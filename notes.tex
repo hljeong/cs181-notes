@@ -1,0 +1,245 @@
+\documentclass{notes}
+\usepackage{multicol}
+
+\class{CS 181 (Introduction to Formal Languages and Automata Theory)}
+
+\begin{document}
+
+\section{Deterministic finite automata (DFAs)}
+
+\subsection{Basic notions}
+
+\begin{defn}
+  An \textbf{alphabet} is any finite set of symbols.
+\end{defn}
+
+\begin{eg}
+  Binary alphabet: $\left \{ \verb~0~, \verb~1~ \right \}$
+\end{eg}
+
+\begin{eg}
+  English alphabet: $\left \{ \verb~a~, \verb~b~, \dots, \verb~c~ \right \}$
+\end{eg}
+
+\begin{defn}
+  A \textbf{string} is any finite sequence of symbols from a given alphabet.
+\end{defn}
+
+\begin{eg}
+  \verb~001010110101~
+\end{eg}
+
+\begin{eg}
+  \verb~abracadabra~
+\end{eg}
+
+\begin{eg}
+  $\varepsilon$ (empty string)
+\end{eg}
+
+\begin{defn}
+  A \textbf{language} is a set of strings over a given alphabet.
+\end{defn}
+
+\begin{eg}
+  $\varnothing$ (empty language)
+\end{eg}
+
+\begin{eg}
+  $\left \{ \varepsilon \right \}$
+\end{eg}
+
+\begin{eg}
+  $\left \{ \verb~acclaim~, \verb~aim~, \verb~brim~, \dots \right \}$
+\end{eg}
+
+\begin{eg}
+  $\left \{ \verb~0~, \verb~1~, \verb~00~, \verb~11~, \dots \right \}$
+\end{eg}
+
+\begin{defn}
+  A \textbf{computational device} is a mechanism that inputs a string and either accepts or rejects it.
+\end{defn}
+
+\subsection{Deterministic finite automata}
+
+\begin{itemize}
+  \item Choose an alphabet: $\left \{ \verb~a~, \verb~b~ \right \}$.
+  \item Draw states.
+  \item Choose start state and accept states.
+  \item Draw transitions (out of every state on every symbol).
+\end{itemize}
+
+\begin{minipage}{0.5 \textwidth}
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 5em]
+      \node[initial, initial text=, state, minimum size = 2em] (q1) {};
+      \node[below left of = q1, accepting, state, minimum size = 2em] (q2) {};
+      \node[below right of = q1, accepting, state, minimum size = 2em] (q3) {};
+      \node[below right of = q2, state, minimum size = 2em] (q4) {};
+      \draw[->]
+      (q1) edge[above left] node{\verb~a~} (q2)
+      (q1) edge[above right] node{\verb~b~} (q3)
+      (q2) edge[loop left] node{\verb~a~} (q2)
+      (q2) edge[below left] node{\verb~b~} (q4)
+      (q3) edge[below right] node{\verb~a~} (q4)
+      (q3) edge[loop right] node{\verb~b~} (q3)
+      (q4) edge[loop below] node{\verb~a~,\verb~b~} (q4)
+      ;
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}%
+\begin{minipage}{0.5 \textwidth}
+  \begin{center}
+    \begin{tabular}{cc}
+      Input & Output \\ 
+      \hline
+      $\varepsilon$ & reject \\ 
+      \verb~ab~ & reject \\ 
+      \verb~aaa~ & accept \\ 
+      \verb~bb~ & accept
+    \end{tabular}
+  \end{center}
+\end{minipage}
+
+In words, this machine accepts nonempty strings of all \verb~a~'s or all \verb~b~'s.
+
+\begin{defn}
+  The \textbf{language} of a DFA is the set of all strings it accepts.
+\end{defn}
+
+\begin{eg}
+  
+  \begin{minipage}{0.5 \textwidth}
+    \begin{center}
+      \begin{tikzpicture}[> = stealth, node distance = 5em]
+        \node[accepting, initial, initial text=, state, minimum size = 2em] (q1) at (90 : 1.5) {};
+        \node[state, minimum size = 2em] (q2) at (330 : 1.5) {};
+        \node[state, minimum size = 2em] (q3) at (210 : 1.5) {};
+        \draw[->]
+        (q1) edge[loop above] node{\verb~0~} (q1)
+        (q1) edge[below left] node{\verb~1~} (q2)
+        (q1) edge[bend right, above left] node{\verb~2~} (q3)
+        (q2) edge[loop right] node{\verb~0~} (q2)
+        (q2) edge[above] node{\verb~1~} (q3)
+        (q2) edge[bend right, above right] node{\verb~2~} (q1)
+        (q3) edge[loop left] node{\verb~0~} (q3)
+        (q3) edge[below right] node{\verb~1~} (q1)
+        (q3) edge[bend right, below] node{\verb~2~} (q2)
+        ;
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}%
+  \begin{minipage}{0.5 \textwidth}
+    \begin{center}
+      \begin{tabular}{cc}
+        Input & Output \\ 
+        \hline
+        \verb~00...0~ & accept \\ 
+        \verb~12~ & accept \\ 
+        \verb~111~ & accept \\ 
+        \verb~20~ & reject \\ 
+        \verb~1~ & reject
+      \end{tabular}
+    \end{center}
+  \end{minipage}
+
+  \begin{center}
+    Alphabet: $\left \{ \verb~0~, \verb~1~, \verb~2~ \right \}$, language: $\left \{ w : 3 \mid \sum w_i \right \}$
+  \end{center}
+\end{eg}
+
+\begin{eg}
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 5em]
+      \node[accepting, initial, initial text=, state, minimum size = 2em] (q1) {};
+      \node[right of = q1, state, minimum size = 2em] (q2) {};
+      \draw[->]
+      (q1) edge[bend right, below] node{\verb~0~,\verb~1~} (q2)
+      (q2) edge[bend right, above] node{\verb~0~,\verb~1~} (q1)
+      ;
+    \end{tikzpicture}
+
+    Alphabet: $\left \{ \verb~0~, \verb~1~ \right \}$, language: $\left \{ w : 2 \mid \left | w \right | \right \}$
+  \end{center}
+\end{eg}
+
+\begin{eg}
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 5em]
+      \node[initial, initial text=, state, minimum size = 2em] (q1) {};
+      \node[accepting, below left of = q1, state, minimum size = 2em] (q2) {};
+      \node[below of = q2, state, minimum size = 2em] (q3) {};
+      \node[accepting, below right of = q1, state, minimum size = 2em] (q4) {};
+      \node[below of = q4, state, minimum size = 2em] (q5) {};
+      \draw[->]
+      (q1) edge[above left] node{\verb~a~} (q2)
+      (q1) edge[above right] node{\verb~b~} (q4)
+      (q2) edge[loop left] node{\verb~a~} (q2)
+      (q2) edge[bend right, left] node{\verb~b~} (q3)
+      (q3) edge[bend right, right] node{\verb~a~} (q2)
+      (q3) edge[loop below] node{\verb~b~} (q3)
+      (q4) edge[bend right, left] node{\verb~a~} (q5)
+      (q4) edge[loop right] node{\verb~b~} (q4)
+      (q5) edge[loop below] node{\verb~a~} (q5)
+      (q5) edge[bend right, right] node{\verb~b~} (q4)
+      ;
+    \end{tikzpicture}
+
+    Alphabet: $\left \{ \verb~a~, \verb~b~ \right \}$, language: $\left \{ w : w \neq \varepsilon \land w_1 = w_{\left | w \right |  } \right \}$
+  \end{center}
+\end{eg}
+
+\subsection{Designing DFAs}
+
+We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
+
+\begin{eg}
+  Language: $\varnothing$
+  
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 5em]
+      \node[initial, initial text=, state, minimum size = 2em] (q1) {};
+      \draw[->]
+      (q1) edge[loop right] node{\verb~0~,\verb~1~} (q1)
+      ;
+    \end{tikzpicture}
+  \end{center}
+\end{eg}
+
+\begin{eg}
+  Language: $\left \{ w : \text{every odd position is a \verb~1~} \right \}$
+  
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 5em]
+      \node[accepting, initial, initial text=, state, minimum size = 2em] (q1) {};
+      \node[accepting, below right of = q1, state, minimum size = 2em] (q2) {};
+      \node[above right of = q1, state, minimum size = 2em] (q3) {};
+      \draw[->]
+      (q1) edge[above left] node{\verb~0~} (q3)
+      (q1) edge[bend right, below left] node{\verb~1~} (q2)
+      (q2) edge[bend right, above right] node{\verb~0~,\verb~1~} (q1)
+      (q3) edge[loop right] node{\verb~0~,\verb~1~} (q3)
+      ;
+    \end{tikzpicture}
+  \end{center}
+\end{eg}
+
+\begin{eg}
+  Language: $\left \{ w : \text{$w$ ends in \verb~0~} \right \}$
+  
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 5em]
+      \node[initial, initial text=, state, minimum size = 2em] (q1) {};
+      \node[right of = q1, accepting, state, minimum size = 2em] (q2) {};
+      \draw[->]
+      (q1) edge[bend right, below] node{\verb~0~} (q2)
+      (q1) edge[loop above] node{\verb~1~} (q1)
+      (q2) edge[loop below] node{\verb~0~} (q2)
+      (q2) edge[bend right, above] node{\verb~1~} (q1)
+      ;
+    \end{tikzpicture}
+  \end{center}
+\end{eg}
+
+\end{document}
