@@ -1,5 +1,4 @@
 \documentclass{notes}
-\usepackage{multicol}
 
 \class{CS 181 (Introduction to Formal Languages and Automata Theory)}
 
@@ -237,6 +236,412 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
       (q1) edge[loop above] node{\verb~1~} (q1)
       (q2) edge[loop below] node{\verb~0~} (q2)
       (q2) edge[bend right, above] node{\verb~1~} (q1)
+      ;
+    \end{tikzpicture}
+  \end{center}
+\end{eg}
+
+\begin{eg}
+  Language: $\left \{ w : \text{$w$ begins with \verb~1~, ends with \verb~0~} \right \}$
+  
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 5em]
+      \node[initial, initial text=, state, minimum size = 2em] (q1) {};
+      \node[above right of = q1, state, minimum size = 2em] (q2) {};
+      \node[right of = q2, accepting, state, minimum size = 2em] (q3) {};
+      \node[below right of = q1, state, minimum size = 2em] (q4) {};
+      \draw[->]
+      (q1) edge[below left] node{\verb~0~} (q4)
+      (q1) edge[above left] node{\verb~1~} (q2)
+      (q2) edge[bend right, below] node{\verb~0~} (q3)
+      (q2) edge[loop above] node{\verb~1~} (q2)
+      (q3) edge[loop right] node{\verb~0~} (q3)
+      (q3) edge[bend right, above] node{\verb~1~} (q2)
+      (q4) edge[loop right] node{\verb~0~,\verb~1~} (q4)
+      ;
+    \end{tikzpicture}
+  \end{center}
+\end{eg}
+
+\begin{eg}
+  Language: $\left \{ w : \left | w \right | \leq 4  \right \}$
+  
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 5em]
+      \node[accepting, initial, initial text=, state, minimum size = 2em] (q1) {};
+      \node[right of = q1, accepting, state, minimum size = 2em] (q2) {};
+      \node[accepting, right of = q2, state, minimum size = 2em] (q3) {};
+      \node[accepting, right of = q3, state, minimum size = 2em] (q4) {};
+      \node[accepting, right of = q4, state, minimum size = 2em] (q5) {};
+      \node[right of = q5, state, minimum size = 2em] (q6) {};
+      \draw[->]
+      (q1) edge[above] node{\verb~0~,\verb~1~} (q2)
+      (q2) edge[above] node{\verb~0~,\verb~1~} (q3)
+      (q3) edge[above] node{\verb~0~,\verb~1~} (q4)
+      (q4) edge[above] node{\verb~0~,\verb~1~} (q5)
+      (q5) edge[above] node{\verb~0~,\verb~1~} (q6)
+      (q6) edge[loop right] node{\verb~0~,\verb~1~} (q6)
+      ;
+    \end{tikzpicture}
+  \end{center}
+\end{eg}
+
+\newpage
+
+\begin{eg}
+  Language: $\left \{ w : 1000 \mid \left | w \right | \right \}$
+  
+  In words, each state represents a remainder modulo 1000, and only the 0 state is accepting.
+\end{eg}
+
+\begin{eg}
+  Language: $\left \{ w : \text{$w$ contains \verb~0101~ as a substring} \right \}$
+  
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 5em]
+      \node[initial, initial text=, state, minimum size = 2em] (q1) {$\varepsilon$};
+      \node[right of = q1, state, minimum size = 2em] (q2) {\verb~0~};
+      \node[right of = q2, state, minimum size = 2em] (q3) {\verb~01~};
+      \node[right of = q3, state, minimum size = 2em] (q4) {\verb~010~};
+      \node[accepting, right of = q4, state, minimum size = 2em] (q5) {\verb~0101~};
+      \draw[->]
+      (q1) edge[above] node{\verb~0~} (q2)
+      (q1) edge[loop above] node{\verb~1~} (q1)
+      (q2) edge[loop above] node{\verb~0~} (q2)
+      (q2) edge[above] node{\verb~1~} (q3)
+      (q3) edge[above] node{\verb~0~} (q4)
+      (q3) edge[bend right = 75, above] node{\verb~1~} (q1)
+      (q4) edge[bend right = 60, above] node{\verb~0~} (q2)
+      (q4) edge[above] node{\verb~1~} (q5)
+      (q5) edge[loop right] node{\verb~0~,\verb~1~} (q5)
+      ;
+    \end{tikzpicture}
+  \end{center}
+\end{eg}
+
+\subsection{Formal definitions}
+
+\begin{defn}
+  A DFA is a tuple $(Q, \Sigma, \delta, q_{0}, F)$
+  where
+  \begin{itemize}
+    \item $Q = \text{set of states, }$
+    \item $\Sigma = \text{alphabet, }$
+    \item $\delta = \text{transition ($\delta \colon Q \times \Sigma \to Q$), }$
+    \item $q_{0} = \text{start state ($q_{0} \in Q$), and }$
+    \item $F = \text{set of accept states ("favorable"? states, $F \subseteq Q$).}$
+  \end{itemize}
+\end{defn}
+
+\begin{eg}
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 5em]
+      \node[initial, initial text=, state, minimum size = 2em] (q1) {$A$};
+      \node[accepting, right of = q1, accepting, state, minimum size = 2em] (q2) {$B$};
+      \node[right of = q2, state, minimum size = 2em] (q3) {$C$};
+      \draw[->]
+      (q1) edge[loop above] node{\verb~0~} (q1)
+      (q1) edge[above] node{\verb~1~} (q2)
+      (q2) edge[bend right, below] node{\verb~0~} (q3)
+      (q2) edge[loop above] node{\verb~1~} (q2)
+      (q3) edge[bend right, above] node{\verb~0~,\verb~1~} (q2)
+      ;
+    \end{tikzpicture}
+  \end{center}
+  
+  Formal description: $(\left \{ A, B, C \right \}, \left \{ \verb~0~, \verb~1~ \right \}, \delta, A, \left \{ B \right \})$ where $\delta$ is defined by the table
+  \begin{center}
+    \begin{tabular}{c|cc}
+      & \verb~0~ & \verb~1~ \\ 
+      \hline
+      $A$ & $A$ & $B$ \\ 
+      $B$ & $C$ & $B$ \\ 
+      $C$ & $B$ & $B$.
+    \end{tabular}
+  \end{center}
+\end{eg}
+
+\begin{eg}
+  Formal description: $(\left \{ A, B, C, D, E \right \}, \left \{ \verb~0~, \verb~1~ \right \}, \delta, C, \left \{ C \right \})$ where $\delta$ is defined by the table \begin{center}
+    \begin{tabular}{c|cc}
+      & \verb~0~ & \verb~1~ \\ 
+      \hline
+      $A$ & $A$ & $B$ \\ 
+      $B$ & $A$ & $C$ \\ 
+      $C$ & $B$ & $D$ \\ 
+      $D$ & $C$ & $E$ \\ 
+      $E$ & $D$ & $E$.
+    \end{tabular}
+  \end{center}
+  
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 5em]
+      \node[state, minimum size = 2em] (q1) {$A$};
+      \node[right of = q1, state, minimum size = 2em] (q2) {$B$};
+      \node[accepting, initial above, initial text=, right of = q2, state, minimum size = 2em] (q3) {$C$};
+      \node[right of = q3, state, minimum size = 2em] (q4) {$D$};
+      \node[right of = q4, state, minimum size = 2em] (q5) {$E$};
+      \draw[->]
+      (q1) edge[loop left] node{\verb~0~} (q1)
+      (q1) edge[bend right, below] node{\verb~1~} (q2)
+      (q2) edge[bend right, above] node{\verb~0~} (q1)
+      (q2) edge[bend right, below] node{\verb~1~} (q3)
+      (q3) edge[bend right, above] node{\verb~0~} (q2)
+      (q3) edge[bend right, below] node{\verb~1~} (q4)
+      (q4) edge[bend right, above] node{\verb~0~} (q3)
+      (q4) edge[bend right, below] node{\verb~1~} (q5)
+      (q5) edge[bend right, above] node{\verb~0~} (q4)
+      (q5) edge[loop right] node{\verb~1~} (q5)
+      ;
+    \end{tikzpicture}
+  \end{center}
+\end{eg}
+
+\begin{eg}
+  Formal description for Example~\ref{eg:1.3.6}: $(\left \{ 0, 1, 2, \dots, 999 \right \}, \left \{ \verb~0~, \verb~1~ \right \}, \delta, 0, \left \{ 0 \right \})$ where $\delta(q, \sigma) = (q + 1) \mod 1000$.
+\end{eg}
+
+\begin{defn}
+  DFA $(Q, \Sigma, \delta, q_{0}, F)$ accepts a string $w = w_1 w_2 \dots w_n$ iff
+  \[
+    \delta(\cdots \delta(\delta(q_0, w_1), w_2) \cdots, w_n) \in F.
+  \]
+\end{defn}
+
+\begin{defn}
+  DFA $D$ {\boldmath \bfseries recognizes} the language $\mathcal L$ iff 
+  \[
+    \mathcal L = \left \{ w : \text{$D$ accepts $w$} \right \}.
+  \]
+\end{defn}
+
+\begin{note}
+  \vspace{-1em}
+  \begin{itemize}
+    \item Every DFA recognizes exactly 1 language.
+
+    \item A language has either 0 or $\infty$ DFAs recognizing it.
+  \end{itemize}
+\end{note}
+
+\section{Nondeterminism}
+
+\subsection{Basic notions}
+
+\begin{eg}
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 5em]
+      \node[initial, initial text=, state, minimum size = 2em] (q1) {$A$};
+      \node[right of = q1, state, minimum size = 2em] (q2) {$B$};
+      \node[right of = q2, state, minimum size = 2em] (q3) {$C$};
+      \node[accepting, right of = q3, state, minimum size = 2em] (q4) {$D$};
+      \draw[->]
+      (q1) edge[loop above] node{\verb~0~,\verb~1~} (q1)
+      (q1) edge[above] node{\verb~1~} (q2)
+      (q2) edge[above] node{\verb~0~,$\varepsilon$} (q3)
+      (q3) edge[above] node{\verb~1~} (q4)
+      (q4) edge[loop above] node{\verb~0~,\verb~1~} (q4)
+      ;
+    \end{tikzpicture}
+  \end{center}
+
+  \begin{itemize}
+    \item Choose an alphabet: $\left \{ \verb~0~, \verb~1~ \right \}$.
+
+    \item Draw states.
+      
+    \item Choose start state and accept states.
+    The steps so far are the same as those of a DFA.
+      
+    \item Draw transitions.
+    A state may have any number of transitions on a given symbol.
+    A state may also have transitions on $\varepsilon$.
+  \end{itemize}
+\end{eg}
+
+\newpage
+
+\begin{defn}
+  An NFA {\boldmath \bfseries accepts} $w$ iff there is \textit{at least} one path to an accept state.
+\end{defn}
+
+\begin{eg}
+  Output table for Example~\ref{eg:2.1.1}:
+  \begin{center}
+    \begin{tabular}{ccc}
+      Input & Accepting path & Output \\ 
+      \hline
+      $\varepsilon$ & - & reject \\ 
+      \verb~0~ & - & reject \\ 
+      \verb~1~ & - & reject \\ 
+      \verb~010110~ & $AABCDDD$ & accept \\
+      \verb~010~ & - & reject \\ 
+      \verb~11~ & $ABCD$ & accept 
+    \end{tabular}
+  \end{center}
+  
+  \begin{center}
+    Language: all strings containing \verb~101~ or \verb~11~
+  \end{center}
+\end{eg}
+
+\subsection{Using shortcuts}
+
+\begin{eg}
+  Language: $\varnothing$
+  
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 5em]
+      \node[initial, initial text=, state, minimum size = 2em] (q1) {};
+      \draw[->]
+      ;
+    \end{tikzpicture}
+  \end{center}
+\end{eg}
+
+\begin{eg}
+  Language: $\left \{ \varepsilon \right \}$
+
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 5em]
+      \node[accepting, initial, initial text=, state, minimum size = 2em] (q1) {};
+      \draw[->]
+      ;
+    \end{tikzpicture}
+  \end{center}
+\end{eg}
+
+\begin{eg}
+  Language: $\left \{ w : \text{$w$ doesn't contain \verb~1~} \right \}$
+
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 5em]
+      \node[accepting, initial, initial text=, state, minimum size = 2em] (q1) {};
+      \draw[->]
+      (q1) edge[loop right] node{\verb~0~} (q1)
+      ;
+    \end{tikzpicture}
+  \end{center}
+\end{eg}
+
+\begin{eg}
+  Language: $\left \{ w : \text{$\left | w \right | \geq 2$ and $w$ starts and ends with \verb~0~} \right \}$
+  
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 5em]
+      \node[initial, initial text=, state, minimum size = 2em] (q1) {};
+      \node[right of = q1, state, minimum size = 2em] (q2) {};
+      \node[accepting, right of = q2, state, minimum size = 2em] (q3) {};
+      \draw[->]
+      (q1) edge[above] node{\verb~0~} (q2)
+      (q2) edge[above] node{\verb~0~} (q3)
+      (q2) edge[loop above] node{\verb~0~,\verb~1~} (q2)
+      ;
+    \end{tikzpicture}
+  \end{center}
+\end{eg}
+
+\subsection{pattern matching}
+
+\begin{eg}
+  Language: $\left \{ w : \text{conatins \verb~0101~} \right \}$
+  
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 5em]
+      \node[initial, initial text=, state, minimum size = 2em] (q1) {};
+      \node[right of = q1, state, minimum size = 2em] (q2) {};
+      \node[right of = q2, state, minimum size = 2em] (q3) {};
+      \node[right of = q3, state, minimum size = 2em] (q4) {};
+      \node[accepting, right of = q4, state, minimum size = 2em] (q5) {};
+      \draw[->]
+      (q1) edge[loop above] node{\verb~0~,\verb~1~} (q1)
+      (q1) edge[above] node{\verb~0~} (q2)
+      (q2) edge[above] node{\verb~1~} (q3)
+      (q3) edge[above] node{\verb~0~} (q4)
+      (q4) edge[above] node{\verb~1~} (q5)
+      ;
+    \end{tikzpicture}
+  \end{center}
+\end{eg}
+
+\begin{eg}
+  Language: $\left \{ w : w = \underbrace{\verb~00...0~}_{\geq 0}\underbrace{\verb~11...1~}{\geq 0}\underbrace{\verb~00...0~}{\geq 1} \right \}$ % >= 0, >= 0, >= 1
+  
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 5em]
+      \node[initial, initial text=, state, minimum size = 2em] (q1) {};
+      \node[right of = q1, state, minimum size = 2em] (q2) {};
+      \node[accepting, right of = q2, state, minimum size = 2em] (q3) {};
+      \draw[->]
+      (q1) edge[loop above] node{\verb~0~} (q1)
+      (q1) edge[above] node{$\varepsilon$} (q2)
+      (q2) edge[above] node{\verb~0~} (q3)
+      (q3) edge[loop above] node{\verb~0~} (q3)
+      ;
+    \end{tikzpicture}
+  \end{center}
+\end{eg}
+
+\begin{eg}
+  Language: $\left \{ w : \text{$w$ has a \verb~1~ in the 3rd position from the end} \right \}$
+  
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 5em]
+      \node[initial, initial text=, state, minimum size = 2em] (q1) {};
+      \node[right of = q1, state, minimum size = 2em] (q2) {};
+      \node[right of = q2, state, minimum size = 2em] (q3) {};
+      \node[accepting, right of = q3, state, minimum size = 2em] (q4) {};
+      \draw[->]
+      (q1) edge[loop above] node{\verb~0~,\verb~1~} (q1)
+      (q1) edge[above] node{\verb~1~} (q2)
+      (q2) edge[above] node{\verb~0~,\verb~1~} (q3)
+      (q3) edge[above] node{\verb~0~,\verb~1~} (q4)
+      ;
+    \end{tikzpicture}
+  \end{center}
+\end{eg}
+
+\subsection{Alternatives}
+
+\begin{eg}
+  Language: $\left \{ w : 2 \mid \left | w \right | \lor 3 \mid \left | w \right | \right \}$
+  
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 5em]
+      \node[initial, initial text=, state, minimum size = 2em] (q1) {};
+      \node[accepting, above right of = q1, state, minimum size = 2em] (q2) {};
+      \node[right of = q2, state, minimum size = 2em] (q3) {};
+      \node[accepting, below right of = q1, state, minimum size = 2em] (q4) {};
+      \node[above right of = q4, state, minimum size = 2em] (q5) {};
+      \node[below right of = q4, state, minimum size = 2em] (q6) {};
+      \draw[->]
+      (q1) edge[above left] node{$\varepsilon$} (q2)
+      (q2) edge[bend right, below] node{\verb~0~,\verb~1~} (q3)
+      (q3) edge[bend right, above] node{\verb~0~,\verb~1~} (q2)
+      (q1) edge[below left] node{$\varepsilon$} (q4)
+      (q4) edge[above left] node{\verb~0~,\verb~1~} (q5)
+      (q5) edge[right] node{\verb~0~,\verb~1~} (q6)
+      (q6) edge[below left] node{\verb~0~,\verb~1~} (q4)
+      ;
+    \end{tikzpicture}
+  \end{center}
+  
+  Note that the following is not valid due to side effects: 
+
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 5em]
+      \node[accepting, initial, initial text=, state, minimum size = 2em] (q1) {};
+      \node[right of = q1, state, minimum size = 2em] (q2) {};
+      \node[accepting, below of = q1, state, minimum size = 2em] (q3) {};
+      \node[below left of = q3, state, minimum size = 2em] (q4) {};
+      \node[below right of = q3, state, minimum size = 2em] (q5) {};
+      \draw[->]
+      (q1) edge[bend right, below] node{\verb~0~,\verb~1~} (q2)
+      (q2) edge[bend right, above] node{\verb~0~,\verb~1~} (q1)
+      (q1) edge[left] node{$\varepsilon$} (q3)
+      (q3) edge[above left] node{\verb~0~,\verb~1~} (q4)
+      (q4) edge[below] node{\verb~0~,\verb~1~} (q5)
+      (q5) edge[above right] node{\verb~0~,\verb~1~} (q3)
       ;
     \end{tikzpicture}
   \end{center}
