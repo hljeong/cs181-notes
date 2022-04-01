@@ -361,6 +361,8 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
   \end{center}
 \end{eg}
 
+\newpage
+
 \begin{eg}
   Formal description: $(\left \{ A, B, C, D, E \right \}, \left \{ \verb~0~, \verb~1~ \right \}, \delta, C, \left \{ C \right \})$ where $\delta$ is defined by the table \begin{center}
     \begin{tabular}{c|cc}
@@ -402,7 +404,7 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
 \end{eg}
 
 \begin{defn}
-  DFA $(Q, \Sigma, \delta, q_{0}, F)$ accepts a string $w = w_1 w_2 \dots w_n$ iff
+  DFA $(Q, \Sigma, \delta, q_{0}, F)$ {\boldmath \bfseries accepts} a string $w = w_1 w_2 \dots w_n$ iff
   \[
     \delta(\cdots \delta(\delta(q_0, w_1), w_2) \cdots, w_n) \in F.
   \]
@@ -416,13 +418,14 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
 \end{defn}
 
 \begin{note}
-  \vspace{-1em}
   \begin{itemize}
     \item Every DFA recognizes exactly 1 language.
 
     \item A language has either 0 or $\infty$ DFAs recognizing it.
   \end{itemize}
 \end{note}
+
+\newpage
 
 \section{Nondeterminism}
 
@@ -458,8 +461,6 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
     A state may also have transitions on $\varepsilon$.
   \end{itemize}
 \end{eg}
-
-\newpage
 
 \begin{defn}
   An NFA {\boldmath \bfseries accepts} $w$ iff there is \textit{at least} one path to an accept state.
@@ -511,6 +512,8 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
   \end{center}
 \end{eg}
 
+\newpage
+
 \begin{eg}
   Language: $\left \{ w : \text{$w$ doesn't contain \verb~1~} \right \}$
 
@@ -541,7 +544,7 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
   \end{center}
 \end{eg}
 
-\subsection{pattern matching}
+\subsection{Pattern matching}
 
 \begin{eg}
   Language: $\left \{ w : \text{conatins \verb~0101~} \right \}$
@@ -565,7 +568,7 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
 \end{eg}
 
 \begin{eg}
-  Language: $\left \{ w : w = \underbrace{\verb~00...0~}_{\geq 0}\underbrace{\verb~11...1~}{\geq 0}\underbrace{\verb~00...0~}{\geq 1} \right \}$ % >= 0, >= 0, >= 1
+  Language: $\{ w : w = \underbrace{\verb~00...0~}_{\geq 0}\underbrace{\verb~11...1~}_{\geq 0}\underbrace{\verb~00...0~}_{\geq 1} \}$ % >= 0, >= 0, >= 1
   
   \begin{center}
     \begin{tikzpicture}[> = stealth, node distance = 5em]
@@ -575,6 +578,7 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
       \draw[->]
       (q1) edge[loop above] node{\verb~0~} (q1)
       (q1) edge[above] node{$\varepsilon$} (q2)
+      (q2) edge[loop above] node{\verb~1~} (q2)
       (q2) edge[above] node{\verb~0~} (q3)
       (q3) edge[loop above] node{\verb~0~} (q3)
       ;
