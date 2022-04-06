@@ -398,11 +398,11 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
   A DFA is a tuple $(Q, \Sigma, \delta, q_{0}, F)$
   where
   \begin{itemize}
-    \item $Q = \text{set of states, }$
-    \item $\Sigma = \text{alphabet, }$
-    \item $\delta = \text{transition ($\delta \colon Q \times \Sigma \to Q$), }$
-    \item $q_{0} = \text{start state ($q_{0} \in Q$), and }$
-    \item $F = \text{set of accept states ("favorable"? states, $F \subseteq Q$).}$
+    \item $Q =$ set of states, 
+    \item $\Sigma =$ alphabet, 
+    \item $\delta =$ transition function ($\delta \colon Q \times \Sigma \to Q$), 
+    \item $q_0 =$ start state ($q_0 \in Q$), and 
+    \item $F =$ set of accept states ("favorable"? states, $F \subseteq Q$).
   \end{itemize}
 \end{defn}
 
@@ -435,7 +435,8 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
 \end{eg}
 
 \begin{eg}
-  Formal description: $(\left \{ A, B, C, D, E \right \}, \left \{ \verb~0~, \verb~1~ \right \}, \delta, C, \left \{ C \right \})$ where $\delta$ is defined by the table \begin{center}
+  Formal description: $(\left \{ A, B, C, D, E \right \}, \left \{ \verb~0~, \verb~1~ \right \}, \delta, C, \left \{ C \right \})$ where $\delta$ is defined by the table 
+  \begin{center}
     \begin{tabular}{c|cc}
       & \verb~0~ & \verb~1~ \\ 
       \hline
@@ -633,6 +634,7 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
       (q2) edge[above] node{\verb~1~} (q3)
       (q3) edge[above] node{\verb~0~} (q4)
       (q4) edge[above] node{\verb~1~} (q5)
+      (q5) edge[loop above] node{\verb~0~,\verb~1~} (q5)
       ;
     \end{tikzpicture}
   \end{center}
@@ -782,5 +784,305 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
     \end{tikzpicture}
   \end{center}
 \end{eg}
+
+\begin{eg}
+  Language: $\left \{ w : \text{$w$ contains an even number of \verb~0~s, or exactly two \verb~1~s} \right \}$
+  
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 3em]
+      \node[initial, initial text=, state, minimum size = 2em] (1) {};
+      \node[above right = of 1, accepting, state, minimum size = 2em] (2) {};
+      \node[right = of 2, state, minimum size = 2em] (3) {};
+      \node[below right = of 1,state, minimum size = 2em] (4) {};
+      \node[right = of 4, state, minimum size = 2em] (5) {};
+      \node[accepting, right = of 5, state, minimum size = 2em] (6) {};
+      \draw[->]
+      (1) edge[above left] node{$\varepsilon$} (2)
+      (1) edge[below left] node{$\varepsilon$} (4)
+      (2) edge[bend right, below] node{\verb~0~} (3)
+      (2) edge[loop above] node{\verb~1~} (2)
+      (3) edge[bend right, above] node{\verb~0~} (2)
+      (3) edge[loop above] node{\verb~1~} (3)
+      (4) edge[above] node{\verb~1~} (5)
+      (4) edge[loop above] node{\verb~0~} (4)
+      (5) edge[above] node{\verb~1~} (6)
+      (5) edge[loop above] node{\verb~0~} (5)
+      (6) edge[loop above] node{\verb~0~} (6)
+      ;
+    \end{tikzpicture}
+  \end{center}
+\end{eg}
+
+\begin{eg}
+  Language: $\left \{ w : \text{$w$ does not contain both \verb~0~ and \verb~1~} \right \}$
+  
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 3em]
+      \node[initial, initial text=, state, minimum size = 2em] (1) {};
+      \node[accepting, above right = of 1, state, minimum size = 2em] (2) {};
+      \node[accepting, below right = of 1, state, minimum size = 2em] (3) {};
+      \draw[->]
+      (1) edge[above left] node{$\varepsilon$} (2)
+      (2) edge[loop right] node{\verb~0~} (2)
+      (1) edge[below left] node{$\varepsilon$} (3)
+      (3) edge[loop right] node{\verb~1~} (3)
+      ;
+    \end{tikzpicture}
+  \end{center}
+\end{eg}
+
+\subsection{Formal definitions}
+
+\begin{defn}
+  An NFA is a tuple $(Q, \Sigma, \delta q_0, F)$ where
+  \begin{itemize}
+    \item $Q =$ set of states, 
+
+    \item $\Sigma =$ alphabet, 
+      
+    \item $\delta =$ transition function ($\delta \colon Q \times (\Sigma \cup \left \{ \varepsilon \right \}) \to \mathcal P(Q)$), 
+      
+    \item $q_0 =$ start state ($q_0 \in Q$), and 
+      
+    \item $F =$ set of accept states ($F \subseteq Q$).
+  \end{itemize}
+\end{defn}
+
+\begin{eg}
+  Formal description for NFA from Example~\ref{eg:2.1.1}: 
+  \[
+    \left ( \left \{ A, B, C, D \right \}, \left \{ \verb~0~, \verb~1~ \right \}, \delta, A, \left \{ D \right \} \right )
+  \]
+  where $\delta$ is defined by the table 
+  \begin{center}
+    \begin{tabular}{c|ccc}
+      & \verb~0~ & \verb~1~ & $\varepsilon$ \\ 
+      \hline
+      $A$ & $\left \{ A \right \}$ & $\left \{ A, B \right \}$ & $\varnothing$ \\ 
+      $B$ & $\left \{ C \right \}$ & $\varnothing$ & $\left \{ C \right \}$ \\ 
+      $C$ & $\varnothing$ & $\left \{ D \right \}$ & $\varnothing$ \\ 
+      $D$ & $\left \{ D \right \}$ & $\left \{ D \right \}$ & $\varnothing$.
+    \end{tabular}
+  \end{center}
+  
+  Note that as pictures are not precise, we had to make an assumption on the alphabet of the NFA.
+  Also note that although adding transition from $A$ to $A$ on $\varepsilon$ does not change the language, it does not match the drawing and therefore represents a different NFA.
+  Make sure to transcribe the given NFA.
+\end{eg}
+
+\begin{eg}
+  $(\left \{ A, B, C \right \}, \left \{ \verb~0~, \verb~1~ \right \}, \delta, A, \left \{ B \right \})$ where $\delta$ is defined by the table 
+  \begin{center}
+    \begin{tabular}{c|ccc}
+      & \verb~0~ & \verb~1~ & $\varepsilon$ \\ 
+      \hline
+      $A$ & $\left \{ C \right \}$ & $\left \{ B \right \}$ & $\varnothing$ \\ 
+      $B$ & $\left \{ A \right \}$ & $\varnothing$ & $\varnothing$ \\ 
+      $C$ & $\left \{ B \right \}$ & $\left \{ B, C \right \}$ & $\left \{ A \right \}$. 
+    \end{tabular}
+  \end{center}
+  
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 3em]
+      \node[initial, initial text=, state, minimum size = 2em] (A) {$A$};
+      \node[accepting, right = of A, state, minimum size = 2em] (B) {$B$};
+      \node[right = of B, state, minimum size = 2em] (C) {$C$};
+      \draw[->]
+      (A) edge[bend right = 55, below] node{\verb~0~} (C)
+      (A) edge[bend right, below] node{\verb~1~} (B)
+      (B) edge[bend right, above] node{\verb~0~} (A)
+      (C) edge[bend right = 55, above] node{\verb~0~} (A)
+      (C) edge[above] node{\verb~1~} (B)
+      (C) edge[loop right] node{\verb~1~} (C)
+      (C) edge[bend right = 80, above] node{$\varepsilon$} (A)
+      ;
+    \end{tikzpicture}
+  \end{center}
+\end{eg}
+
+\newpage
+
+\begin{defn}
+  NFA $(Q, \Sigma, \delta, q_0, F)$ {\boldmath \bfseries accepts} a string $w$ iff 
+  \begin{align*}
+    \exists \, q_1, q_2, \dots, q_m \in Q \, &\exists \, \sigma_0, \sigma_1, \dots, \sigma_{m - 1} \in \Sigma \cup \left \{ \varepsilon \right \}: \\ 
+    &q_1 \in \delta(q_0, \delta_0) \land q_2 \in \delta(q_1, \sigma) \land \cdots \\ 
+    &\land q_m \in \delta(q_{m - 1}, \sigma_{m - 1}) \land q_m \in F \\ 
+    &\land \sigma_0 \sigma_1 \dots \sigma_{m - 1} = w, 
+  \end{align*}
+  or, in words, an accept state is reachable from $q_0$ via some path on input $w$.
+\end{defn}
+
+\begin{defn}
+  NFA $N$ {\boldmath \bfseries recognizes} the language $\mathcal L$ iff 
+  \[
+    \mathcal L = \left \{ w : \text{$N$ accepts $w$} \right \}.
+  \]
+\end{defn}
+
+\section{Equivalence of DFAs and NFAs}
+
+\subsection{Example}
+
+Does this NFA accept the string \verb~0110~?
+
+\begin{center}
+  \begin{tikzpicture}[> = stealth, node distance = 3em]
+    \node[accepting, state, minimum size = 2em] (A) {$A$};
+    \node[below right = of A, state, minimum size = 2em] (B) {$B$};
+    \node[accepting, above right = of A, state, minimum size = 2em] (C) {$C$};
+    \draw[->]
+    (A) edge[bend right, below] node{$\varepsilon$} (C)
+    (C) edge[bend right, above] node{\verb~0~} (A)
+    (A) edge[below left] node{\verb~1~} (B)
+    (B) edge[right] node{\verb~0~,\verb~1~} (C)
+    (B) edge[loop right] node{\verb~0~} (B)
+    ;
+  \end{tikzpicture}
+\end{center}
+
+Recall that the NFA accepts \verb~0110~ iff an accept state is reachable from the start state via some path $\underbrace{\varepsilon \dots \varepsilon}_{\geq 0} \verb~0~ \underbrace{\varepsilon \dots \varepsilon}_{\geq 0} \verb~1~ \underbrace{\varepsilon \dots \varepsilon}_{\geq 0} \verb~1~ \underbrace{\varepsilon \dots \varepsilon}_{\geq 0} \verb~0~ \underbrace{\varepsilon \dots \varepsilon}_{\geq 0}$.
+
+\begin{center}
+  \begin{tabular}{cc}
+    Path & Possible end states \\ 
+    \hline
+    $\varepsilon \dots \varepsilon$ & $A, C$ \\ 
+    $\varepsilon \dots \varepsilon \verb~0~ \varepsilon \dots \varepsilon$ & $A, C$ \\ 
+    $\varepsilon \dots \varepsilon \verb~0~ \varepsilon \dots \varepsilon \verb~1~ \varepsilon \dots \varepsilon$ & $B$ \\ 
+    $\varepsilon \dots \varepsilon \verb~0~ \varepsilon \dots \varepsilon \verb~1~ \varepsilon \dots \varepsilon \verb~1~ \varepsilon \dots \varepsilon$ & $C$ \\ 
+    $\varepsilon \dots \varepsilon \verb~0~ \varepsilon \dots \varepsilon \verb~1~ \varepsilon \dots \varepsilon \verb~1~ \varepsilon \dots \varepsilon \verb~0~ \varepsilon \dots \varepsilon$ & $A, C$ \\ 
+  \end{tabular}
+\end{center}
+
+\newpage
+
+Can we convert this to a DFA? Yes.
+
+\begin{oldenumerate}[topsep = 0ex, label = {\textbf{Step \arabic*}}]
+  \item Use subsets of the states of the NFA as the states of the DFA.
+  Accept states are subsets that contain accept states of the NFA.
+  The start state is the subset of all reachable states from the start state of the NFA via $\varepsilon$.
+  For subsets containing more than one element, the transition is the union of all transitions for each individual element.
+  
+  \begin{center}
+    \linespread{0.8}
+    \begin{tikzpicture}[
+      > = stealth, 
+      node distance = 4em
+    ]
+      \node[state, minimum size = 2em] (0) {$\varnothing$};
+      \node[right = of 0, accepting, state, minimum size = 2em] (A) {$\left \{ A \right \}$};
+      \node[right = of A, state, minimum size = 2em] (B) {$\left \{ B \right \}$};
+      \node[accepting, right = of B, state, minimum size = 2em] (AB) {$\left \{ A, B \right \}$};
+      \node[below = of 0, state, minimum size = 2em] (C) {$\left \{ C \right \}$};
+      \node[initial below, initial text=, accepting, right = of C, state, minimum size = 2em] (AC) {$\left \{ A, C \right \}$};
+      \node[right = of AC, state, minimum size = 2em] (BC) {$\left \{ B, C \right \}$};
+      \node[accepting, right = of BC, state, minimum size = 2em] (ABC) {$\left \{ A, B, C \right \}$};
+      \draw[->]
+      (0) edge[loop above] node{$\verb~0~ \varepsilon \dots \varepsilon, \verb~1~ \varepsilon \dots \varepsilon$} (0)
+      (A) edge[above] node{$\verb~0~ \varepsilon \dots \varepsilon$} (0)
+      (A) edge[above] node{$\verb~1~ \varepsilon \dots \varepsilon$} (B)
+      (B) edge node[above, sloped]{$\verb~0~ \varepsilon \dots \varepsilon$} (BC)
+      (B) edge node[above, sloped]{$\verb~1~ \varepsilon \dots \varepsilon$} (C)
+      (C) edge[below] node{$\verb~0~ \varepsilon \dots \varepsilon$} (AC)
+      (C) edge[left] node{$\verb~1~ \varepsilon \dots \varepsilon$} (0)
+      (AC) edge[loop right] node[below left = 1.5ex and -1em]{$\verb~0~ \varepsilon \dots \varepsilon$} (AC)
+      (AC) edge node[below, sloped]{$\verb~1~ \varepsilon \dots \varepsilon$} (B)
+      (BC) edge[bend right, below] node{$\verb~0~ \varepsilon \dots \varepsilon$} (ABC)
+      (BC) edge[bend left = 45, below] node{$\verb~1~ \varepsilon \dots \varepsilon$} (C)
+      (ABC) edge[loop right] node[below left = 1.7ex and -1em]{$\verb~0~ \varepsilon \dots \varepsilon$} (ABC)
+      (ABC) edge[bend right, above] node{$\verb~1~ \varepsilon \dots \varepsilon$} (BC)
+      (AB) edge node[above, sloped, align = left]{$\verb~0~ \varepsilon \dots \varepsilon$, \\ $\verb~1~ \varepsilon \dots \varepsilon$} (BC)
+      ;
+    \end{tikzpicture}
+  \end{center}
+  
+  \item Clean up.
+
+  \begin{center}
+    \linespread{0.8}
+    \begin{tikzpicture}[
+      > = stealth, 
+      node distance = 4em
+    ]
+      \node[state, minimum size = 2em] (0) {};
+      \node[right = of 0, accepting, state, minimum size = 2em] (1) {};
+      \node[right = of 1, state, minimum size = 2em] (2) {};
+      \node[accepting, right = of 2, state, minimum size = 2em] (3) {};
+      \node[below = of 0, state, minimum size = 2em] (4) {};
+      \node[initial below, initial text=, accepting, right = of 4, state, minimum size = 2em] (5) {};
+      \node[right = of 5, state, minimum size = 2em] (6) {};
+      \node[accepting, right = of 6, state, minimum size = 2em] (7) {};
+      \draw[->]
+      (0) edge[loop above] node{\verb~0~,\verb~1~} (0)
+      (1) edge[above] node{\verb~0~} (0)
+      (1) edge[above] node{\verb~1~} (2)
+      (2) edge node[right]{\verb~0~} (6)
+      (2) edge node[above, sloped]{\verb~1~} (4)
+      (4) edge[below] node{\verb~0~} (5)
+      (4) edge[left] node{\verb~1~} (0)
+      (5) edge[loop right] node{\verb~0~} (5)
+      (5) edge node[below, sloped]{\verb~1~} (2)
+      (6) edge[bend right, below] node{\verb~0~} (7)
+      (6) edge[bend left = 45, below] node{\verb~1~} (4)
+      (7) edge[loop right] node{\verb~0~} (ABC)
+      (7) edge[bend right, above] node{\verb~1~} (6)
+      (3) edge node[above, sloped, align = left]{\verb~0~,\verb~1~} (6)
+      ;
+    \end{tikzpicture}
+  \end{center}
+  
+  \item Optionally drop unreachable states.
+
+  \begin{center}
+    \linespread{0.8}
+    \begin{tikzpicture}[
+      > = stealth, 
+      node distance = 4em
+    ]
+      \node[state, minimum size = 2em] (0) {};
+      \node[right = 10em of 0, state, minimum size = 2em] (2) {};
+      \node[below = of 0, state, minimum size = 2em] (4) {};
+      \node[initial below, initial text=, accepting, right = of 4, state, minimum size = 2em] (5) {};
+      \node[right = of 5, state, minimum size = 2em] (6) {};
+      \node[accepting, right = of 6, state, minimum size = 2em] (7) {};
+      \draw[->]
+      (0) edge[loop above] node{\verb~0~,\verb~1~} (0)
+      (2) edge node[right]{\verb~0~} (6)
+      (2) edge node[above, sloped]{\verb~1~} (4)
+      (4) edge[below] node{\verb~0~} (5)
+      (4) edge[left] node{\verb~1~} (0)
+      (5) edge[loop right] node{\verb~0~} (5)
+      (5) edge node[below, sloped]{\verb~1~} (2)
+      (6) edge[bend right, below] node{\verb~0~} (7)
+      (6) edge[bend left = 45, below] node{\verb~1~} (4)
+      (7) edge[loop right] node{\verb~0~} (ABC)
+      (7) edge[bend right, above] node{\verb~1~} (6)
+      ;
+    \end{tikzpicture}
+  \end{center}
+\end{oldenumerate}
+
+\newpage
+
+\subsection{General theorem}
+
+\begin{thm}
+  Every NFA $N$ can be converted to a DFA $D$ that recognizes the same language.
+\end{thm}
+
+\begin{prf}
+  Given NFA $N = (Q, \Sigma, \delta, q_0, F)$ define DFA $D = (\mathcal P(Q), \Sigma, \Delta, S_0, \mathscr F)$ where 
+  \begin{itemize}
+    \item $S_0 = \{ q \in Q : \text{$q$ is reachable from $q_0$ via a path $\underbrace{\varepsilon \dots \varepsilon}_{\geq 0}$} \}$, 
+
+    \item $\Delta(S, \sigma) = \{ q \in Q : \text{$q$ is reachable from a state in $S$ via a path $\delta \underbrace{\varepsilon \dots \varepsilon}_{\geq 0}$} \}$, and 
+
+    \item $\mathscr F = \left \{ S \subseteq Q : \text{$S$ contains a state in $F$} \right \}$.
+  \end{itemize}
+  
+  Then $N$ accepts a string $w = w_1 w_2 \dots w_n$ $\Leftrightarrow$ a state in $F$ is reachable via a path $\underbrace{\varepsilon \dots \varepsilon}_{\geq 0} w_1 \underbrace{\varepsilon \dots \varepsilon}_{\geq 0} w_2 \dots w_n \underbrace{\varepsilon \dots \varepsilon}_{\geq 0}$ $\Leftrightarrow$ a state in $\mathscr F$ is reachable from $S_0$ via the path $w_1 w_2 \dots w_n$ $\Leftrightarrow$ $D$ accepts $w$.
+\end{prf}
 
 \end{document}
