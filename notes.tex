@@ -429,7 +429,7 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
       \hline
       $A$ & $A$ & $B$ \\ 
       $B$ & $C$ & $B$ \\ 
-      $C$ & $B$ & $B$.
+      $C$ & $B$ & $B$
     \end{tabular}
   \end{center}
 \end{eg}
@@ -444,7 +444,7 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
       $B$ & $A$ & $C$ \\ 
       $C$ & $B$ & $D$ \\ 
       $D$ & $C$ & $E$ \\ 
-      $E$ & $D$ & $E$.
+      $E$ & $D$ & $E$
     \end{tabular}
   \end{center}
   
@@ -831,6 +831,8 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
   \end{center}
 \end{eg}
 
+\newpage
+
 \subsection{Formal definitions}
 
 \begin{defn}
@@ -861,7 +863,7 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
       $A$ & $\left \{ A \right \}$ & $\left \{ A, B \right \}$ & $\varnothing$ \\ 
       $B$ & $\left \{ C \right \}$ & $\varnothing$ & $\left \{ C \right \}$ \\ 
       $C$ & $\varnothing$ & $\left \{ D \right \}$ & $\varnothing$ \\ 
-      $D$ & $\left \{ D \right \}$ & $\left \{ D \right \}$ & $\varnothing$.
+      $D$ & $\left \{ D \right \}$ & $\left \{ D \right \}$ & $\varnothing$
     \end{tabular}
   \end{center}
   
@@ -871,14 +873,14 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
 \end{eg}
 
 \begin{eg}
-  $(\left \{ A, B, C \right \}, \left \{ \verb~0~, \verb~1~ \right \}, \delta, A, \left \{ B \right \})$ where $\delta$ is defined by the table 
+  Formal description: $(\left \{ A, B, C \right \}, \left \{ \verb~0~, \verb~1~ \right \}, \delta, A, \left \{ B \right \})$ where $\delta$ is defined by the table 
   \begin{center}
     \begin{tabular}{c|ccc}
       & \verb~0~ & \verb~1~ & $\varepsilon$ \\ 
       \hline
       $A$ & $\left \{ C \right \}$ & $\left \{ B \right \}$ & $\varnothing$ \\ 
       $B$ & $\left \{ A \right \}$ & $\varnothing$ & $\varnothing$ \\ 
-      $C$ & $\left \{ B \right \}$ & $\left \{ B, C \right \}$ & $\left \{ A \right \}$. 
+      $C$ & $\left \{ B \right \}$ & $\left \{ B, C \right \}$ & $\left \{ A \right \}$ 
     \end{tabular}
   \end{center}
   
@@ -891,10 +893,9 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
       (A) edge[bend right = 55, below] node{\verb~0~} (C)
       (A) edge[bend right, below] node{\verb~1~} (B)
       (B) edge[bend right, above] node{\verb~0~} (A)
-      (C) edge[bend right = 55, above] node{\verb~0~} (A)
-      (C) edge[above] node{\verb~1~} (B)
+      (C) edge[above] node{\verb~0~,\verb~1~} (B)
       (C) edge[loop right] node{\verb~1~} (C)
-      (C) edge[bend right = 80, above] node{$\varepsilon$} (A)
+      (C) edge[bend right = 55, above] node{$\varepsilon$} (A)
       ;
     \end{tikzpicture}
   \end{center}
