@@ -146,7 +146,7 @@ In words, this machine accepts nonempty strings of all \verb~a~'s or all \verb~b
   \end{minipage}
 
   \begin{center}
-    Alphabet: $\left \{ \verb~0~, \verb~1~, \verb~2~ \right \}$, language: $\left \{ w : 3 \mid \sum w_i \right \}$
+    $\Sigma = \left \{ \verb~0~, \verb~1~, \verb~2~ \right \}$, $\mathcal L = \left \{ w : 3 \mid \sum w_i \right \}$
   \end{center}
 \end{eg}
 
@@ -161,7 +161,7 @@ In words, this machine accepts nonempty strings of all \verb~a~'s or all \verb~b
       ;
     \end{tikzpicture}
 
-    Alphabet: $\left \{ \verb~0~, \verb~1~ \right \}$, language: $\left \{ w : 2 \mid \left | w \right | \right \}$
+    $\Sigma = \left \{ \verb~0~, \verb~1~ \right \}$, $\mathcal L = \left \{ w : 2 \mid \left | w \right | \right \}$
   \end{center}
 \end{eg}
 
@@ -187,7 +187,7 @@ In words, this machine accepts nonempty strings of all \verb~a~'s or all \verb~b
       ;
     \end{tikzpicture}
 
-    Alphabet: $\left \{ \verb~a~, \verb~b~ \right \}$, language: $\left \{ w : w \neq \varepsilon \land w_1 = w_{\left | w \right |  } \right \}$
+    $\Sigma = \left \{ \verb~a~, \verb~b~ \right \}$, $\mathcal L = \left \{ w : w \neq \varepsilon \land w_1 = w_{\left | w \right |  } \right \}$
   \end{center}
 \end{eg}
 
@@ -196,7 +196,7 @@ In words, this machine accepts nonempty strings of all \verb~a~'s or all \verb~b
 We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
 
 \begin{eg}
-  Language: $\varnothing$
+  Design a DFA for $\mathcal L = \varnothing$.
   
   \begin{center}
     \begin{tikzpicture}[> = stealth, node distance = 3em]
@@ -209,7 +209,7 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
 \end{eg}
 
 \begin{eg}
-  Language: $\left \{ w : \text{every odd position is a \verb~1~} \right \}$
+  Design a DFA for $\mathcal L = \left \{ w : \text{every odd position is a \verb~1~} \right \}$.
   
   \begin{center}
     \begin{tikzpicture}[> = stealth, node distance = 3em]
@@ -227,7 +227,7 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
 \end{eg}
 
 \begin{eg}
-  Language: $\left \{ w : \text{$w$ ends in \verb~0~} \right \}$
+  Design a DFA for $\mathcal L = \left \{ w : \text{$w$ ends in \verb~0~} \right \}$.
   
   \begin{center}
     \begin{tikzpicture}[> = stealth, node distance = 3em]
@@ -244,7 +244,7 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
 \end{eg}
 
 \begin{eg}
-  Language: $\left \{ w : \text{$w$ begins with \verb~1~, ends with \verb~0~} \right \}$
+  Design a DFA for $\mathcal L = \left \{ w : \text{$w$ begins with \verb~1~, ends with \verb~0~} \right \}$.
   
   \begin{center}
     \begin{tikzpicture}[> = stealth, node distance = 3em]
@@ -266,7 +266,7 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
 \end{eg}
 
 \begin{eg}
-  Language: $\left \{ w : \left | w \right | \leq 4  \right \}$
+  Design a DFA for $\mathcal L = \left \{ w : \left | w \right | \leq 4  \right \}$.
   
   \begin{center}
     \begin{tikzpicture}[> = stealth, node distance = 3em]
@@ -291,13 +291,13 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
 \newpage
 
 \begin{eg}
-  Language: $\left \{ w : 1000 \mid \left | w \right | \right \}$
+  Design a DFA for $\mathcal L = \left \{ w : 1000 \mid \left | w \right | \right \}$.
   
   In words, each state represents a remainder modulo 1000, and only the 0 state is accepting.
 \end{eg}
 
 \begin{eg}
-  Language: $\left \{ w : \text{$w$ contains \verb~0101~ as a substring} \right \}$
+  Design a DFA for $\mathcal L = \left \{ w : \text{$w$ contains \verb~0101~ as a substring} \right \}$.
   
   \begin{center}
     \begin{tikzpicture}[> = stealth, node distance = 3em]
@@ -322,7 +322,7 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
 \end{eg}
 
 \begin{eg}[Week 1 Discussion]
-  $L = \left \{ w : \left | w \right | > 0 \land \text{$w$ contains only \verb~1~s} \right \}$
+  Design a DFA for $\mathcal L = \left \{ w : \left | w \right | > 0 \land \text{$w$ contains only \verb~1~s} \right \}$.
   
   \begin{center}
     \begin{tikzpicture}[> = stealth, node distance = 3em]
@@ -341,7 +341,7 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
 \end{eg}
 
 \begin{eg}[Week 1 Discussion]
-  $L = \left \{ w : \text{$w$ ends in \verb~1101~} \right \}$
+  Design a DFA for $\mathcal L = \left \{ w : \text{$w$ ends in \verb~1101~} \right \}$.
   
   \begin{center}
     \begin{tikzpicture}[> = stealth, node distance = 3em]
@@ -367,7 +367,7 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
 \end{eg}
 
 \begin{eg}[Week 1 Discussion]
-  $L = \left \{ w : \text{$w$ contains \verb~1101~} \right \}$
+  Design a DFA for $\mathcal L = \left \{ w : \text{$w$ contains \verb~1101~} \right \}$.
   
   \begin{center}
     \begin{tikzpicture}[> = stealth, node distance = 3em]
@@ -408,6 +408,8 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
 \end{defn}
 
 \begin{eg}
+  A formal description of the DFA
+
   \begin{center}
     \begin{tikzpicture}[> = stealth, node distance = 3em]
       \node[initial, initial text=, state, minimum size = 2em] (q1) {$A$};
@@ -423,20 +425,20 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
     \end{tikzpicture}
   \end{center}
   
-  Formal description: $(\left \{ A, B, C \right \}, \left \{ \verb~0~, \verb~1~ \right \}, \delta, A, \left \{ B \right \})$ where $\delta$ is defined by the table
+  is given by $(\left \{ A, B, C \right \}, \left \{ \verb~0~, \verb~1~ \right \}, \delta, A, \left \{ B \right \})$ where $\delta$ is defined by the table
   \begin{center}
     \begin{tabular}{c|cc}
       & \verb~0~ & \verb~1~ \\ 
       \hline
       $A$ & $A$ & $B$ \\ 
       $B$ & $C$ & $B$ \\ 
-      $C$ & $B$ & $B$
+      $C$ & $B$ & $B$.
     \end{tabular}
   \end{center}
 \end{eg}
 
 \begin{eg}
-  Formal description: $(\left \{ A, B, C, D, E \right \}, \left \{ \verb~0~, \verb~1~ \right \}, \delta, C, \left \{ C \right \})$ where $\delta$ is defined by the table 
+  The graph for the DFA $(\left \{ A, B, C, D, E \right \}, \left \{ \verb~0~, \verb~1~ \right \}, \delta, C, \left \{ C \right \})$ where $\delta$ is defined by the table 
   \begin{center}
     \begin{tabular}{c|cc}
       & \verb~0~ & \verb~1~ \\ 
@@ -448,6 +450,8 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
       $E$ & $D$ & $E$
     \end{tabular}
   \end{center}
+  
+  is given by: 
   
   \begin{center}
     \begin{tikzpicture}[> = stealth, node distance = 3em]
@@ -473,7 +477,7 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
 \end{eg}
 
 \begin{eg}
-  Formal description for Example~\ref{eg:1.3.6}: $(\left \{ 0, 1, 2, \dots, 999 \right \}, \left \{ \verb~0~, \verb~1~ \right \}, \delta, 0, \left \{ 0 \right \})$ where $\delta(q, \sigma) = (q + 1) \mod 1000$.
+  A formal description for Example~\ref{eg:1.3.6} is given by $(\left \{ 0, 1, 2, \dots, 999 \right \}, \left \{ \verb~0~, \verb~1~ \right \}, \delta, 0, \left \{ 0 \right \})$ where $\delta(q, \sigma) = (q + 1) \mod 1000$.
 \end{eg}
 
 \newpage
@@ -542,7 +546,7 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
 \newpage
 
 \begin{eg}
-  Output table for Example~\ref{eg:2.1.1}:
+  The output table for Example~\ref{eg:2.1.1} is given by 
   \begin{center}
     \begin{tabular}{ccc}
       Input & Accepting path & Output \\ 
@@ -552,19 +556,17 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
       \verb~1~ & - & reject \\ 
       \verb~010110~ & $AABCDDD$ & accept \\
       \verb~010~ & - & reject \\ 
-      \verb~11~ & $ABCD$ & accept 
+      \verb~11~ & $ABCD$ & accept. 
     \end{tabular}
   \end{center}
   
-  \begin{center}
-    Language: all strings containing \verb~101~ or \verb~11~
-  \end{center}
+  Then the language is the set of all strings containing \verb~101~ or \verb~11~.
 \end{eg}
 
 \subsection{Using shortcuts}
 
 \begin{eg}
-  Language: $\varnothing$
+  Design an NFA for $\mathcal L = \varnothing$.
   
   \begin{center}
     \begin{tikzpicture}[> = stealth, node distance = 3em]
@@ -576,7 +578,7 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
 \end{eg}
 
 \begin{eg}
-  Language: $\left \{ \varepsilon \right \}$
+  Design an NFA for $\mathcal L = \left \{ \varepsilon \right \}$.
 
   \begin{center}
     \begin{tikzpicture}[> = stealth, node distance = 3em]
@@ -588,7 +590,7 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
 \end{eg}
 
 \begin{eg}
-  Language: $\left \{ w : \text{$w$ doesn't contain \verb~1~} \right \}$
+  Design an NFA for $\mathcal L = \left \{ w : \text{$w$ doesn't contain \verb~1~} \right \}$.
 
   \begin{center}
     \begin{tikzpicture}[> = stealth, node distance = 3em]
@@ -601,7 +603,7 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
 \end{eg}
 
 \begin{eg}
-  Language: $\left \{ w : \text{$\left | w \right | \geq 2$ and $w$ starts and ends with \verb~0~} \right \}$
+  Design an NFA for $\mathcal L = \left \{ w : \text{$\left | w \right | \geq 2$ and $w$ starts and ends with \verb~0~} \right \}$.
   
   \begin{center}
     \begin{tikzpicture}[> = stealth, node distance = 3em]
@@ -620,7 +622,7 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
 \subsection{Pattern matching}
 
 \begin{eg}
-  Language: $\left \{ w : \text{conatins \verb~0101~} \right \}$
+  Design an NFA for $\mathcal L = \left \{ w : \text{conatins \verb~0101~} \right \}$.
   
   \begin{center}
     \begin{tikzpicture}[> = stealth, node distance = 3em]
@@ -644,7 +646,7 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
 \newpage
 
 \begin{eg}
-  Language: $\{ w : w = \underbrace{\verb~00...0~}_{\geq 0}\underbrace{\verb~11...1~}_{\geq 0}\underbrace{\verb~00...0~}_{\geq 1} \}$ % >= 0, >= 0, >= 1
+  Design an NFA for $\mathcal L = \{ w : w = \underbrace{\verb~00...0~}_{\geq 0}\underbrace{\verb~11...1~}_{\geq 0}\underbrace{\verb~00...0~}_{\geq 1} \}$.
   
   \begin{center}
     \begin{tikzpicture}[> = stealth, node distance = 3em]
@@ -663,7 +665,7 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
 \end{eg}
 
 \begin{eg}
-  Language: $\left \{ w : \text{$w$ has a \verb~1~ in the 3rd position from the end} \right \}$
+  Design an NFA for $\mathcal L = \left \{ w : \text{$w$ has a \verb~1~ in the 3rd position from the end} \right \}$.
   
   \begin{center}
     \begin{tikzpicture}[> = stealth, node distance = 3em]
@@ -682,7 +684,7 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
 \end{eg}
 
 \begin{eg}[Week 1 Discussion]
-  $L = \left \{ w : \text{$w$ contains \verb~1101~} \right \}$
+  Design an NFA for $\mathcal L = \left \{ w : \text{$w$ contains \verb~1101~} \right \}$.
   
   \begin{center}
     \begin{tikzpicture}[> = stealth, node distance = 3em]
@@ -704,7 +706,7 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
 \end{eg}
 
 \begin{eg}[Week 1 Discussion]
-  $L = \{ w : w = \underbrace{\verb~11...1~}_{\geq 0}\underbrace{\verb~00...0~}_{\geq 1}\underbrace{\verb~11...1~}_{\geq 0} \}$
+  Design an NFA for $\mathcal L = \{ w : w = \underbrace{\verb~11...1~}_{\geq 0}\underbrace{\verb~00...0~}_{\geq 1}\underbrace{\verb~11...1~}_{\geq 0} \}$.
   
   \begin{center}
     \begin{tikzpicture}[> = stealth, node distance = 3em]
@@ -725,7 +727,7 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
 \subsection{Alternatives}
 
 \begin{eg}
-  Language: $\left \{ w : 2 \mid \left | w \right | \lor 3 \mid \left | w \right | \right \}$
+  Design an NFA for $\mathcal L = \left \{ w : 2 \mid \left | w \right | \lor 3 \mid \left | w \right | \right \}$.
   
   \begin{center}
     \begin{tikzpicture}[> = stealth, node distance = 3em]
@@ -771,7 +773,7 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
 \end{eg}
 
 \begin{eg}[Week 1 Discussion]
-  $L = \{ w : \text{$w$ contains \verb~1101~} \lor w = \underbrace{\verb~11...1~}_{\geq 0}\underbrace{\verb~00...0~}_{\geq 1}\underbrace{\verb~11...1~}_{\geq 0} \}$
+  Design an NFA for \\ $\mathcal L = \{ w : \text{$w$ contains \verb~1101~} \lor w = \underbrace{\verb~11...1~}_{\geq 0}\underbrace{\verb~00...0~}_{\geq 1}\underbrace{\verb~11...1~}_{\geq 0} \}$.
   
   \begin{center}
     \begin{tikzpicture}[> = stealth, node distance = 3em]
@@ -787,7 +789,7 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
 \end{eg}
 
 \begin{eg}
-  Language: $\left \{ w : \text{$w$ contains an even number of \verb~0~s, or exactly two \verb~1~s} \right \}$
+  Design an NFA for $\mathcal L = \left \{ w : \text{$w$ contains an even number of \verb~0~s, or exactly two \verb~1~s} \right \}$.
   
   \begin{center}
     \begin{tikzpicture}[> = stealth, node distance = 3em]
@@ -815,7 +817,7 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
 \end{eg}
 
 \begin{eg}
-  Language: $\left \{ w : \text{$w$ does not contain both \verb~0~ and \verb~1~} \right \}$
+  Design an NFA for $\mathcal L = \left \{ w : \text{$w$ does not contain both \verb~0~ and \verb~1~} \right \}$.
   
   \begin{center}
     \begin{tikzpicture}[> = stealth, node distance = 3em]
@@ -852,7 +854,7 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
 \end{defn}
 
 \begin{eg}
-  Formal description for NFA from Example~\ref{eg:2.1.1}: 
+  A formal description for NFA from Example~\ref{eg:2.1.1} is given by 
   \[
     \left ( \left \{ A, B, C, D \right \}, \left \{ \verb~0~, \verb~1~ \right \}, \delta, A, \left \{ D \right \} \right )
   \]
@@ -864,7 +866,7 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
       $A$ & $\left \{ A \right \}$ & $\left \{ A, B \right \}$ & $\varnothing$ \\ 
       $B$ & $\left \{ C \right \}$ & $\varnothing$ & $\left \{ C \right \}$ \\ 
       $C$ & $\varnothing$ & $\left \{ D \right \}$ & $\varnothing$ \\ 
-      $D$ & $\left \{ D \right \}$ & $\left \{ D \right \}$ & $\varnothing$
+      $D$ & $\left \{ D \right \}$ & $\left \{ D \right \}$ & $\varnothing$.
     \end{tabular}
   \end{center}
   
@@ -874,7 +876,7 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
 \end{eg}
 
 \begin{eg}
-  Formal description: $(\left \{ A, B, C \right \}, \left \{ \verb~0~, \verb~1~ \right \}, \delta, A, \left \{ B \right \})$ where $\delta$ is defined by the table 
+  The graph for the DFA $(\left \{ A, B, C \right \}, \left \{ \verb~0~, \verb~1~ \right \}, \delta, A, \left \{ B \right \})$ where $\delta$ is defined by the table 
   \begin{center}
     \begin{tabular}{c|ccc}
       & \verb~0~ & \verb~1~ & $\varepsilon$ \\ 
@@ -884,6 +886,8 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
       $C$ & $\left \{ B \right \}$ & $\left \{ B, C \right \}$ & $\left \{ A \right \}$ 
     \end{tabular}
   \end{center}
+  
+  is given by 
   
   \begin{center}
     \begin{tikzpicture}[> = stealth, node distance = 3em]
@@ -1355,13 +1359,13 @@ We will show that this conclusion is the best possible.
 \begin{prf}
   {\boldmath \bfseries Idea: }\footnote{Here ``E'' stands for ``EVEN'', ``O'' stands for ``ODD'', ``H'' stands for ``HAPPY'', ``W'' stands for ``WORRIED'', and ``S'' stands for ``SAD''.}
   
-  \begin{minipage}{0.45 \textwidth}
+  \begin{minipage}{0.48 \textwidth}
     \begin{center}
       $\mathcal L' = \left \{ w : \text{$w$ has an even number of \verb~0~s} \right \}$.
     \end{center}
   \end{minipage}%
   \hfill%
-  \begin{minipage}{0.45 \textwidth}
+  \begin{minipage}{0.48 \textwidth}
     \begin{center}
       $\mathcal L'' = \left \{ w : \text{every \verb~0~ is immediately followed by a \verb~1~} \right \}$.
     \end{center}
@@ -1432,13 +1436,13 @@ We will show that this conclusion is the best possible.
 
   \begin{minipage}{0.45 \textwidth}
     \begin{center}
-      $\mathcal L = \mathcal L' \cup \mathcal L''$
+      $\mathcal L = \mathcal L' \cup \mathcal L''.$
     \end{center}
   \end{minipage}%
   \hfill%
   \begin{minipage}{0.45 \textwidth}
     \begin{center}
-      $\mathcal L = \mathcal L' \cap \mathcal L''$
+      $\mathcal L = \mathcal L' \cap \mathcal L''.$
     \end{center}
   \end{minipage}
   \vspace{0.5 \baselineskip}
