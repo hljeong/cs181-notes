@@ -1355,12 +1355,13 @@ We will show that this conclusion is the best possible.
 \begin{prf}
   {\boldmath \bfseries Idea: }\footnote{Here ``E'' stands for ``EVEN'', ``O'' stands for ``ODD'', ``H'' stands for ``HAPPY'', ``W'' stands for ``WORRIED'', and ``S'' stands for ``SAD''.}
   
-  \begin{minipage}{0.5 \textwidth}
+  \begin{minipage}{0.45 \textwidth}
     \begin{center}
       $\mathcal L' = \left \{ w : \text{$w$ has an even number of \verb~0~s} \right \}$.
     \end{center}
   \end{minipage}%
-  \begin{minipage}{0.5 \textwidth}
+  \hfill%
+  \begin{minipage}{0.45 \textwidth}
     \begin{center}
       $\mathcal L'' = \left \{ w : \text{every \verb~0~ is immediately followed by a \verb~1~} \right \}$.
     \end{center}
@@ -1429,12 +1430,13 @@ We will show that this conclusion is the best possible.
 
   Note that we can create DFAs for either union or intersection by assigning appropriate accept states: 
 
-  \begin{minipage}{0.5 \textwidth}
+  \begin{minipage}{0.45 \textwidth}
     \begin{center}
       $\mathcal L = \mathcal L' \cup \mathcal L''$
     \end{center}
   \end{minipage}%
-  \begin{minipage}{0.5 \textwidth}
+  \hfill%
+  \begin{minipage}{0.45 \textwidth}
     \begin{center}
       $\mathcal L = \mathcal L' \cap \mathcal L''$
     \end{center}
@@ -1443,55 +1445,59 @@ We will show that this conclusion is the best possible.
 
   \begin{minipage}{0.45 \textwidth}
     \begin{center}
-      \begin{tikzpicture}[> = stealth, node distance = 3em]
-        \node[accepting, initial below, initial text=, state, minimum size = 2em] (eh) {E, H};
-        \node[accepting, right = of eh, state, minimum size = 2em] (ew) {E, W};
-        \node[accepting, right = of ew, state, minimum size = 2em] (es) {E, S};
-        \node[accepting, below = of eh, state, minimum size = 2em] (oh) {O, H};
-        \node[right = of oh, , state, minimum size = 2em] (ow) {O, W};
-        \node[right = of ow, state, minimum size = 2em] (os) {O, S};
-        \draw[->]
-        (eh) edge[loop left] node{\verb~1~} (eh)
-        (eh) edge[] node[above left = 0 and 0.3, sloped]{\verb~0~} (ow)
-        (ew) edge[above] node{\verb~1~} (eh)
-        (ew) edge[] node[above left = 0 and 0.3, sloped]{\verb~0~} (os)
-        (es) edge[loop right] node{\verb~1~} (es)
-        (es) edge[bend right, left] node{\verb~0~} (os)
-        (oh) edge[loop left] node{\verb~1~} (oh)
-        (oh) edge[] node[above left = 0 and 0.3, sloped]{\verb~0~} (ew)
-        (ow) edge[above] node{\verb~1~} (oh)
-        (ow) edge[] node[above left = 0 and 0.3,  sloped]{\verb~0~} (es)
-        (os) edge[loop right] node{\verb~0~} (os)
-        (os) edge[bend right, right] node{\verb~0~} (es)
-        ;
-      \end{tikzpicture}
+      \scalebox{0.8}{
+        \begin{tikzpicture}[> = stealth, node distance = 3em]
+          \node[accepting, initial below, initial text=, state, minimum size = 2em] (eh) {E, H};
+          \node[accepting, right = of eh, state, minimum size = 2em] (ew) {E, W};
+          \node[accepting, right = of ew, state, minimum size = 2em] (es) {E, S};
+          \node[accepting, below = of eh, state, minimum size = 2em] (oh) {O, H};
+          \node[right = of oh, , state, minimum size = 2em] (ow) {O, W};
+          \node[right = of ow, state, minimum size = 2em] (os) {O, S};
+          \draw[->]
+          (eh) edge[loop left] node{\verb~1~} (eh)
+          (eh) edge[] node[above left = 0 and 0.3, sloped]{\verb~0~} (ow)
+          (ew) edge[above] node{\verb~1~} (eh)
+          (ew) edge[] node[above left = 0 and 0.3, sloped]{\verb~0~} (os)
+          (es) edge[loop right] node{\verb~1~} (es)
+          (es) edge[bend right, left] node{\verb~0~} (os)
+          (oh) edge[loop left] node{\verb~1~} (oh)
+          (oh) edge[] node[above left = 0 and 0.3, sloped]{\verb~0~} (ew)
+          (ow) edge[above] node{\verb~1~} (oh)
+          (ow) edge[] node[above left = 0 and 0.3,  sloped]{\verb~0~} (es)
+          (os) edge[loop right] node{\verb~0~} (os)
+          (os) edge[bend right, right] node{\verb~0~} (es)
+          ;
+        \end{tikzpicture}
+      }
     \end{center}
   \end{minipage}%
   \hfill%
   \begin{minipage}{0.45 \textwidth}
     \begin{center}
-      \begin{tikzpicture}[> = stealth, node distance = 3em]
-        \node[accepting, initial below, initial text=, state, minimum size = 2em] (eh) {E, H};
-        \node[right = of eh, state, minimum size = 2em] (ew) {E, W};
-        \node[right = of ew, state, minimum size = 2em] (es) {E, S};
-        \node[below = of eh, state, minimum size = 2em] (oh) {O, H};
-        \node[right = of oh, , state, minimum size = 2em] (ow) {O, W};
-        \node[right = of ow, state, minimum size = 2em] (os) {O, S};
-        \draw[->]
-        (eh) edge[loop left] node{\verb~1~} (eh)
-        (eh) edge[] node[above left = 0 and 0.3, sloped]{\verb~0~} (ow)
-        (ew) edge[above] node{\verb~1~} (eh)
-        (ew) edge[] node[above left = 0 and 0.3, sloped]{\verb~0~} (os)
-        (es) edge[loop right] node{\verb~1~} (es)
-        (es) edge[bend right, left] node{\verb~0~} (os)
-        (oh) edge[loop left] node{\verb~1~} (oh)
-        (oh) edge[] node[above left = 0 and 0.3, sloped]{\verb~0~} (ew)
-        (ow) edge[above] node{\verb~1~} (oh)
-        (ow) edge[] node[above left = 0 and 0.3,  sloped]{\verb~0~} (es)
-        (os) edge[loop right] node{\verb~0~} (os)
-        (os) edge[bend right, right] node{\verb~0~} (es)
-        ;
-      \end{tikzpicture}
+      \scalebox{0.8}{
+        \begin{tikzpicture}[> = stealth, node distance = 3em]
+          \node[accepting, initial below, initial text=, state, minimum size = 2em] (eh) {E, H};
+          \node[right = of eh, state, minimum size = 2em] (ew) {E, W};
+          \node[right = of ew, state, minimum size = 2em] (es) {E, S};
+          \node[below = of eh, state, minimum size = 2em] (oh) {O, H};
+          \node[right = of oh, , state, minimum size = 2em] (ow) {O, W};
+          \node[right = of ow, state, minimum size = 2em] (os) {O, S};
+          \draw[->]
+          (eh) edge[loop left] node{\verb~1~} (eh)
+          (eh) edge[] node[above left = 0 and 0.3, sloped]{\verb~0~} (ow)
+          (ew) edge[above] node{\verb~1~} (eh)
+          (ew) edge[] node[above left = 0 and 0.3, sloped]{\verb~0~} (os)
+          (es) edge[loop right] node{\verb~1~} (es)
+          (es) edge[bend right, left] node{\verb~0~} (os)
+          (oh) edge[loop left] node{\verb~1~} (oh)
+          (oh) edge[] node[above left = 0 and 0.3, sloped]{\verb~0~} (ew)
+          (ow) edge[above] node{\verb~1~} (oh)
+          (ow) edge[] node[above left = 0 and 0.3,  sloped]{\verb~0~} (es)
+          (os) edge[loop right] node{\verb~0~} (os)
+          (os) edge[bend right, right] node{\verb~0~} (es)
+          ;
+        \end{tikzpicture}
+      }
     \end{center}
   \end{minipage}
   \vspace{0.5 \baselineskip}
@@ -1502,7 +1508,7 @@ We will show that this conclusion is the best possible.
   
   Then the DFA for $\mathcal L' \cup \mathcal L''$ is given by $(Q' \times Q'', \Sigma, \delta, (q_0', q_0''), (F' \times Q'') \cup (Q' \times F''))$ where $\delta((q', q''), \sigma) := (\delta'(q', \sigma), \delta''(q'', \delta))$ for all $q' \in Q'$, $q'' \in Q''$, and $\sigma \in \Sigma$.
 
-  Similarly, the DFA for $\mathcal L' \cap \mathcal L''$ is given by $(Q' \times Q'', \Sigma, \delta, (q_0', q_0''), F' \times F'')$ where $\delta((q', q''), \sigma) := (\delta'(q', \sigma), \delta''(q'', \delta))$ for all $q' \in Q'$, $q'' \in Q''$, and $\sigma \in \Sigma$.
+  Similarly, the DFA for $\mathcal L' \cap \mathcal L''$ is given by $(Q' \times Q'', \Sigma, \delta, (q_0', q_0''), F' \times F'')$ where \\ $\delta((q', q''), \sigma) := (\delta'(q', \sigma), \delta''(q'', \delta))$ for all $q' \in Q'$, $q'' \in Q''$, and $\sigma \in \Sigma$.
 \end{prf}
 
 \begin{cor}
