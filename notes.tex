@@ -1,5 +1,6 @@
 \documentclass{notes}
 \usetikzlibrary{shapes, shapes.geometric}
+\usepackage{multirow,bigdelim}
 
 \class{CS 181 (Introduction to Formal Languages and Automata Theory)}
 
@@ -1086,6 +1087,451 @@ Can we convert this to a DFA? Yes.
   \end{itemize}
   
   Then $N$ accepts a string $w = w_1 w_2 \dots w_n$ $\Leftrightarrow$ a state in $F$ is reachable via a path $\underbrace{\varepsilon \dots \varepsilon}_{\geq 0} w_1 \underbrace{\varepsilon \dots \varepsilon}_{\geq 0} w_2 \dots w_n \underbrace{\varepsilon \dots \varepsilon}_{\geq 0}$ $\Leftrightarrow$ a state in $\mathscr F$ is reachable from $S_0$ via the path $w_1 w_2 \dots w_n$ $\Leftrightarrow$ $D$ accepts $w$.
+\end{prf}
+
+\subsection{Blow-up in size}
+
+\begin{defn}
+  A language $\mathcal L$ is called {\boldmath \bfseries regular} iff it is recognized by some NFA or, equivalently, some DFA.
+\end{defn}
+
+{\boldmath \bfseries Last time:} If $\mathcal L$ has an NFA with $k$ states then $\mathcal L$ has a DFA with $2^k$ states.
+
+We will show that this conclusion is the best possible.
+
+\begin{thm}
+  Define $\Sigma = \left \{ \verb~0~, \verb~1~ \right \}$, $k =$ any positive integer, $\mathcal L_k = \left \{ w : \text{$w$ has a \verb~0~ in the $k$-th position from the end} \right \}$.
+  \begin{oldenumerate}[topsep = 0ex, label = {(\alph*)}]
+    \item $\mathcal L_k$ has a NFA of size $k + 1$, and 
+
+    \item $\mathcal L_k$ does not have a DFA of size $< 2^k$.
+  \end{oldenumerate}
+\end{thm}
+
+\begin{prf}
+  \begin{oldenumerate}[topsep = 0ex, label = {(\alph*)}]
+    \item \leavevmode
+    \begin{center}
+      \begin{tikzpicture}[> = stealth, node distance = 3em]
+        \node[initial, initial text=, state, minimum size = 2em] (0) {};
+        \node[right = of 0, state, minimum size = 2em] (1) {};
+        \node[right = of 1, state, minimum size = 2em] (2) {};
+        \node[right = of 2, minimum size = 2em] (3) {$\dots$};
+        \node[right = of 3, state, minimum size = 2em] (4) {};
+        \node[accepting, right = of 4, state, minimum size = 2em] (5) {};
+        \draw[->]
+        (0) edge[loop above] node{\verb~0~,\verb~1~} (0)
+        (0) edge[above] node{\verb~0~} (1)
+        (1) edge[above] node{\verb~0~,\verb~1~} (2)
+        (2) edge[above] node{\verb~0~,\verb~1~} (3)
+        (3) edge[above] node{\verb~0~,\verb~1~} (4)
+        (4) edge[above] node{\verb~0~,\verb~1~} (5)
+        ;
+      \end{tikzpicture}
+    \end{center}
+    
+    \newpage
+    
+    \item Let $D$ be any DFA with $< 2^k$ states.
+
+    \begin{center}
+      \begin{tabular}{cc}
+        Input & End state of $D$ \\ 
+        \hline
+        \verb~000...00~ & $q_i$ \\
+        \verb~000...01~ & $q_j$ \\ 
+        \vdots & \vdots \\
+        \verb~111...11~ & $q_k$
+      \end{tabular}
+    \end{center}
+    
+    If the left hand side of the table enumerates all $2^k$ strings of length $k$, then the right hand side cannot be all distinct due to the pigeonhole principle.
+    Then there exists strings $u \neq v$ of length $k$ such that 
+    \[
+      \text{end state on $u$} = \text{end state on $v$}.
+    \]
+    Say $u_i = 0$, $v_i = 1$.
+    Then 
+    \[
+      \text{end state on $u \underbrace{\verb~00...0~}_{i - 1}$} = \text{end state on $v \underbrace{\verb~00...0~}_{i - 1}$}.
+    \]
+    
+    However, note that the left hand side has a \verb~0~ in the $k$-th position from the end while the right hand side has a \verb~1~ in the $k$-th position from the end.
+
+    Then we conclude that $D$ does not recognize $\mathcal L_k$.
+  \end{oldenumerate}
+\end{prf}
+
+\section{Closure}
+
+\subsection{Complement}
+
+\begin{center}
+  \begin{tikzpicture}[fill=gray]
+    \scope
+      \clip (-2, -2) rectangle (3, 2)
+            (0, 0) circle (1);
+      \fill (-2, -2) rectangle (3, 2);
+    \endscope
+    \scope
+      \clip (-2, -2) rectangle (3, 2)
+            (0, 0) circle (1);
+      \fill (0, 0) circle (1);
+    \endscope
+    \draw (0, 0) circle (1) (0, 0) node [text = black] {$\mathcal L$}
+          (2, 0) node [text = white] {$\overline{\mathcal L}$}
+          (-2, -2) rectangle (3, 2) node [text = black, above] {All strings};
+  \end{tikzpicture}
+\end{center}
+
+\begin{defn}
+  The {\boldmath \bfseries complement}  of the language $\mathcal L$ is 
+  \[
+    \overline{\mathcal L} = \left \{ w : w \not \in \mathcal L \right \}.
+  \]
+\end{defn}
+
+\begin{thm}
+  If $\mathcal L$ is regular then $\overline{\mathcal L}$ is regular.
+  In other words, regular languages are closed under complement.
+\end{thm}
+
+\begin{prf}
+  Swap the accept and reject states of the DFA for $\mathcal L$ to get a DFA for $\overline{\mathcal L}$.
+
+  Formally, if DFA $(Q, \Sigma, \delta, q_0, F)$ recognizes $\mathcal L$ then DFA $(Q, \Sigma, \delta, q_0, Q \setminus F)$ recognizes $\overline{\mathcal L}$.
+\end{prf}
+
+\begin{eg}
+  $\mathcal L = \left \{ w : w \neq \verb~0~, \verb~1~ \right \}$.
+  
+  Note that $\overline{\mathcal L} = \left \{ w : w = \verb~0~ \lor w = \verb~1~ \right \}$.
+  The DFA for $\overline{\mathcal L}$ is given by: 
+
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 3em]
+      \node[initial, initial text=, state, minimum size = 2em] (0) {};
+      \node[right = of 0, accepting, state, minimum size = 2em] (1) {};
+      \node[right = of 1, state, minimum size = 2em] (2) {};
+      \draw[->]
+      (0) edge[above] node{\verb~0~,\verb~1~} (1)
+      (1) edge[above] node{\verb~0~,\verb~1~} (2)
+      (2) edge[loop right] node{\verb~0~,\verb~1~} (2)
+      ;
+    \end{tikzpicture}
+  \end{center}
+  
+  Then the DFA for $\mathcal L$ is given by 
+
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 3em]
+      \node[accepting, initial, initial text=, state, minimum size = 2em] (0) {};
+      \node[right = of 0, state, minimum size = 2em] (1) {};
+      \node[accepting, right = of 1, state, minimum size = 2em] (2) {};
+      \draw[->]
+      (0) edge[above] node{\verb~0~,\verb~1~} (1)
+      (1) edge[above] node{\verb~0~,\verb~1~} (2)
+      (2) edge[loop right] node{\verb~0~,\verb~1~} (2)
+      ;
+    \end{tikzpicture}
+  \end{center}
+\end{eg}
+
+\begin{eg}
+  $\mathcal L = \left \{ w : \text{$w$ does not contain \verb~0101~} \right \}$.
+  
+  Note that $\overline{\mathcal L} = \left \{ w : \text{$w$ contains \verb~0101~} \right \}$.
+  The DFA for $\overline{\mathcal L}$ is given by: 
+
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 3em]
+      \node[initial, initial text=, state, minimum size = 2em] (0) {};
+      \node[right = of 0, state, minimum size = 2em] (1) {};
+      \node[right = of 1, state, minimum size = 2em] (2) {};
+      \node[right = of 2, state, minimum size = 2em] (3) {};
+      \node[accepting, right = of 3, state, minimum size = 2em] (4) {};
+      \draw[->]
+      (0) edge[loop below] node{\verb~1~} (0)
+      (0) edge[above] node{\verb~0~} (1)
+      (1) edge[loop below] node{\verb~0~} (1)
+      (1) edge[above] node{\verb~1~} (2)
+      (2) edge[above] node{\verb~0~} (3)
+      (2) edge[bend right, above] node{\verb~1~} (0)
+      (3) edge[above] node{\verb~1~} (4)
+      (3) edge[bend right, above] node{\verb~0~} (1)
+      (4) edge[loop below] node{\verb~0~,\verb~1~} (4)
+      ;
+    \end{tikzpicture}
+  \end{center}
+  
+  Then the DFA for $\mathcal L$ is given by 
+
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 3em]
+      \node[accepting, initial, initial text=, state, minimum size = 2em] (0) {};
+      \node[accepting, right = of 0, state, minimum size = 2em] (1) {};
+      \node[accepting, right = of 1, state, minimum size = 2em] (2) {};
+      \node[accepting, right = of 2, state, minimum size = 2em] (3) {};
+      \node[right = of 3, state, minimum size = 2em] (4) {};
+      \draw[->]
+      (0) edge[loop below] node{\verb~1~} (0)
+      (0) edge[above] node{\verb~0~} (1)
+      (1) edge[loop below] node{\verb~0~} (1)
+      (1) edge[above] node{\verb~1~} (2)
+      (2) edge[above] node{\verb~0~} (3)
+      (2) edge[bend right, above] node{\verb~1~} (0)
+      (3) edge[above] node{\verb~1~} (4)
+      (3) edge[bend right, above] node{\verb~0~} (1)
+      (4) edge[loop below] node{\verb~0~,\verb~1~} (4)
+      ;
+    \end{tikzpicture}
+  \end{center}
+\end{eg}
+
+\subsection{Union and intersection}
+
+\begin{minipage}{0.5 \textwidth}
+  \begin{center}
+    \begin{tikzpicture}[fill=gray]
+      \fill (0, 0) circle (1.5);
+      \fill (1.5, 0) circle (1.5);
+      \draw (0, 0) circle (1.5) (-1.5, 1.5) node[text = black]{$\mathcal L'$}
+            (1.5, 0) circle (1.5) (3, 1.5) node[text = black] {$\mathcal L''$}
+            (0.75, 0) node[text = white]{$\mathcal L' \cup \mathcal L''$};
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}%
+\begin{minipage}{0.5 \textwidth}
+  \begin{center}
+    \begin{tikzpicture}[fill=gray]
+      \scope
+        \clip (-2, -2) rectangle (3, 2)
+              (1.5, 0) circle (1.5)
+              (0, 0) circle (1.5);
+        \fill (0, 0) circle (1.5);
+      \endscope
+      \draw (0, 0) circle (1.5) (-1.5, 1.5) node[text = black]{$\mathcal L'$}
+            (1.5, 0) circle (1.5) (3, 1.5) node[text = black] {$\mathcal L''$}
+            (0.75, 0) node[text = white]{$\mathcal L' \cap \mathcal L''$};
+    \end{tikzpicture}
+  \end{center}
+\end{minipage}
+
+\begin{defn}
+  The {\boldmath \bfseries union} of languages $\mathcal L'$ and $\mathcal L''$ is 
+  \[
+    \mathcal L' \cup \mathcal L'' = \left \{ w : w \in \mathcal L' \lor w \in \mathcal L'' \right \}.
+  \]
+\end{defn}
+
+\begin{defn}
+  The {\boldmath \bfseries intersection} of languages $\mathcal L'$ and $\mathcal L''$ is 
+  \[
+    \mathcal L' \cap \mathcal L'' = \left \{ w : w \in \mathcal L' \land w \in \mathcal L'' \right \}.
+  \]
+\end{defn}
+
+\begin{thm}
+  If $\mathcal L'$, $\mathcal L''$ are regular, then so are 
+  \begin{oldenumerate}[topsep = 0ex, label = {(\alph*)}]
+    \item $\mathcal L' \cup \mathcal L''$ and 
+
+    \item $\mathcal L' \cap \mathcal L''$.
+  \end{oldenumerate}
+  
+  In other words, regular lanaguages are closed under union and intersection.
+\end{thm}
+
+\begin{prf}
+  \begin{oldenumerate}[topsep = 0ex, label = {(\alph*)}]
+    \item Connect an initial state to the initial states for the NFAs for $\mathcal L'$ and $\mathcal L''$ via $\varepsilon$.
+      
+    \item If $\mathcal L'$ and $\mathcal L''$ are regular then $\overline{\mathcal L'}$ and $\overline{\mathcal L''}$ are regular.
+    Then $\overline{\mathcal L'} \cup \overline{\mathcal L''}$ is regular.
+    Then, by De Morgan's law, $\mathcal L' \cap \mathcal L'' = \overline{\overline{\mathcal L'} \cup \overline{\mathcal L''}}$ is regular.
+  \end{oldenumerate}
+\end{prf}
+
+\begin{prf}
+  {\boldmath \bfseries Idea: }\footnote{Here ``E'' stands for ``EVEN'', ``O'' stands for ``ODD'', ``H'' stands for ``HAPPY'', ``W'' stands for ``WORRIED'', and ``S'' stands for ``SAD''.}
+  
+  \begin{minipage}{0.5 \textwidth}
+    \begin{center}
+      $\mathcal L' = \left \{ w : \text{$w$ has an even number of \verb~0~s} \right \}$.
+    \end{center}
+  \end{minipage}%
+  \begin{minipage}{0.5 \textwidth}
+    \begin{center}
+      $\mathcal L'' = \left \{ w : \text{every \verb~0~ is immediately followed by a \verb~1~} \right \}$.
+    \end{center}
+  \end{minipage}
+  \vspace{0.5 \baselineskip}
+
+  \begin{minipage}{0.45 \textwidth}
+    \begin{center}
+      \begin{tikzpicture}[> = stealth, node distance = 3em]
+        \node[accepting, initial, initial text=, state, minimum size = 2em] (e) {E};
+        \node[below = of e, state, minimum size = 2em] (o) {O};
+        \draw[->]
+        (e) edge[bend right, left] node{\verb~0~} (o)
+        (e) edge[loop right] node{\verb~1~} (e)
+        (o) edge[bend right, right] node{\verb~0~} (e)
+        (o) edge[loop right] node{\verb~1~} (o)
+        ;
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}%
+  \hfill%
+  \begin{minipage}{0.45 \textwidth}
+    \begin{center}
+      \begin{tikzpicture}[> = stealth, node distance = 3em]
+        \node[accepting, initial, initial text=, state, minimum size = 2em] (h) {H};
+        \node[right = of h, state, minimum size = 2em] (w) {W};
+        \node[right = of w, state, minimum size = 2em] (s) {S};
+        \draw[->]
+        (h) edge[loop above] node{\verb~1~} (h)
+        (h) edge[bend right, below] node{\verb~0~} (w)
+        (w) edge[bend right, above] node{\verb~1~} (h)
+        (w) edge[above] node{\verb~0~} (s)
+        (s) edge[loop above] node{\verb~0~,\verb~1~} (s)
+        ;
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+  \vspace{0.5 \baselineskip}
+  
+  Consider the construction: 
+
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 3em]
+      \node[initial below, initial text=, state, minimum size = 2em] (eh) {E, H};
+      \node[right = of eh, state, minimum size = 2em] (ew) {E, W};
+      \node[right = of ew, state, minimum size = 2em] (es) {E, S};
+      \node[below = of eh, state, minimum size = 2em] (oh) {O, H};
+      \node[right = of oh, , state, minimum size = 2em] (ow) {O, W};
+      \node[right = of ow, state, minimum size = 2em] (os) {O, S};
+      \draw[->]
+      (eh) edge[loop left] node{\verb~1~} (eh)
+      (eh) edge[] node[above left = 0 and 0.3, sloped]{\verb~0~} (ow)
+      (ew) edge[above] node{\verb~1~} (eh)
+      (ew) edge[] node[above left = 0 and 0.3, sloped]{\verb~0~} (os)
+      (es) edge[loop right] node{\verb~1~} (es)
+      (es) edge[bend right, left] node{\verb~0~} (os)
+      (oh) edge[loop left] node{\verb~1~} (oh)
+      (oh) edge[] node[above left = 0 and 0.3, sloped]{\verb~0~} (ew)
+      (ow) edge[above] node{\verb~1~} (oh)
+      (ow) edge[] node[above left = 0 and 0.3,  sloped]{\verb~0~} (es)
+      (os) edge[loop right] node{\verb~0~} (os)
+      (os) edge[bend right, right] node{\verb~0~} (es)
+      ;
+    \end{tikzpicture}
+  \end{center}
+
+  Note that we can create DFAs for either union or intersection by assigning appropriate accept states: 
+
+  \begin{minipage}{0.5 \textwidth}
+    \begin{center}
+      $\mathcal L = \mathcal L' \cup \mathcal L''$
+    \end{center}
+  \end{minipage}%
+  \begin{minipage}{0.5 \textwidth}
+    \begin{center}
+      $\mathcal L = \mathcal L' \cap \mathcal L''$
+    \end{center}
+  \end{minipage}
+  \vspace{0.5 \baselineskip}
+
+  \begin{minipage}{0.45 \textwidth}
+    \begin{center}
+      \begin{tikzpicture}[> = stealth, node distance = 3em]
+        \node[accepting, initial below, initial text=, state, minimum size = 2em] (eh) {E, H};
+        \node[accepting, right = of eh, state, minimum size = 2em] (ew) {E, W};
+        \node[accepting, right = of ew, state, minimum size = 2em] (es) {E, S};
+        \node[accepting, below = of eh, state, minimum size = 2em] (oh) {O, H};
+        \node[right = of oh, , state, minimum size = 2em] (ow) {O, W};
+        \node[right = of ow, state, minimum size = 2em] (os) {O, S};
+        \draw[->]
+        (eh) edge[loop left] node{\verb~1~} (eh)
+        (eh) edge[] node[above left = 0 and 0.3, sloped]{\verb~0~} (ow)
+        (ew) edge[above] node{\verb~1~} (eh)
+        (ew) edge[] node[above left = 0 and 0.3, sloped]{\verb~0~} (os)
+        (es) edge[loop right] node{\verb~1~} (es)
+        (es) edge[bend right, left] node{\verb~0~} (os)
+        (oh) edge[loop left] node{\verb~1~} (oh)
+        (oh) edge[] node[above left = 0 and 0.3, sloped]{\verb~0~} (ew)
+        (ow) edge[above] node{\verb~1~} (oh)
+        (ow) edge[] node[above left = 0 and 0.3,  sloped]{\verb~0~} (es)
+        (os) edge[loop right] node{\verb~0~} (os)
+        (os) edge[bend right, right] node{\verb~0~} (es)
+        ;
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}%
+  \hfill%
+  \begin{minipage}{0.45 \textwidth}
+    \begin{center}
+      \begin{tikzpicture}[> = stealth, node distance = 3em]
+        \node[accepting, initial below, initial text=, state, minimum size = 2em] (eh) {E, H};
+        \node[right = of eh, state, minimum size = 2em] (ew) {E, W};
+        \node[right = of ew, state, minimum size = 2em] (es) {E, S};
+        \node[below = of eh, state, minimum size = 2em] (oh) {O, H};
+        \node[right = of oh, , state, minimum size = 2em] (ow) {O, W};
+        \node[right = of ow, state, minimum size = 2em] (os) {O, S};
+        \draw[->]
+        (eh) edge[loop left] node{\verb~1~} (eh)
+        (eh) edge[] node[above left = 0 and 0.3, sloped]{\verb~0~} (ow)
+        (ew) edge[above] node{\verb~1~} (eh)
+        (ew) edge[] node[above left = 0 and 0.3, sloped]{\verb~0~} (os)
+        (es) edge[loop right] node{\verb~1~} (es)
+        (es) edge[bend right, left] node{\verb~0~} (os)
+        (oh) edge[loop left] node{\verb~1~} (oh)
+        (oh) edge[] node[above left = 0 and 0.3, sloped]{\verb~0~} (ew)
+        (ow) edge[above] node{\verb~1~} (oh)
+        (ow) edge[] node[above left = 0 and 0.3,  sloped]{\verb~0~} (es)
+        (os) edge[loop right] node{\verb~0~} (os)
+        (os) edge[bend right, right] node{\verb~0~} (es)
+        ;
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}
+  \vspace{0.5 \baselineskip}
+  
+  Note that this construction is better than that in the first proof since the number of nodes in this construction is $\mathcal O(n^2)$ while that in the first proof is $\mathcal O(4^n)$.
+  
+  Formally, write the DFA for $\mathcal L'$ as $(Q', \Sigma, \delta', q_0', F')$ and that for $\mathcal L''$ as $(Q'', \Sigma, \delta'', q_0'', F'')$.
+  
+  Then the DFA for $\mathcal L' \cup \mathcal L''$ is given by $(Q' \times Q'', \Sigma, \delta, (q_0', q_0''), (F' \times Q'') \cup (Q' \times F''))$ where $\delta((q', q''), \sigma) := (\delta'(q', \sigma), \delta''(q'', \delta))$ for all $q' \in Q'$, $q'' \in Q''$, and $\sigma \in \Sigma$.
+
+  Similarly, the DFA for $\mathcal L' \cap \mathcal L''$ is given by $(Q' \times Q'', \Sigma, \delta, (q_0', q_0''), F' \times F'')$ where $\delta((q', q''), \sigma) := (\delta'(q', \sigma), \delta''(q'', \delta))$ for all $q' \in Q'$, $q'' \in Q''$, and $\sigma \in \Sigma$.
+\end{prf}
+
+\begin{cor}
+  If $\mathcal L_1, \mathcal L_2, \dots, \mathcal L_n$ are regular, so are 
+  \begin{itemize}
+    \item $\mathcal L_1 \cup \mathcal L_2 \cup \cdots \cup \mathcal L_n$ and 
+
+    \item $\mathcal L_1 \cap \mathcal L_2 \cap \cdots \cap \mathcal L_n$.
+  \end{itemize}
+\end{cor}
+
+\begin{prf}
+  Induction.
+\end{prf}
+
+\begin{cor}
+  Every finite language is regular.
+\end{cor}
+
+\begin{prf}
+  Let $\mathcal L$ be finite.
+  Then we can write 
+  \[
+    \mathcal L = \bigcup_{w \in \mathcal L} \left \{ w \right \}, 
+  \]
+  that is, as a union of singleton languages.
+
+  Note that an NFA can be easily found for any singleton language, that is, singleton languages are regular.
+  Then $\mathcal L$ is regular by Corollary~\ref{cor:4.2.4}.
 \end{prf}
 
 \end{document}
