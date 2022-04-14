@@ -1544,4 +1544,297 @@ We will show that this conclusion is the best possible.
   Then $\mathcal L$ is regular by Corollary~\ref{cor:4.2.4}.
 \end{prf}
 
+\newpage
+
+\subsection{Difference}
+
+\begin{center}
+  $\mathcal L' \setminus \mathcal L'' = \left \{ w \in \mathcal L' : w \not \in \mathcal L'' \right \}$
+\end{center}
+
+\begin{center}
+  \begin{tikzpicture}[fill=gray]
+    \scope
+      \clip (-2, -2) rectangle (3, 2)
+            (1.5, 0) circle (1.5);
+      \fill (0, 0) circle (1.5);
+    \endscope
+    \draw (0, 0) circle (1.5) (-1.5, 1.5) node[text = black]{$\mathcal L'$}
+          (1.5, 0) circle (1.5) (3, 1.5) node[text = black] {$\mathcal L''$}
+          (-0.75, 0) node[text = white]{$\mathcal L' \setminus \mathcal L''$};
+  \end{tikzpicture}
+\end{center}
+
+\begin{thm}
+  If $\mathcal L'$ and $\mathcal L''$ are regular then so is $\mathcal L' \setminus \mathcal L''$.
+\end{thm}
+
+\begin{prf}
+  $\mathcal L' \setminus \mathcal L'' = \mathcal L' \cap \overline{\mathcal L''}$.
+\end{prf}
+
+\begin{cor}
+  If $\mathcal A$, $\mathcal S$ are regular, then so is $\mathcal L = \left \{ w \in \mathcal A : \text{no substring of $w$ is in $\mathcal S$} \right \}$.
+\end{cor}
+
+\begin{prf}
+  Let $\mathcal S' = \left \{ w : \text{some substring of $w$ is in $\mathcal S$} \right \}$.
+  Note that $\mathcal S'$ is a superset of $\mathcal S$.
+  An NFA for $\mathcal S'$ is given by: 
+  
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 3em]
+      \node[initial, initial text=, state, minimum size = 2em] (x) {};
+      \node[right = of x, style = {draw, rectangle, minimum width = 4em, minimum height = 2em}, minimum size = 2em] (nfa) {NFA for $\mathcal S$};
+      \draw[->]
+      (x) edge[loop above] node{\verb~0~,\verb~1~} (x)
+      (x) edge[above] node{$\varepsilon$} (nfa)
+      (nfa) edge[loop above] node{\verb~0~,\verb~1~} (nfa)
+      ;
+    \end{tikzpicture}
+  \end{center}
+  where the self loop on NFA for $\mathcal S$ refers to self loops on the accept states of the NFA.
+  
+  Since $\mathcal S'$ is regular by construction, $\mathcal L = \mathcal A \setminus \mathcal S'$ is regular.
+\end{prf}
+
+\subsection{Concatenation}
+
+\begin{defn}
+  The {\boldmath \bfseries concatenation} of two languages $\mathcal L'$ and $\mathcal L''$, is given by 
+  \[
+    \mathcal L' \mathcal L'' = \left \{ w' w'' : w' \in \mathcal L' \quad \land \quad w'' \in \mathcal L'' \right \}.
+  \]
+  
+  This is sometimes denoted as $\mathcal L' \circ \mathcal L''$.
+\end{defn}
+
+\begin{eg}
+  Given $\mathcal L' = \left \{ \verb~000~, \verb~111~ \right \}$ and $\mathcal L'' = \left \{ \verb~10~, \verb~010~ \right \}$, we have 
+  \[
+    \mathcal L' \mathcal L'' = \left \{ \verb~00010~, \verb~000010~, \verb~11110~, \verb~111010~ \right \}.
+  \]
+\end{eg}
+
+{\boldmath \bfseries Observation: } $\mathcal L \varnothing \varnothing \mathcal L = \varnothing$ and $\mathcal L \left \{ \varepsilon \right \} = \left \{ \varepsilon \right \} \mathcal L = \mathcal L$ for any language $\mathcal L$.
+
+\begin{thm}
+  If $\mathcal L'$ and $\mathcal L''$ are regular then so is $\mathcal L' \mathcal L''.$
+\end{thm}
+
+\begin{prf}
+  An NFA for $\mathcal L' \mathcal L''$ is given by: 
+  
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 3em]
+      \node[initial, initial text=, style = {draw, rectangle, minimum width = 4em, minimum height = 2em}, minimum size = 2em] (nfa1) {NFA for $\mathcal L'$};
+      \node[right = of nfa1, style = {draw, rectangle, minimum width = 4em, minimum height = 2em}, minimum size = 2em] (nfa2) {NFA for $\mathcal L''$};
+      \draw[->]
+      (nfa1) edge[above] node{$\varepsilon$} (nfa2)
+      ;
+    \end{tikzpicture}
+  \end{center}
+  where the $\varepsilon$ transition from the first NFA to the second NFA refer to those from the accept states in the first NFA to the start state of the second and all accept states in the first NFA are converted to reject states.
+
+  Formally, write the first NFA as $(Q', \Sigma, \delta', q'_0, F')$ and the second NFA as $(Q'', \Sigma, \delta', q''_0, F'')$.
+  Then we 
+  \begin{itemize}
+    \item make every state in $F'$ a reject state and
+
+    \item add $\varepsilon$ transitions from every state in $F'$ to $q''_0$.
+  \end{itemize}
+\end{prf}
+
+\begin{eg}
+  An NFA for $\left \{ u w : \text{$\left | u \right |$ is odd, $v$ contains at least two \verb~0~s} \right \}$ is given by: 
+
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 3em]
+      \node[initial, initial text=, state, minimum size = 2em] (0) {};
+      \node[right = of 0, state, minimum size = 2em] (1) {};
+      \node[right = of 1, state, minimum size = 2em] (2) {};
+      \node[right = of 2, state, minimum size = 2em] (3) {};
+      \node[accepting, right = of 3, state, minimum size = 2em] (4) {};
+      \draw[->]
+      (0) edge[bend right, below] node{\verb~0~,\verb~1~} (1)
+      (1) edge[bend right, above] node{\verb~0~,\verb~1~} (0)
+      (1) edge[above] node{$\varepsilon$} (2)
+      (2) edge[loop above] node{\verb~1~} (2)
+      (2) edge[above] node{\verb~0~} (3)
+      (3) edge[loop above] node{\verb~1~} (3)
+      (3) edge[above] node{\verb~0~} (4)
+      (4) edge[loop above] node{\verb~0~,\verb~1~} (4)
+      ;
+    \end{tikzpicture}
+  \end{center}
+\end{eg}
+
+\subsection{Kleene star}
+
+\begin{defn}
+  The {\boldmath \bfseries Kleene star} of a language $\mathcal L$ is given by 
+  \[
+    \mathcal L^* = \left \{ w : \text{$w$ is the concatenation of zero or more strings in $\mathcal L$} \right \}.
+  \]
+\end{defn}
+
+\begin{eg}
+  The Kleene star of $\mathcal L = \left \{ \verb~a~, \verb~b~ \right \}$ is given by 
+  \[
+    \mathcal L^* = \left \{ \varepsilon, \verb~a~, \verb~b~, \verb~aa~, \verb~ab~, \verb~ba~, \verb~bb~, \dots \right \}.
+  \]
+  
+  In words, $\left \{ \verb~a~, \verb~b~ \right \}^* = $ the set of all strings over the alphabet $\left \{ \verb~a~, \verb~b~ \right \}$.
+\end{eg}
+
+{\boldmath \bfseries Observation: } $\varnothing^* = \left \{ \varepsilon \right \}^* = \left \{ \varepsilon \right \}$.
+
+{\boldmath \bfseries Observation: } $\mathcal L^*$ is finite if and only if $\mathcal L = \varnothing$ or $\mathcal L = \left \{ \varepsilon \right \}$.
+
+\begin{thm}
+  If $\mathcal L$ is regular then so is $\mathcal L^*$.
+\end{thm}
+
+\begin{prf}
+  {\color{red} (Incorrect)} Note that 
+  \[
+    \mathcal L^* = \left \{ \varepsilon \right \} \cup \mathcal L \cup \mathcal L \mathcal L \cup \cdots \cup \underbrace{\mathcal L \cdots \mathcal L}_{n} \cup \cdots, 
+  \]
+  and since the union of regular languages is regular, $\mathcal L^*$ is regular.
+  
+  However, note that the theorem that the union of regular languages is regular does not work for an infinite number of languages and therefore this proof fails.
+\end{prf}
+
+\begin{prf}
+  {\color{red} (Incorrect)} An NFA for $\mathcal L^*$ is given by 
+
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 3em]
+      \node[initial, initial text=, style = {draw, rectangle, minimum width = 4em, minimum height = 2em}, minimum size = 2em] (nfa) {NFA for $\mathcal L$};
+      \draw[->]
+      (nfa) edge[loop above] node{$\varepsilon$} (nfa)
+      ;
+    \end{tikzpicture}
+  \end{center}
+  where the self loop on the NFA refers to $\varepsilon$ transitions from the accept states of the NFA to the start state and the start state is converted to an accept state.
+  
+  However, this construction fails if $q_0$ is originally rejecting \textit{and} part of a cycle.
+\end{prf}
+
+\begin{prf}
+  {\color{green} (Correct)} An NFA for $\mathcal L^*$ is given by 
+
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 3em]
+      \node[accepting, initial, initial text=, state, minimum size = 2em] (s) {};
+      \node[right = of s, style = {draw, rectangle, minimum width = 4em, minimum height = 2em}, minimum size = 2em] (nfa) {NFA for $\mathcal L$};
+      \draw[->]
+      (s) edge[above] node{$\varepsilon$} (nfa)
+      (nfa) edge[loop above] node{$\varepsilon$} (nfa)
+      ;
+    \end{tikzpicture}
+  \end{center}
+  where the self loop on the NFA refers to $\varepsilon$ transitions from the accept states of the NFA to the start state.
+  
+  In words, add $\varepsilon$-transitions from every state in $F$ to $q_0$ and add a new start state $q'_0$ and link it with an $\varepsilon$-arrow to $q_0$.
+\end{prf}
+
+\subsection{Reverse}
+
+\begin{defn}
+  For a string $w = w_1 w_2 \dots w_n$, its {\boldmath \bfseries reverse} is given by 
+  \[
+    w^R = w_n w_{n - 1} \dots w_2 w_1.
+  \]
+\end{defn}
+
+\begin{defn}
+  The {\boldmath \bfseries reverse} of a language $\mathcal L$ is given by
+  \[
+    \mathcal L^R = \left \{ w^R : w \in \mathcal L \right \}.
+  \]
+\end{defn}
+
+\begin{eg}
+  $\left \{ \verb~011~, \verb~abc~ \right \}^R = \left \{ \verb~110~, \verb~cba~ \right \}$.
+\end{eg}
+
+\begin{thm}
+  If $\mathcal L$ is regular then so is $\mathcal L^R$.
+\end{thm}
+
+\begin{prf}
+  Consider an NFA $(Q, \Sigma, \delta, q_0, F)$ for $\mathcal L$.
+  Reverse all the transitions, create a new start state, and link it with $\varepsilon$-transitions to states in $F$.
+  Make $q_0$ the only accept state.
+\end{prf}
+
+\subsection{Prefix and suffix}
+
+\begin{defn}
+  The {\boldmath \bfseries prefix language} of a language $\mathcal L$ is given by 
+  \[
+    \operatorname{prefix}(\mathcal L) = \left \{ u : u v \in \mathcal L \text{ for some string $v$, possibly empty} \right \}.
+  \]
+\end{defn}
+
+\begin{defn}
+  The {\boldmath \bfseries suffix language} of a language $\mathcal L$ is given by 
+  \[
+    \operatorname{suffix}(\mathcal L) = \left \{ v : u v \in \mathcal L \text{ for some string $u$, possibly empty} \right \}.
+  \]
+\end{defn}
+
+\begin{thm}
+  If $\mathcal L$ is regular then so is $\operatorname{prefix}(\mathcal L)$.
+\end{thm}
+
+\begin{prf}
+  Given a DFA $(Q, \Sigma, \delta, q_0, F)$ for $\mathcal L$, a DFA for $\operatorname{prefix}(\mathcal L)$ is given by $(Q, \Sigma, \delta, q_0, F')$ where 
+  \[
+    F' = \left \{ q \in Q : \text{there exists a path, possibly empty, from $q$ to a state in $F$} \right \}
+  \]
+\end{prf}
+
+\begin{cor}
+  If $\mathcal L$ is regular then so is $\operatorname{suffix}(\mathcal L)$.
+\end{cor}
+
+\begin{prf}
+  $\operatorname{suffix}(\mathcal L) = (\operatorname{prefix}(\mathcal L^R))^R$.
+\end{prf}
+
+\subsection{Substring}
+
+\begin{defn}
+  The {\boldmath \bfseries substring language} of a language $\mathcal L$ is given by 
+  \[
+    \operatorname{substring}(\mathcal L) = \left \{ v : uvw \in \mathcal L \text{ for some strings $u$, $w$} \right \}.
+  \]
+\end{defn}
+
+\begin{thm}
+  If $\mathcal L$ is regular then so is $\operatorname{substring}(\mathcal L)$.
+\end{thm}
+
+\begin{prf}
+  $\operatorname{substring}(\mathcal L) = \operatorname{suffix}(\operatorname{prefix}(\mathcal L))$.
+\end{prf}
+
+\subsection{Shuffle}
+
+\begin{defn}
+  The {\boldmath \bfseries shuffle language} of two languages $\mathcal L'$ and $\mathcal L''$ is given by 
+  \[
+    \left \{ a_1 b_1 a_2 b_2 \dots a_k b_k : a_1, \dots, a_k \text{ strings}, b_1, \dots, b_k \text{ strings}, a_1 \cdots a_k \in \mathcal L', b_1 \cdots b_k \in \mathcal L'' \right \}.
+  \]
+\end{defn}
+
+\begin{prf}
+  Given an NFA $(Q', \Sigma, \delta', q'_0, F')$ for $\mathcal L'$ and an NFA $(Q'', \Sigma, \delta'', q''_0, F'')$ for $\mathcal L''$, an NFA for $\mathcal L' \diamond \mathcal L''$ is given by $(Q' \times Q'', \Sigma, \Delta, (q'_0, q''_0), F' \times F'')$ where 
+  \[
+    \Delta((q', q''), \sigma) = \left ( \delta'(q', \sigma) \times \left \{ q'' \right \} \right ) \cup \left ( \left \{ q' \right \} \times \delta''(q'', \sigma) \right ).
+  \]
+\end{prf}
+
 \end{document}
