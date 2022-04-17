@@ -1837,4 +1837,294 @@ We will show that this conclusion is the best possible.
   \]
 \end{prf}
 
+\section{Regular expressions}
+
+\subsection{Basic notions}
+
+\begin{defn}
+  A regular expression is 
+  \begin{olditemize}[topsep = 0ex, itemsep = 0ex]
+    \item $\varnothing$, 
+
+    \item $\left \{ \varepsilon \right \}$, 
+
+    \item $\left \{ \sigma \right \}$ for $\sigma \in \Sigma$, 
+
+    \item $(R^*)$, % BEGIN BRACE
+
+    \item $(R_1 \cup R_2)$, and
+
+    \item $(R_1 \circ R_2)$. % END BRACE - where $R$, $R_1$, $R_2$ are regular expressions
+  \end{olditemize}
+\end{defn}
+
+\begin{eg}
+  $\left ( \left ( \left ( \left \{ \verb~0~ \right \} \cup \left \{ \verb~1~ \right \} \right )^* \right ) \cup \left \{ \verb~1~ \right \} \right )$.
+\end{eg}
+
+\begin{eg}
+  $\left ( \left ( \left ( \left \{ \verb~0~ \right \} \circ \left \{ \verb~1~ \right \} \right ) \circ \left \{ \verb~1~ \right \} \right ) \circ \left \{ \verb~1~ \right \} \right )$.
+\end{eg}
+
+\begin{eg}
+  $((((\left \{ \verb~0~ \right \} \circ \left \{ \verb~1~ \right \})^*) \circ \left \{ \verb~1~ \right \}) \circ ((\left \{ \verb~0~ \right \} \cup \left \{ \verb~1~ \right \})^*))$
+\end{eg}
+
+{\boldmath \bfseries Shorthand}
+
+\begin{itemize}
+  \item $R^k = \underbrace{(R \circ R \circ \cdots \circ R)}_{k}$
+    
+  \item $R^+ = (R \circ (R^*))$
+    
+  \item $\Sigma = (\left \{ \verb~0~ \right \} \cup \left \{ \verb~1~ \right \})$ assuming alpha bet is $\left \{ \verb~0~, \verb~1~ \right \}$
+    
+  \item may omit $\left \{ \right \}$, $()$, $\circ$
+\end{itemize}
+
+{\boldmath \bfseries Precedence:} $*$ then $\circ$ then $\cup$.
+
+\begin{note}
+  Sometimes $()$ are necessary.
+\end{note}
+
+\begin{eg}
+  Example~\ref{eg:5.1.2} can be simplified to $\Sigma^* \cup \left \{ 1 \right \} = \Sigma^*$.
+\end{eg}
+
+\begin{eg}
+  Example~\ref{eg:5.1.3} can be simplified to \verb~0111~.
+\end{eg}
+
+\begin{eg}
+  Example~\ref{eg:5.1.4} can be simplified to $\Sigma^* \verb~1~ \Sigma^*$.
+\end{eg}
+
+\begin{eg}
+  A regular expression for $\left \{ w : \text{$w$ contains exactly one \verb~1~} \right \}$ is $\verb~0~^* \verb~1~ \verb~0~^*$.
+\end{eg}
+
+\begin{eg}
+  A regular expression for $\left \{ w : \text{$w$ contains at least one \verb~1~} \right \}$ is $\Sigma^* \verb~1~ \Sigma^*$.
+\end{eg}
+
+\begin{eg}
+  A regular expression for $\left \{ w : \text{$w$ contains \verb~001~ as a substring} \right \}$ is $\Sigma^* \verb~001~ \Sigma^*$.
+\end{eg}
+
+\begin{eg}
+  A regular expression for $\left \{ w : \text{$w$ does not contain \verb~00~ as a substring} \right \}$ is $\verb~1~^* (\verb~0~ \verb~1~^+)^* (\varepsilon \cup \verb~0~)$.
+\end{eg}
+
+\begin{eg}
+  A regular expression for $\left \{ w : \text{$|w|$ is even} \right \}$ is $(\Sigma^2)^*$.
+\end{eg}
+
+\begin{eg}
+  A regular expression for $\left \{ w : 5 \mid |w| \right \}$ is $(\Sigma^5)^*$.
+\end{eg}
+
+\begin{eg}
+  A regular expression for $\left \{ w : w \neq \varepsilon \land w_1 = w_{|w|} \right \}$ is $\Sigma \cup \verb~0~ \Sigma^* \verb~0~ \cup \verb~1~ \Sigma^* \verb~1~$.
+\end{eg}
+
+\begin{eg}
+  A regular expression for $\left \{ \verb~01~, \verb~10~ \right \}$ is $\verb~01~ \cup \verb~10~$.
+\end{eg}
+
+\begin{eg}
+  The regular expression $(\verb~0~ \cup \varepsilon) 1^*$ can be arguably simplified to $\verb~01~^* \cup 1^*$.
+\end{eg}
+
+\begin{eg}
+  The regular expression $\verb~1~^* \varnothing$ can be simplified to $\varnothing$.
+\end{eg}
+
+\begin{eg}
+  The regular expression $\varnothing^*$ can be simplified to $\varepsilon$.
+\end{eg}
+
+\begin{eg}
+  The regular expression $(\verb~0~ \cup \verb~1~^+ \verb~0~)^*$ can be simplified to $((\varepsilon \cup \verb~1~^+) \verb~0~)*$ and then to $(\verb~1~^* \verb~0~)^*$.
+  In words, all strings that do not end in a \verb~1~.
+\end{eg}
+
+\begin{eg}
+  \begin{center}
+    \begin{tabular}{c|c|c}
+      Regular expression & Shortest accepted string & Shortest rejected string \\ 
+      \hline
+      $\verb~0~^* \verb~0011~^*$ & \verb~001~ & $\varepsilon$ \\ 
+      $\verb~0~^* \verb~00~ (\verb~0~ \cup \verb~1~)^*$ & \verb~00~ & $\varepsilon$ \\ 
+      $(\verb~00~)^* (\verb~110~)^* (\verb~11~)^*$ & $\varepsilon$ & \verb~0~, \verb~1~ \\ 
+      $\verb~0~^* (\verb~01~ \cup \verb~10~)^* \verb~1~^*$ & $\varepsilon$ & \verb~100~, \verb~110~
+    \end{tabular}
+  \end{center}
+\end{eg}
+
+\subsection{Equivalence with automata}
+
+\begin{thm}
+  The language of every regular expression is regular.
+\end{thm}
+
+\begin{prf}
+  Induction.
+\end{prf}
+
+\begin{thm}[Kleene's theorem]
+  Then language of every NFA can be represented by a regular expression.
+\end{thm}
+
+\begin{prf}
+  Given an NFA, create a new state state and a new and unique accept state (making every state in the original NFA rejecting).
+  Choose a state other than the start state and the accept state.
+  Call the states from which the incoming transitions originate donors and those at which the outgoing transitions arrive receivers.
+  Note that a state can be both a donor and a receiver.
+  Then for each donor-receiver pair, replace the transitions with a single transition $\alpha \beta^* \gamma$ where $\alpha$ is the incoming transition, $\beta$ is the looping transition, and $\gamma$ is the outgoing transition.
+  Remove the chosen state.
+  Collapse any parallel edges created in the process by unioning them.
+  If there are states other than the start state or the accept state, repeat the process.
+  If there are no transitions from the start state to the accept state then the regular expression is $\varnothing$.
+  Otherwise there is exactly one transition $\alpha$, the desired regular expression.
+\end{prf}
+
+\subsection{Conversion example}
+
+\begin{center}
+  \begin{tikzpicture}[> = stealth, node distance = 3em]
+    \node[initial, initial text=, state, minimum size = 2em] (0) {};
+    \node[right = of 0, accepting, state, minimum size = 2em] (1) {};
+    \node[right = of 1, state, minimum size = 2em] (2) {};
+    \node[accepting, right = of 2, state, minimum size = 2em] (3) {};
+    \node[below = of 0, state, minimum size = 2em] (4) {};
+    \draw[->]
+    (0) edge[above] node{\verb~0~,\verb~1~} (1)
+    (0) edge[left] node{\verb~0~} (4)
+    (1) edge[bend right = 15, above left] node{\verb~0~} (4)
+    (1) edge[above] node{\verb~1~} (2)
+    (2) edge[loop below] node{\verb~0~} (2)
+    (2) edge[above] node{\verb~1~} (3)
+    (4) edge[bend right = 15, below right] node{\verb~1~} (1)
+    ;
+  \end{tikzpicture}
+\end{center}
+
+\begin{center}
+  \begin{tikzpicture}[> = stealth, node distance = 3em]
+    \node[color = red, initial, initial text=, state, minimum size = 2em] (s) {};
+    \node[right = of s, state, minimum size = 2em] (0) {};
+    \node[right = of 0, color = red, state, minimum size = 2em] (1) {};
+    \node[right = of 1, state, minimum size = 2em] (2) {};
+    \node[color = red, right = of 2, state, minimum size = 2em] (3) {};
+    \node[below = of 0, state, minimum size = 2em] (4) {};
+    \node[color = red, accepting, right = of 3, state, minimum size = 2em] (e) {};
+    \draw[->]
+    (s) edge[color = red, above] node{$\varepsilon$} (0)
+    (0) edge[above] node{\verb~0~,\verb~1~} (1)
+    (0) edge[left] node{\verb~0~} (4)
+    (1) edge[bend right = 15, above left] node{\verb~0~} (4)
+    (1) edge[above] node{\verb~1~} (2)
+    (1) edge[bend left = 40, above, color = red] node{$\varepsilon$} (e)
+    (2) edge[loop below] node{\verb~0~} (2)
+    (2) edge[above] node{\verb~1~} (3)
+    (3) edge[color = red, above] node{$\varepsilon$} (e)
+    (4) edge[bend right = 15, below right] node{\verb~1~} (1)
+    ;
+  \end{tikzpicture}
+\end{center}
+
+\begin{center}
+  \begin{tikzpicture}[> = stealth, node distance = 3em]
+    \node[initial, initial text=, state, minimum size = 2em] (s) {};
+    \node[right = of s, state, minimum size = 2em] (0) {};
+    \node[right = of 0, state, minimum size = 2em] (1) {};
+    \node[right = of 1, minimum size = 2em] (2) {};
+    \node[right = of 2, state, minimum size = 2em] (3) {};
+    \node[below = of 0, state, minimum size = 2em] (4) {};
+    \node[accepting, right = of 3, state, minimum size = 2em] (e) {};
+    \draw[->]
+    (s) edge[above] node{$\varepsilon$} (0)
+    (0) edge[above] node{\verb~0~,\verb~1~} (1)
+    (0) edge[left] node{\verb~0~} (4)
+    (1) edge[bend right = 15, above left] node{\verb~0~} (4)
+    (1) edge[bend left = 40, above] node{$\varepsilon$} (e)
+    (1) edge[color = red, above] node{$\verb~10~^* \verb~1~$} (3)
+    (3) edge[above] node{$\varepsilon$} (e)
+    (4) edge[bend right = 15, below right] node{\verb~1~} (1)
+    ;
+  \end{tikzpicture}
+\end{center}
+
+\begin{center}
+  \begin{tikzpicture}[> = stealth, node distance = 3em]
+    \node[initial, initial text=, state, minimum size = 2em] (s) {};
+    \node[right = of s, state, minimum size = 2em] (0) {};
+    \node[right = of 0, state, minimum size = 2em] (1) {};
+    \node[right = of 1, minimum size = 2em] (2) {};
+    \node[right = of 2, minimum size = 2em] (3) {};
+    \node[below = of 0, state, minimum size = 2em] (4) {};
+    \node[accepting, right = of 3, state, minimum size = 2em] (e) {};
+    \draw[->]
+    (s) edge[above] node{$\varepsilon$} (0)
+    (0) edge[above] node{\verb~0~,\verb~1~} (1)
+    (0) edge[left] node{\verb~0~} (4)
+    (1) edge[bend right = 15, above left] node{\verb~0~} (4)
+    (1) edge[color = red, above] node{$\verb~10~^* \verb~1~ \cup \varepsilon$} (e)
+    (4) edge[bend right = 15, below right] node{\verb~1~} (1)
+    ;
+  \end{tikzpicture}
+\end{center}
+
+\begin{center}
+  \begin{tikzpicture}[> = stealth, node distance = 3em]
+    \node[initial, initial text=, state, minimum size = 2em] (s) {};
+    \node[right = of s, minimum size = 2em] (0) {};
+    \node[right = of 0, state, minimum size = 2em] (1) {};
+    \node[right = of 1, minimum size = 2em] (2) {};
+    \node[right = of 2, minimum size = 2em] (3) {};
+    \node[below = of 0, state, minimum size = 2em] (4) {};
+    \node[accepting, right = of 3, state, minimum size = 2em] (e) {};
+    \draw[->]
+    (s) edge[color = red, above] node{$\Sigma$} (1)
+    (s) edge[color = red, below left] node{\verb~0~} (4)
+    (1) edge[bend right = 15, above left] node{\verb~0~} (4)
+    (1) edge[above] node{$\verb~10~^* \verb~1~ \cup \varepsilon$} (e)
+    (4) edge[bend right = 15, below right] node{\verb~1~} (1)
+    ;
+  \end{tikzpicture}
+\end{center}
+
+\begin{center}
+  \begin{tikzpicture}[> = stealth, node distance = 3em]
+    \node[initial, initial text=, state, minimum size = 2em] (s) {};
+    \node[right = of s, minimum size = 2em] (0) {};
+    \node[right = of 0, state, minimum size = 2em] (1) {};
+    \node[right = of 1, minimum size = 2em] (2) {};
+    \node[right = of 2, minimum size = 2em] (3) {};
+    \node[below = of 0, minimum size = 2em] (4) {};
+    \node[accepting, right = of 3, state, minimum size = 2em] (e) {};
+    \draw[->]
+    (s) edge[color = red, above] node{$\Sigma \cup \verb~01~$} (1)
+    (1) edge[color = red, loop above] node{\verb~01~} (1)
+    (1) edge[above] node{$\verb~10~^* \verb~1~ \cup \varepsilon$} (e)
+    ;
+  \end{tikzpicture}
+\end{center}
+
+\begin{center}
+  \begin{tikzpicture}[> = stealth, node distance = 3em]
+    \node[initial, initial text=, state, minimum size = 2em] (s) {};
+    \node[right = of s, minimum size = 2em] (0) {};
+    \node[right = of 0, minimum size = 2em] (1) {};
+    \node[right = of 1, minimum size = 2em] (2) {};
+    \node[right = of 2, minimum size = 2em] (3) {};
+    \node[below = of 0, minimum size = 2em] (4) {};
+    \node[accepting, right = of 3, state, minimum size = 2em] (e) {};
+    \draw[->]
+    (s) edge[color = red, above] node{$(\Sigma \cup \verb~01~) (\verb~01~)^* (\verb~10~^* \verb~1~ \cup \varepsilon)$} (e)
+    ;
+  \end{tikzpicture}
+\end{center}
+
 \end{document}
