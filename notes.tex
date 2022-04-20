@@ -2127,4 +2127,231 @@ We will show that this conclusion is the best possible.
   \end{tikzpicture}
 \end{center}
 
+\subsection{Conversion example \#2}
+
+\begin{center}
+  \begin{tikzpicture}[> = stealth, node distance = 5em]
+    \node[accepting, initial, initial text=, state, minimum size = 2em] (0) {};
+    \node[above right = of 0, state, minimum size = 2em] (1) {};
+    \node[below right = of 0, state, minimum size = 2em] (2) {};
+    \node[above right = of 2, state, minimum size = 2em] (3) {};
+    \node[right = of 3, state, minimum size = 2em] (4) {};
+    \draw[->]
+    (0) edge[above left] node{\verb~0~} (1)
+    (0) edge[bend right = 15, below left] node{\verb~1~} (2)
+    (1) edge[bend right = 15, left] node{\verb~1~} (2)
+    (2) edge[bend right = 15, above] node{\verb~1~} (0)
+    (2) edge[bend right = 15, right] node{\verb~0~} (1)
+    (0) edge[loop above] node{\verb~1~} (0)
+    (0) edge[bend right = 85, looseness = 3.5, below] node{\verb~1~} (3)
+    (3) edge[above right] node{\verb~0~} (1)
+    (2) edge[below right] node{\verb~1~} (3)
+    (4) edge[loop below] node{\verb~0~,\verb~1~} (4)
+    (4) edge[bend right, above] node{\verb~0~} (1)
+    (4) edge[above] node{\verb~0~} (3)
+    (2) edge[loop below] node{\verb~1~} (2)
+    ;
+  \end{tikzpicture}
+\end{center}
+
+\begin{center}
+  \begin{tikzpicture}[> = stealth, node distance = 5em]
+    \node[initial, initial text=, color = red, state, minimum size = 2em] (s) {};
+    \node[right = of s, color = red, state, minimum size = 2em] (0) {};
+    \node[above right = of 0, state, minimum size = 2em] (1) {};
+    \node[below right = of 0, state, minimum size = 2em] (2) {};
+    \node[above right = of 2, state, minimum size = 2em] (3) {};
+    \node[accepting, below = of s, color = red, state, minimum size = 2em] (e) {};
+    \draw[->]
+    (s) edge[color = red, above] node{$\varepsilon$} (0)
+    (0) edge[color = red, above left] node{$\varepsilon$} (e)
+    (0) edge[bend right = 15, below left] node{\verb~1~} (2)
+    (0) edge[above left] node{\verb~0~} (1)
+    (1) edge[bend right = 15, left] node{\verb~1~} (2)
+    (2) edge[bend right = 15, above] node{\verb~1~} (0)
+    (2) edge[bend right = 15, right] node{\verb~0~} (1)
+    (0) edge[loop above] node{\verb~1~} (0)
+    (0) edge[bend right = 85, looseness = 3.5, below] node{\verb~1~} (3)
+    (3) edge[above right] node{\verb~0~} (1)
+    (2) edge[below right] node{\verb~1~} (3)
+    (2) edge[loop below] node{\verb~1~} (2)
+    ;
+  \end{tikzpicture}
+\end{center}
+
+\begin{center}
+  \begin{tikzpicture}[> = stealth, node distance = 5em]
+    \node[initial, initial text=, state, minimum size = 2em] (s) {};
+    \node[right = of s, state, minimum size = 2em] (0) {};
+    \node[above right = of 0, state, minimum size = 2em] (1) {};
+    \node[below right = of 0, state, minimum size = 2em] (2) {};
+    \node[accepting, below = of s, state, minimum size = 2em] (e) {};
+    \draw[->]
+    (s) edge[above] node{$\varepsilon$} (0)
+    (0) edge[above left] node{$\varepsilon$} (e)
+    (0) edge[color = red, above] node[sloped]{$\verb~0~ \cup \verb~10~$} (1)
+    (0) edge[bend right = 15, below left] node{\verb~1~} (2)
+    (1) edge[bend right = 15, left] node{\verb~1~} (2)
+    (2) edge[bend right = 15, above] node{\verb~1~} (0)
+    (2) edge[color = red, bend right = 15, right] node{$\verb~0~ \cup \verb~10~$} (1)
+    (0) edge[loop above] node{\verb~1~} (0)
+    (2) edge[loop below] node{\verb~1~} (2)
+    ;
+  \end{tikzpicture}
+\end{center}
+
+\begin{center}
+  \begin{tikzpicture}[> = stealth, node distance = 5em]
+    \node[initial, initial text=, state, minimum size = 2em] (s) {};
+    \node[right = of s, state, minimum size = 2em] (0) {};
+    \node[below right = of 0, state, minimum size = 2em] (2) {};
+    \node[accepting, below = of s, state, minimum size = 2em] (e) {};
+    \draw[->]
+    (s) edge[above] node{$\varepsilon$} (0)
+    (0) edge[above left] node{$\varepsilon$} (e)
+    (0) edge[color = red, bend right = 15, below] node[sloped]{$\verb~1~ \cup (\verb~0~ \cup \verb~01~) \verb~1~$} (2)
+    (2) edge[bend right = 15, above] node[]{\verb~1~} (0)
+    (0) edge[loop above] node{\verb~1~} (0)
+    (2) edge[color = red, loop below] node{$\verb~1~ \cup (\verb~0~ \cup \verb~10~) \verb~1~$} (2)
+    ;
+  \end{tikzpicture}
+\end{center}
+
+\begin{center}
+  \begin{tikzpicture}[> = stealth, node distance = 5em]
+    \node[initial, initial text=, state, minimum size = 2em] (s) {};
+    \node[right = of s, state, minimum size = 2em] (0) {};
+    \node[accepting, right = of 0, state, minimum size = 2em] (e) {};
+    \draw[->]
+    (s) edge[above] node{$\varepsilon$} (0)
+    (0) edge[above left] node{$\varepsilon$} (e)
+    (0) edge[color = red, loop above] node{$\verb~1~ \cup \Big ( 1 \cup (\verb~0~ \cup \verb~10~) \verb~1~ \Big ) \Big ( \verb~1~ \cup (\verb~0~ \cup \verb~10~) \verb~1~ \Big )^* \verb~1~$} (0)
+    ;
+  \end{tikzpicture}
+\end{center}
+
+\begin{center}
+  \begin{tikzpicture}[> = stealth, node distance = 12em]
+    \node[initial, initial text=, state, minimum size = 2em] (s) {};
+    \node[accepting, right = of 0, state, minimum size = 2em] (e) {};
+    \draw[->]
+    (s) edge[color = red, above] node{$\Bigg ( \verb~1~ \cup \Big ( 1 \cup (\verb~0~ \cup \verb~10~) \verb~1~ \Big ) \Big ( \verb~1~ \cup (\verb~0~ \cup \verb~10~) \verb~1~ \Big )^* \verb~1~ \Bigg )^*$} (e)
+    ;
+  \end{tikzpicture}
+\end{center}
+
+\section{Pumping lemma}
+
+\subsection{First nonregular language}
+
+\begin{thm}
+  The language $\mathcal L = \left \{ \verb~0~^n \verb~1~^n : n \geq 1 \right \}$ is not regular.
+\end{thm}
+
+\begin{prf}
+  By contradiction.
+  Suppose we have a DFA $D$ for $\mathcal L$.
+  Let $p$ be the number of states in $D$.
+  
+  \begin{itemize}
+    \item Run the DFA on $w = \underbrace{\color{red} \verb~00...0~}_{p} \underbrace{\color{blue} \verb~11...1~}_{p}$.
+      
+    \item Note that $w$ must end in an accept state.
+
+    \item By the pigeonhole principle, some state $q$ must have been visited at least twice while reading $\underbrace{\color{red} \verb~00...0~}_{p}$.
+      
+    \item Write $w = x y z$ where $x$ is the portion of $w$ before the first visit of $q$, $y$ is the portion of $w$ between the first and the second visit of $q$, and $z$ is the portion of $w$ after the second visit of $q$.
+      
+    \item Since $D$ accepts $w = x y z$, $D$ also accepts $x y y z$, which contains more than $p$ \verb~0~s and exactly $p$ \verb~1~s.
+    Then $D$ does not recognize $\mathcal L$.
+  \end{itemize}
+\end{prf}
+
+\subsection{Pumping lemma}
+
+\begin{lem}
+  Let $\mathcal L$ be a regular language.
+  Then there exists $p \in \mathbb N$ such that every string $w \in \mathcal L$ of length $\geq p$ can be written as 
+  \[
+    w = x y z, 
+  \]
+  where
+  \begin{itemize}
+    \item $x$, $y$, $z$ are strings, 
+
+    \item $y \neq \varepsilon$, 
+
+    \item $\left | x y \right | \leq p$, and 
+
+    \item $x y^i z \in \mathcal L$ for $i = 0, 1, 2, \dots$.
+  \end{itemize}
+  
+  To put in a slightly irresponsible wording, all long enough strings in $\mathcal L$ can be pumped.
+\end{lem}
+
+\begin{prf}
+  Let $D$ be a DFA for $\mathcal L$.
+  Define $p$ to be the number of states in $D$.
+  \begin{itemize}
+    \item Run the DFA on $w$.
+      
+    \item Note that $w$ must end in an accept state.
+      
+    \item By the pigeonhole principle, some state $q$ must have been visited at twice while reading $w_1 w_2 \dots w_p$.
+      
+    \item Define $x$ to be the portion of $w$ before the first visit of $q$, $y$ to be the portion of $w$ between the first and the second visit of $q$, and $z$ to be the portion of $w$ after the second visit of $q$.
+      
+    \item Note that $x$, $y$, and $z$ are strings, $y \neq \varepsilon$, $\left | x y \right | \leq \left | w_1 w_2 \dots w_p \right | = p$, and $x y^i z \in \mathcal L$ for all $i$.
+  \end{itemize}
+\end{prf}
+
+{\boldmath \bfseries Original pumping lemma ("pumping property")}
+
+\[
+  \mathcal L \text{ reg} \Rightarrow (\exists \, p \, \forall \, w \in \mathcal L: \left | w \right | \geq p \Rightarrow \exists \, x, y, z: w = x y z \land y \neq \varepsilon \land \left | x y \right | \leq p \land \forall \, i: x y^i z \in \mathcal L).
+\]
+
+{\boldmath \bfseries Contrapositive form of pumping lemma}
+
+\[
+  (\forall \, p \, \exists \, w \in \mathcal L: \left | w \right | \geq p \Rightarrow \forall \, x, y, z: w = x y z \land y \neq \varepsilon \land \left | x y \right | \leq p \Rightarrow \exists \, i: x y^i z \not \in \mathcal L) \Rightarrow \mathcal L \text{ not regular}
+\]
+
+\newpage
+
+\subsection{Examples}
+
+\begin{eg}
+  Consider the language $\mathcal L = \left \{ \verb~0~^n \verb~1~^n : n \geq 0 \right \}$.
+
+  Let $p$ be arbitrary.
+  Define $w = \verb~0~^p \verb~1~^p \in \mathcal L$.
+  Consider arbitrary $x$, $y$, $z$ such that $w = x y z$, $y \neq \varepsilon$, and $\left | x y \right | \leq p$.
+  Note that $x y^2 z \not \in \mathcal L$.
+  
+  Then the pumping property fails and $\mathcal L$ is not regular.
+\end{eg}
+
+\begin{eg}
+  Consider the language $\mathcal L = \left \{ w : \text{$w$ contains as many \verb~0~s as \verb~1~s} \right \}$.
+  
+  Note that 
+  \[
+    \mathcal L \cap \underbrace{\verb~0~^* \verb~1~^*}_\text{regular} = \underbrace{\left \{ \verb~0~^n \verb~1~^n : n \geq 0 \right \}}_\text{nonregular}.
+  \]
+  
+  Then by the closure of regular languages under intersection, $\mathcal L$ is not regular.
+\end{eg}
+
+\begin{eg}
+  Consider the language $\mathcal L = \left \{ \verb~0~^n \verb~1~^m : n \neq m \right \}$.
+
+  Note that 
+  \[
+    \underbrace{\verb~0~^* \verb~1~^*}_\text{regular} \setminus \mathcal L = \underbrace{\left \{ \verb~0~^n \verb~1~^n : n \geq 0 \right \}}_\text{nonregular}.
+  \]
+  
+  Then by the closure of regular languages under set difference, $\mathcal L$ is not regular.
+\end{eg}
+
 \end{document}
