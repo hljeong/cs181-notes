@@ -934,7 +934,7 @@ Does this NFA accept the string \verb~0110~?
 
 \begin{center}
   \begin{tikzpicture}[> = stealth, node distance = 3em]
-    \node[accepting, state, minimum size = 2em] (A) {$A$};
+    \node[initial, initial text=, accepting, state, minimum size = 2em] (A) {$A$};
     \node[below right = of A, state, minimum size = 2em] (B) {$B$};
     \node[accepting, above right = of A, state, minimum size = 2em] (C) {$C$};
     \draw[->]
@@ -2353,5 +2353,163 @@ We will show that this conclusion is the best possible.
   
   Then by the closure of regular languages under set difference, $\mathcal L$ is not regular.
 \end{eg}
+
+\subsection{Continued}
+
+\begin{eg}
+  Consider the language $\mathcal L = \left \{ \verb~0~^n \verb~1~^m : n > m \right \}$ and the string $\overbrace{\verb~00...0~}^{{\color{red} p + 1}} \overbrace{\verb~11...1~}^{p}$.
+  Consider any $y \neq \varepsilon$ such that $\left | x y \right | \leq p$.
+  Note that $x z \not \in \mathcal L$.
+  Then $\mathcal L$ is not regular.
+\end{eg}
+
+\begin{eg}
+  Consider the language $\mathcal L = \left \{ \verb~10~^n \verb~1~^n : n \geq 1 \right \}$ and the string $\verb~1~ \overbrace{\verb~00...0~}^{p} \overbrace{\verb~11...1~}^{p}$.
+  Then $y \neq \varepsilon$ either contains a leading $\verb~1~$, in which case $x z$ does not have a leading $\verb~1~$ and therefore $x z \not \in \mathcal L$, or does not contain a leading $\verb~1~$, in which case $x z$ has a different number of \verb~0~s as trailing \verb~1~s and therefore $x z \not \in \mathcal L$.
+  Then $\mathcal L$ is not regular.
+\end{eg}
+
+\begin{eg}
+  Consider the language $\mathcal L = \left \{ \verb~1~^{n^2} : n \geq 0 \right \}$ and the string $\overbrace{\verb~11...1~}^{p^2}$.
+  Consider any $y \neq \varepsilon$ such that $\left | x y \right | \leq p$.
+  Then 
+  \begin{align*}
+    p^2 &< \left | x y^2 z \right | = \left | x y z \right | + \left | y \right | \\ 
+    &\leq p^2 + p < (p + 1)^2.
+  \end{align*}
+  Then $x y^2 z \not \in \mathcal L$ and $\mathcal L$ is not regular.
+\end{eg}
+
+\begin{eg}
+  Consider the language $\mathcal L = \left \{ ww : w \in \left \{ \verb~0~, \verb~1~ \right \}^* \right \}$ and the string $\overbrace{\verb~00...0~}^{p} \verb~1~ \overbrace{\verb~00...0~}^{p} \verb~1~$.
+  Consider any $y \neq \varepsilon$ such that $\left | x y \right | \leq p$.
+  Note that $x z \not \in \mathcal L$ since the first half of $x z$ ends with \verb~0~ while the second half ends with \verb~1~.
+  Then $\mathcal L$ is not regular.
+\end{eg}
+
+\begin{eg}
+  Consider the language $\mathcal L = \left \{ www : w \in \left \{ \verb~0~, \verb~1~ \right \}^* \right \}$.
+  It can be shown that this is not regular.
+\end{eg}
+
+\newpage
+
+\begin{eg}
+  Consider the language $\mathcal L = \left \{ w : w = w^R \right \}$ and the string $\overbrace{\verb~00...0~}^{p} \verb~1~ \overbrace{\verb~00...0~}^{p}$.
+  Consider any $y \neq \varepsilon$ such that $\left | x y \right | \leq p$.
+  Note that $x z \not \in \mathcal L$.
+  Then $\mathcal L$ is not regular.
+\end{eg}
+
+\begin{eg}
+  Consider the language $\mathcal L = \left \{ w : \text{$\left | w \right |$ prime} \right \}$.
+  Let $q$ be a prime greater than $p$.
+  Consider the string $\overbrace{\verb~00...0~}^{q}$.
+  Consider any $y \neq \varepsilon$ such that $\left | x y \right | \leq p$.
+  Then $x y^{q + 1} z \not \in \mathcal L$ since $\left | x y^{q + 1} z \right | = \underbrace{q}_{\geq 2} \underbrace{(1 + \left | y \right |)}_{\geq 2}$ is not prime.
+  Then $\mathcal L$ is not regular. 
+\end{eg}
+
+\subsection{True or false}
+
+\begin{eg}
+  The statement ``regular languages are closed under arbitrary unions, i.e., even infinite unions'' is false.
+  Note that every nonregular language is an infinite union of singleton languages, which are regular.
+  For a concrete example, note that $\left \{ \verb~0~^n \verb~1~^n : n \geq 0 \right \} = \bigcup_{n = 0}^\infty \left \{ \verb~0~^n \verb~1~^n \right \}$.
+\end{eg}
+
+\begin{eg}
+  The statement ``subsets of regular languages are regular'' is false.
+  Note that $\Sigma*$ is regular yet $\left \{ \verb~0~^n \verb~1~^n : n \geq 0 \right \} \subseteq \Sigma^*$.
+\end{eg}
+
+\begin{eg}
+  The statement ``subsets of nonregular languages are nonregular'' is false.
+  Note that $\varnothing$ is regular yet $\varnothing \subseteq \left \{ \verb~0~^n \verb~1~^n : n \geq 0 \right \}$.
+\end{eg}
+
+\begin{eg}
+  The statement ``nonregular languages are closed under complement'' is true since $\text{$\mathcal L$ regular} \Leftrightarrow \text{$\overline{\mathcal L}$ regular}$, which implies $\text{$\mathcal L$ regular} \Leftrightarrow \text{$\overline{\mathcal L}$ regular}$.
+\end{eg}
+
+\begin{eg}
+  The statement ``nonregular languages are closed under union'' is false.
+  Note that $\mathcal L = \left \{ \verb~0~^n \verb~1~^n : n \geq 0 \right \}$ is nonregular and so is $\overline{\mathcal L}$, yet $\mathcal L \cup \overline{\mathcal L} = \Sigma^*$ is regular.
+\end{eg}
+
+\begin{eg}
+  The statement ``nonregular languages are closed under intersection'' is false.
+  Note that $\mathcal L = \left \{ \verb~0~^n \verb~1~^n : n \geq 0 \right \}$ is nonregular and so is $\overline{\mathcal L}$, yet $\mathcal L \cap \overline{\mathcal L} = \varnothing$ is regular.
+\end{eg}
+
+\begin{eg}
+  The statement ``nonregular languages are always infinite'' is true since all finite languages are regular.
+\end{eg}
+
+\section{Myhill-Nerode theorem}
+
+\subsection{When the pumping lemma fails}
+
+\begin{eg}
+  Consider the language $\mathcal L = \verb~0~^* \verb~1~^* \cup \left \{ \verb~1~^m \verb~0~^n \verb~1~^n : m \geq 1 \land n \geq 0 \right \}$.
+  We can consider strings of the forms $\verb~0~^+$, $\verb~1~^+$, $\verb~0~^+ \verb~1~^+$, $\verb~1~^+ \verb~0~^n \verb~1~^n$, etc.
+  We can check that all of the listed forms satisfy the pumping property by taking $x = \varepsilon$ and $y = w_1$.
+  Then in this case the pumping lemma is useless.
+  However $\mathcal L$ is nonregular since $\mathcal L \cap \verb~1~ \verb~0~^+ \verb~1~^+ = \left \{ \verb~1~ \verb~0~^n \verb~1~^n : n \geq 1 \right \}$ is nonregular.
+\end{eg}
+
+\newpage
+
+\subsection{Indistinguishability}
+
+\begin{defn}
+  Let $\mathcal L$ be a given language.
+  Strings $x$ and $y$ are called {\boldmath \bfseries $\mathcal L$-indistinguishable} if for all {\color{red} strings $w$}, 
+  \[
+    x {\color{red} w} \in \mathcal L \Leftrightarrow y {\color{red} w} \in \mathcal L.
+  \]
+  
+  Notation: $x \equiv_{\mathcal L} y$
+\end{defn}
+
+\begin{eg}
+  Consider the language $\mathcal L = \left \{ w : 3 \mid \left | w \right | \right \}$.
+  Note that
+  \begin{itemize}
+    \item $\verb~1~ \equiv_{\mathcal L} \verb~0~$, 
+
+    \item $\varepsilon \not \equiv_{\mathcal L} \verb~0~$, 
+
+    \item $\varepsilon \equiv_{\mathcal L} \verb~000~$, and 
+
+    \item $\verb~1~ \equiv_{\mathcal L} \verb~1010~ \equiv_{\mathcal L} \verb~1110001~$.
+  \end{itemize}
+\end{eg}
+
+\begin{eg}
+  Consider the language $\mathcal L = \left \{ w : 3 \mid \sum w_i \right \}$.
+  Note that 
+  \begin{itemize}
+    \item $\verb~1~ \not \equiv_{\mathcal L} \verb~0~$, 
+
+    \item $\varepsilon \equiv_{\mathcal L} \verb~0~ \equiv_{\mathcal L} \verb~000~$, 
+
+    \item $\verb~1~ \equiv_{\mathcal L} \verb~101011~$
+  \end{itemize}
+\end{eg}
+
+\begin{prop}
+  For any language $\mathcal L$, $\equiv_{\mathcal L}$ is an equivalence relation.
+\end{prop}
+
+\begin{prf}
+  \begin{itemize}
+    \item Reflexive: $x \equiv_{\mathcal L} x$.
+      
+    \item Symmetric: $x \equiv_{\mathcal L} y \Leftrightarrow y \equiv_{\mathcal L} x$.
+      
+    \item Transitive: $x w \in \mathcal L \Leftrightarrow y w \in \mathcal L \Leftrightarrow z w \in \mathcal L$.
+  \end{itemize}
+\end{prf}
 
 \end{document}
