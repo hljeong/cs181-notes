@@ -1,6 +1,6 @@
 \documentclass{notes}
 \usetikzlibrary{shapes, shapes.geometric}
-\usepackage{multirow,bigdelim}
+\usepackage{pgf-pie} 
 
 \class{CS 181 (Introduction to Formal Languages and Automata Theory)}
 
@@ -2511,5 +2511,553 @@ We will show that this conclusion is the best possible.
     \item Transitive: $x w \in \mathcal L \Leftrightarrow y w \in \mathcal L \Leftrightarrow z w \in \mathcal L$.
   \end{itemize}
 \end{prf}
+
+\begin{note}
+  Every equivalence class is either entirely in $\mathcal L$ or entirely in $\overline{\mathcal L}$.
+\end{note}
+
+\begin{eg}
+  Consider the language $\mathcal L = \left \{ w : 3 \mid \left | w \right | \right \}$.
+  
+  \begin{minipage}[t]{0.45 \textwidth}
+    A DFA for $\mathcal L$ is given by: 
+    \begin{center}
+      \begin{tikzpicture}[> = stealth, node distance = 3em]
+        \node[accepting, initial, initial text=, state, minimum size = 2em] (0) {};
+        \node[right = of 0, state, minimum size = 2em] (1) {};
+        \node[below = of 0, state, minimum size = 2em] (2) {};
+        \draw[->]
+        (0) edge[above] node{\verb~0~,\verb~1~} (1)
+        (1) edge[below right] node{\verb~0~,\verb~1~} (2)
+        (2) edge[left] node{\verb~0~,\verb~1~} (0)
+        ;
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}%
+  \hspace*{\fill}%
+  \begin{minipage}[t]{0.45 \textwidth}
+    Then the language can be partitioned into: 
+    \begin{center}
+      \begin{tikzpicture}[scale = 0.6]
+        \pie[text = inside, hide number, color = white, sum = auto]{
+          1 / $(\Sigma \Sigma \Sigma)^*$,
+          1 / {\color{red} $\Sigma (\Sigma \Sigma \Sigma)^*$},
+          1 / {\color{red} $\Sigma \Sigma (\Sigma \Sigma \Sigma)^*$}
+        }
+        \draw (2.5, 2.5) node{$\Sigma^*$};
+      \end{tikzpicture} 
+    \end{center}
+  \end{minipage}
+\end{eg}
+
+\newpage
+
+\begin{eg}
+  Consider the language $\mathcal L = \left \{ w : \text{every \verb~0~ is immediately followed by a \verb~1~} \right \}$.
+  
+  \begin{minipage}[t]{0.45 \textwidth}
+    A DFA for $\mathcal L$ is given by: 
+    \begin{center}
+      \begin{tikzpicture}[> = stealth, node distance = 3em]
+        \node[accepting, initial, initial text=, state, minimum size = 2em] (0) {};
+        \node[right = of 0, state, minimum size = 2em] (1) {};
+        \node[right = of 1, state, minimum size = 2em] (2) {};
+        \draw[->]
+        (0) edge[bend right, below] node{\verb~0~} (1)
+        (0) edge[loop above] node{\verb~1~} (0)
+        (1) edge[bend right, above] node{\verb~1~} (0)
+        (1) edge[above] node{\verb~0~} (2)
+        (2) edge[loop above] node{\verb~0~,\verb~1~} (2)
+        ;
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}%
+  \hspace*{\fill}%
+  \begin{minipage}[t]{0.45 \textwidth}
+    Then the language can be partitioned into: 
+    \begin{center}
+      \begin{tikzpicture}[scale = 0.7]
+        \pie[text = inside, hide number, color = white, sum = auto]{
+          1 / $\verb~1~^* (\verb~01~^+)^*$,
+          1 / {\color{red} $\verb~1~^* (\verb~01~^+)^* \verb~0~$},
+          1 / {\color{red} $\Sigma^* \verb~00~ \Sigma^*$}
+        }
+        \draw (2.5, 2.5) node{$\Sigma^*$};
+      \end{tikzpicture} 
+    \end{center}
+  \end{minipage}
+\end{eg}
+
+\begin{eg}
+  Consider the language $\mathcal L = \left \{ w : \text{$w$ does not contain both a \verb~0~ and a \verb~1~} \right \}$.
+  
+  \begin{minipage}[t]{0.45 \textwidth}
+    A DFA for $\mathcal L$ is given by: 
+    \begin{center}
+      \begin{tikzpicture}[> = stealth, node distance = 3em]
+        \node[accepting, initial, initial text=, state, minimum size = 2em] (0) {};
+        \node[accepting, above right = of 0, state, minimum size = 2em] (1) {};
+        \node[accepting, below right = of 0, state, minimum size = 2em] (2) {};
+        \node[below right = of 1, state, minimum size = 2em] (3) {};
+        \draw[->]
+        (0) edge[above left] node{\verb~0~} (1)
+        (0) edge[below left] node{\verb~1~} (2)
+        (1) edge[loop above] node{\verb~0~} (1)
+        (1) edge[above right] node{\verb~1~} (3)
+        (2) edge[loop below] node{\verb~1~} (2)
+        (2) edge[below right] node{\verb~0~} (3)
+        (3) edge[loop right] node{\verb~0~,\verb~1~} (3)
+        ;
+      \end{tikzpicture}
+    \end{center}
+  \end{minipage}%
+  \hspace*{\fill}%
+  \begin{minipage}[t]{0.45 \textwidth}
+    Then the language can be partitioned into: 
+    \begin{center}
+      \begin{tikzpicture}[scale = 0.6]
+        \pie[text = inside, hide number, color = white, sum = auto]{
+          1 / $\varepsilon$,
+          1 / $\verb~0~^+$,
+          1 / $\verb~1~^+$, 
+          3 / {\color{red} $\Sigma^* (\verb~01~ \cup \verb~10~) \Sigma^*$}
+        }
+        \draw (2.5, 2.5) node{$\Sigma^*$};
+      \end{tikzpicture} 
+    \end{center}
+  \end{minipage}
+\end{eg}
+
+\begin{eg}
+  Consider the language $\mathcal L = \left \{ w : \text{$w$ contains as many \verb~0~s as \verb~1~s} \right \}$.
+  Note that this language is nonregular.
+  The language can be partitioned into: 
+  
+  \begin{center}
+    \begin{tikzpicture}[scale = 0.65]
+      \pie[text = inside, hide number, color = white, sum = auto]{
+        1 / {\color{red} $C_{-3}$},
+        1 / {\color{red} $C_{-2}$},
+        1 / {\color{red} $C_{-1}$},
+        1 / $C_0$,
+        1 / {\color{red} $C_1$},
+        1 / {\color{red} $C_2$},
+        1 / {\color{red} $C_3$},
+        7 / {\color{red} $\cdots$}
+      }
+      \draw (2.5, 2.5) node{$\Sigma^*$};
+    \end{tikzpicture} 
+  \end{center}
+  
+  where 
+  \[
+    C_i = \left \{ w : \text{number of \verb~0~s in $w$} - \text{number of \verb~1~s in $w$} = i \right \}.
+  \]
+\end{eg}
+
+\begin{eg}
+  Consider the language $\mathcal L = \left \{ w : w^R = w \right \}$.
+  Then 
+  \[
+    w \neq w' \Rightarrow w {\color{red} \verb~0~^n \verb~1~ \verb~0~^n w^R} \in \mathcal L \land w' {\color{red} \verb~0~^n \verb~1~ \verb~0~^n w^R} \not \in \mathcal L
+  \]
+  for large enough $n$.
+  Then every $w \in \Sigma^*$ is in its own equivalence class.
+\end{eg}
+
+\subsection{Myhill-Nerode theorem}
+
+\begin{thm}
+  For every language $\mathcal L$, the minimum number of states in a DFA for $\mathcal L$ is equal to the number of equivalence classes under $\equiv_\mathcal L$.
+  
+  If this number is infinite, we interpret it as ``no such DFA exists,'' that is, $\mathcal L$ is nonregular.
+\end{thm}
+
+\begin{prf}
+  $\geq$: By contradiction.
+
+  Fix a DFA for $\mathcal L$ with $k$ states.
+  Suppose $\exists \, x_1, x_2, \dots, x_{k + 1}$, each in a different equivalence class of $\equiv_\mathcal L$.
+  
+  \begin{center}
+    \begin{tabular}{cc}
+      Input string & End state \\ 
+      \hline
+      $x_1$ & $q_{27}$ \\ 
+      $x_2$ & $q_6$ \\ 
+      $x_3$ & $q_5$ \\ 
+      $\vdots$ & $\vdots$ \\ 
+      $x_{k + 1}$ & $q_{12}$
+    \end{tabular}
+  \end{center}
+  
+  Note that the left hand side of the table enumerates $k + 1$ strings while the right hand side only has $k$ possibilities.
+  Then for some $x_i$, $x_j$ where $i \neq j$, the DFA ends in the same state on reading $x_i$ as $x_j$.
+  Then for all strings $w$ we have 
+  \[
+    x_i w \in \mathcal L \Leftrightarrow x_j w \in \mathcal L, 
+  \]
+  that is, 
+  \[
+    x_i \equiv_\mathcal L x_j, 
+  \]
+  a contradiction.
+  
+  $\leq$: Suppose $\mathcal L$ has $k$ equivalence classes.
+  Pick a representative from each class: $S_1 = \varepsilon$, $S_2$, \dots, $S_k$.
+  Then a DFA for $\mathcal L$ is given by 
+  \[
+    (\left \{ S_1, S_2, \dots, S_k \right \}, \Sigma, S_1, \delta, \left \{ S_1, S_2, \dots, S_k \right \} \cap \mathcal L)
+  \]
+  where 
+  \[
+    \delta(S_i, \sigma) = \text{representative for the equivalence class of $S_i \sigma$}.
+  \]
+\end{prf}
+
+\subsection{Proving nonregularity}
+
+There are 3 methods to prove nonregularity: 
+
+\begin{enumerate}
+  \item Pumping lemma, 
+  
+  \item Pumping lemma with closure properties, and 
+
+  \item Myhill-Nerode theorem.
+\end{enumerate}
+
+\begin{eg}
+  Consider the languages $\mathcal L_1 = \left \{ w : w^R \right \}$ and $\mathcal L_2 = \left \{ w : \text{$w$ has equally many \verb~0~s and \verb~1~s} \right \}$.
+  we have shown that $\equiv_{\mathcal L_1}$ and $\equiv_{\mathcal L_2}$ have infinitely many equivalence classes.
+  Then $\mathcal L_1$ and $\mathcal L_2$ are nonregular.
+\end{eg}
+
+\newpage
+
+\begin{eg}
+  Consider the language $\mathcal L = \left \{ ww : w \in \left \{ \verb~0~, \verb~1~ \right \}^* \right \}$.
+  Note that 
+  \[
+    i \neq j \Rightarrow \verb~0~^i {\color{red} \verb~10^i~ \verb~1~} \in \mathcal L \land \verb~0~^j {\color{red} \verb~10~^i \verb~1~} \not \in \mathcal L.
+  \]
+  Then $\varepsilon, \verb~0~, \verb~00~, \verb~000~, \dots$ are in different classes.
+  Then $\equiv_\mathcal L$ has infinitely many classes.
+  Then $\mathcal L$ is nonregular.
+\end{eg}
+
+\begin{eg}
+  Consider the language $\mathcal L = \left \{ \verb~0~^n \verb~1~^m : n \neq m \right \}$.
+  Note that 
+  \[
+    i \neq j \Rightarrow \verb~0~^i \verb~1~^j \in \mathcal L \land \verb~0~^j \verb~1~^j \not \in \mathcal L \Rightarrow \verb~0~^i \not \equiv_\mathcal L \verb~0~^j.
+  \]
+  Then $\varepsilon, \verb~0~, \verb~00~, \verb~000~, \dots$ are in different classes.
+  Then $\equiv_\mathcal L$ has infinitely many classes.
+  Then $\mathcal L$ is nonregular.
+\end{eg}
+
+\begin{eg}
+  Consider the language $\mathcal L = \verb~0~^* \verb~1~^* \cup \bigcup_{n = 0}^\infty \verb~1~* \verb~0~^n \verb~1~^n$.
+  The nonregularity of this language was not provable by using the pumping lemma.
+  However, note that 
+  \[
+    i \neq j \Rightarrow \verb~10~^i \verb~1~^i \in \mathcal L \land \verb~10~^j \verb~1~^i \not \in \mathcal L \Rightarrow \verb~10~^i \not \equiv_\mathcal L \verb~10~^j.
+  \]
+  Then $\verb~10~, \verb~100~, \verb~1000~, \dots$ are in different classes.
+  Then $\equiv_\mathcal L$ has infinitely many classes.
+  Then $\mathcal L$ is nonregular.
+\end{eg}
+
+\subsection{Proving optimality}
+
+\begin{eg}
+  We claim that the smallest possible DFA for the language $\verb~0~^* \cup \verb~1~^*$ is given by: 
+
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 3em]
+      \node[accepting, initial above, initial text=, state, minimum size = 2em] (0) {};
+      \node[below left = of 0, accepting, state, minimum size = 2em] (1) {};
+      \node[accepting, below right = of 0, state, minimum size = 2em] (2) {};
+      \node[below right = of 1, state, minimum size = 2em] (3) {};
+      \draw[->]
+      (0) edge[above left] node{\verb~0~} (1)
+      (1) edge[loop left] node{\verb~0~} (1)
+      (0) edge[above right] node{\verb~1~} (2)
+      (2) edge[loop right] node{\verb~1~} (2)
+      (1) edge[below left] node{\verb~1~} (3)
+      (2) edge[below right] node{\verb~0~} (3)
+      (3) edge[loop below] node{\verb~0~,\verb~1~} (3)
+      ;
+    \end{tikzpicture}
+  \end{center}
+  
+  Consider the following table of distinguishing suffixes: 
+  \begin{center}
+    \begin{tabular}{c|cccc}
+      & $\varepsilon$ & \verb~0~ & \verb~1~ & \verb~01~ \\ 
+      \hline 
+      $\varepsilon$ & & & & \\ 
+      \verb~0~ & \verb~1~ & & & \\ 
+      \verb~1~ & \verb~0~ & \verb~0~ & & \\ 
+      \verb~01~ & $\varepsilon$ & $\varepsilon$ & $\varepsilon$ & 
+    \end{tabular}
+  \end{center}
+  
+  Then $\varepsilon, \verb~0~, \verb~1~, \verb~01~$ are in different classes, that is, there are at least 4 equivalence classes.
+  Then the minimum size of any DFA for $\mathcal L$ is 4.
+  Then our DFA is optimal.
+\end{eg}
+
+\newpage
+
+\begin{eg}
+  Find the smallest possible DFA for $\mathcal L_k = \left \{ w : k \mid \left | w \right | \right \}$.
+  
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 3em]
+      \node[accepting, initial, initial text=, state, minimum size = 2em] (0) {};
+      \node[right = of 0, state, minimum size = 2em] (1) {};
+      \node[right = of 1, minimum size = 2em] (e) {\dots $k - 3$ reject states \dots};
+      \node[right = of e, state, minimum size = 2em] (km1) {};
+      \draw[->]
+      (0) edge[above] node{\verb~0~,\verb~1~} (1)
+      (1) edge[above] node{\verb~0~,\verb~1~} (e)
+      (e) edge[above] node{\verb~0~,\verb~1~} (km1)
+      (km1) edge[bend left, below] node{\verb~0~,\verb~1~} (0)
+      ;
+    \end{tikzpicture}
+  \end{center}
+  
+  To show that no smaller DFA exists, note that 
+  \[
+    i \neq j (\bmod k) \Rightarrow \verb~0~^i {\color{red} \verb~0~^{k - i}} \in \mathcal L_k \land \verb~0~^j {\color{red} \verb~0~^{k - i}} \not \in \mathcal L_k.
+  \]
+\end{eg}
+
+\begin{cor}
+  For each $k$, $\mathcal L_k$ is a language that can be recogbized by a DFA with $k$ states but not $k - 1$ states.
+\end{cor}
+
+\begin{eg}
+  Given $u = u_1 u_2 \cdots u_k$, define $\mathcal L = \Sigma^* u_1 u_2 \cdots u_k \Sigma^*$.
+  Find the smallest possible DFA for $\mathcal L$.
+  
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 3em]
+      \node[initial, initial text=, state, minimum size = 2em] (0) {};
+      \node[right = of 0, state, minimum size = 2em] (1) {};
+      \node[right = of 1, state, minimum size = 2em] (2) {};
+      \node[right = of 2, minimum size = 2em] (e) {\dots $k - 3$ reject states \dots};
+      \node[right = of e, accepting, state, minimum size = 2em] (k) {};
+      \draw[->]
+      (0) edge[above] node{$u_1$} (1)
+      (1) edge[above] node{$u_2$} (2)
+      (2) edge[above] node{$u_3$} (e)
+      (e) edge[above] node{$u_k$} (k)
+      ;
+    \end{tikzpicture}
+  \end{center}
+  
+  Note that one still needs to figure out the transitions for $\lnot u_1, \lnot u_2, \dots \lnot u_k$ from the respective nodes.
+  
+  However, to show that there exists no smaller DFA for $\mathcal L$, let $i, h \in \left \{ 0, 1, \dots, k \right \}$ where $i > j$.
+  Note that 
+  \[
+    u_1 u_2 \cdots u_i {\color{red} u_{i + 1} \cdots u_k} \in \mathcal L \land \underbrace{u_1 u_2 \cdots u_j {\color{red} u_{i + 1} \cdots u_k}}_{< k} \not \in \mathcal L.
+  \]
+  
+  Then $\varepsilon, u_1, u_1 u_2, \dots, u_1 u_2 \cdots u_k$ are in different classes of $\equiv_\mathcal L$.
+  Then $\mathcal L$ has at least $k + 1$ classes.
+\end{eg}
+
+\section{Context-free grammars}
+
+\subsection{Context-free grammars defined}
+
+\begin{eg}
+  A context-free grammar has an alphabet, for brevity we use $\Sigma = \left \{ \verb~a~, \verb~b~ \right \}$ here.
+  These are called ``terminals'' (alphabet symbols).
+  
+  The second component of a grammar is a set of variables $V = \left \{ S, A, B \right \}$.
+  These are called ``nonterminals.''
+  
+  Then there are what are known as substitution rules, for instance, 
+  \begin{align*}
+    S &\to A \\ 
+    S &\to B \\ 
+    A &\to \verb~a~ A \verb~b~ \\ 
+    A &\to \varepsilon \\ 
+    B &\to \verb~b~ B \verb~a~ \\ 
+    B &\to \varepsilon.
+  \end{align*}
+  Here $S$ is denoted the start variable.
+  
+  How is this a computational device? What strings does this accept? What strings does this reject?
+
+  It all comes down to \textit{derivation}: 
+  \begin{align*}
+    S &\to A & \text{rule \#1} \\ 
+    &\to \verb~a~ A \verb~b~ & \text{rule \#3} \\ 
+    &\to \verb~aa~ A \verb~bb~ & \text{rule \#3} \\ 
+    &\to \verb~aaa~ A \verb~bbb~ & \text{rule \#3} \\ 
+    &\to \verb~aaabbb~ & \text{rule \#4} 
+  \end{align*}
+  
+  It a string can be derived by some application of the rule, then the string is in the language, and vice versa.
+\end{eg}
+
+\begin{defn}
+  The {\boldmath \bfseries language} of a context-free grammar (CFG) is the set of all strings that can be derived.
+\end{defn}
+
+{\boldmath \bfseries Shorthand:} 
+\begin{align*}
+  S &\to A \, | \, B \\ 
+  A &\to \verb~a~ A \verb~b~ \, | \, \varepsilon \\ 
+  B &\to \verb~b~ B \verb~a~ \, | \, \varepsilon
+\end{align*}
+
+Then the language is $\mathcal L = \left \{ \verb~a~^n \verb~b~^n \cup \verb~b~^n \verb~a~^n : n \geq 0 \right \}$.
+
+\begin{defn}
+  A {\boldmath \bfseries context-free grammar} is a tuple $(V, \Sigma, R, S)$ where
+  \begin{itemize}
+    \item $V = $ a set of variables,  
+
+    \item $\Sigma = $ the alphabet,  
+
+    \item $R = $ the set of rules, and  
+
+    \item $S = $ the start variable.
+  \end{itemize}
+\end{defn}
+
+Then the CFG we discussed above can be written as 
+\[
+  (\left \{ S, A, B \right \}, \left \{ \verb~a~, \verb~b~ \right \}, \left \{ S \to A \, | \, B, A \to \verb~a~ A \verb~b~ \, | \, \varepsilon, B \to \verb~b~ B \verb~a~ \, | \, \varepsilon \right \}, S).
+\]
+
+\newpage
+
+\subsection{Reading a CFG}
+
+\begin{eg}
+  Consider the CFG with rules
+  \begin{align*}
+    S &\to AA \\ 
+    A &\to A.
+  \end{align*}
+  
+  The language is $\varnothing$.
+\end{eg}
+
+\begin{eg}
+  Consider the CFG with a single rule 
+  \begin{align*}
+    S &\to \verb~ab~ S \, | \, \verb~a~.
+  \end{align*}
+  
+  The language is $(\verb~ab~^*) \verb~a~$.
+\end{eg}
+
+\begin{eg}
+  Consider the CFG with a single rule 
+  \begin{align*}
+    S &\to \verb~a~ S \verb~b~ \, | \, \varepsilon.
+  \end{align*}
+  
+  The language is $\left \{ \verb~a~^n \verb~b~^n : n \geq 0 \right \}$.
+\end{eg}
+
+\begin{eg}
+  Consider the CFG with rules 
+  \begin{align*}
+    S &\to \verb~a~ S \verb~b~ \, | \, B \\ 
+    B &\to \verb~b~ B \, | \, \varepsilon.
+  \end{align*}
+  
+  The language is $\left \{ \verb~a~^n \verb~b~^m \verb~a~^n : n \geq 0 \land m \geq 0 \right \}$ or $\verb~a~^n \verb~b~^* \verb~a~^n$ where $n \geq 0$.
+\end{eg}
+
+\begin{eg}
+  Consider the CFG with a single rule 
+  \begin{align*}
+    S &\to SS \, | \, \verb~a~ S \, | \, \verb~b~.
+  \end{align*}
+  
+  The language is $\Sigma^* \verb~b~$.
+\end{eg}
+
+\begin{eg}
+  Consider the CFG with rules 
+  \begin{align*}
+    S &\to AB \\ 
+    A &\to \verb~a~ A \verb~a~ \, | \, \varepsilon \\ 
+    B &\to \verb~b~ B \verb~b~ \, | \, \varepsilon.
+  \end{align*}
+  
+  The language is $(\verb~aa~)^* (\verb~bb~)^*$.
+\end{eg}
+
+\begin{eg}
+  Consider the CFG with rules 
+  \begin{align*}
+    S &\to \varepsilon \, | \, \verb~a~ T \, | \, \verb~b~ T \\ 
+    T &\to \verb~a~ S \, | \, \verb~b~ S.
+  \end{align*}
+  
+  The language is $(\Sigma \Sigma)^*$.
+\end{eg}
+
+\newpage
+
+\subsection{Constructing CFGs}
+
+\begin{eg}
+  Consider the language $\mathcal L = \left \{ \verb~a~^n (\verb~a~ \cup \verb~b~)^n : n \geq 0 \right \}$.
+  
+  A CFG for this language is 
+  \begin{align*}
+    S &\to \verb~a~ S \verb~a~ \, | \, \verb~a~ S \verb~b~ \, | \, \varepsilon.
+  \end{align*}
+\end{eg}
+
+\begin{eg}
+  Consider the language $\mathcal L = \left \{ (\verb~a~ \cup \verb~b~)^n \verb~a~ (\verb~a~ \cup \verb~b~)^n : n \geq 0 \right \}$.
+  
+  A CFG for this language is 
+  \begin{align*}
+    S &\to T S T \\ 
+    T &\to \verb~a~ \, | \, \verb~b~.
+  \end{align*}
+\end{eg}
+
+\begin{eg}
+  Consider the language $\mathcal L = \left \{ \verb~a~^n \verb~b~^m : n \geq m \right \}$.
+\end{eg}
+
+\begin{eg}
+  Consider the language $\mathcal L = \left \{ \verb~a~^n \verb~b~^m : n > m \right \}$.
+\end{eg}
+
+\begin{eg}
+  Consider the language $\mathcal L = \left \{ \verb~a~^n \verb~b~^m : 0 \leq m \leq 3 n \right \}$.
+
+  A CFG for this language is 
+  \begin{align*}
+    S &\to \verb~a~ S B B B \, | \, \varepsilon \\ 
+    T &\to \verb~b~ \, | \, \varepsilon.
+  \end{align*}
+\end{eg}
+
+\begin{eg}
+  Consider the language $\mathcal L = \left \{ w : w = w^R \right \}$.
+  
+  A CFG for this language is 
+  \begin{align*}
+    S &\to \verb~a~ S \verb~a~ \, | \, \verb~b~ S \verb~b~ \, | \, \verb~a~ \, | \, \verb~b~ \, | \, \varepsilon.
+  \end{align*}
+\end{eg}
 
 \end{document}
