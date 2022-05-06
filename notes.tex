@@ -1,6 +1,8 @@
 \documentclass{notes}
 \usetikzlibrary{shapes, shapes.geometric}
 \usepackage{pgf-pie} 
+\usepackage{tikz-qtree}
+\usepackage{colortbl}
 
 \class{CS 181 (Introduction to Formal Languages and Automata Theory)}
 
@@ -2913,9 +2915,9 @@ There are 3 methods to prove nonregularity:
 
 {\boldmath \bfseries Shorthand:} 
 \begin{align*}
-  S &\to A \, | \, B \\ 
-  A &\to \verb~a~ A \verb~b~ \, | \, \varepsilon \\ 
-  B &\to \verb~b~ B \verb~a~ \, | \, \varepsilon
+  S &\to A \; | \; B \\ 
+  A &\to \verb~a~ A \verb~b~ \; | \; \varepsilon \\ 
+  B &\to \verb~b~ B \verb~a~ \; | \; \varepsilon
 \end{align*}
 
 Then the language is $\mathcal L = \left \{ \verb~a~^n \verb~b~^n \cup \verb~b~^n \verb~a~^n : n \geq 0 \right \}$.
@@ -2935,7 +2937,7 @@ Then the language is $\mathcal L = \left \{ \verb~a~^n \verb~b~^n \cup \verb~b~^
 
 Then the CFG we discussed above can be written as 
 \[
-  (\left \{ S, A, B \right \}, \left \{ \verb~a~, \verb~b~ \right \}, \left \{ S \to A \, | \, B, A \to \verb~a~ A \verb~b~ \, | \, \varepsilon, B \to \verb~b~ B \verb~a~ \, | \, \varepsilon \right \}, S).
+  (\left \{ S, A, B \right \}, \left \{ \verb~a~, \verb~b~ \right \}, \left \{ S \to A \; | \; B, A \to \verb~a~ A \verb~b~ \; | \; \varepsilon, B \to \verb~b~ B \verb~a~ \; | \; \varepsilon \right \}, S).
 \]
 
 \newpage
@@ -2955,7 +2957,7 @@ Then the CFG we discussed above can be written as
 \begin{eg}
   Consider the CFG with a single rule 
   \begin{align*}
-    S &\to \verb~ab~ S \, | \, \verb~a~.
+    S &\to \verb~ab~ S \; | \; \verb~a~.
   \end{align*}
   
   The language is $(\verb~ab~^*) \verb~a~$.
@@ -2964,7 +2966,7 @@ Then the CFG we discussed above can be written as
 \begin{eg}
   Consider the CFG with a single rule 
   \begin{align*}
-    S &\to \verb~a~ S \verb~b~ \, | \, \varepsilon.
+    S &\to \verb~a~ S \verb~b~ \; | \; \varepsilon.
   \end{align*}
   
   The language is $\left \{ \verb~a~^n \verb~b~^n : n \geq 0 \right \}$.
@@ -2973,8 +2975,8 @@ Then the CFG we discussed above can be written as
 \begin{eg}
   Consider the CFG with rules 
   \begin{align*}
-    S &\to \verb~a~ S \verb~b~ \, | \, B \\ 
-    B &\to \verb~b~ B \, | \, \varepsilon.
+    S &\to \verb~a~ S \verb~b~ \; | \; B \\ 
+    B &\to \verb~b~ B \; | \; \varepsilon.
   \end{align*}
   
   The language is $\left \{ \verb~a~^n \verb~b~^m \verb~a~^n : n \geq 0 \land m \geq 0 \right \}$ or $\verb~a~^n \verb~b~^* \verb~a~^n$ where $n \geq 0$.
@@ -2983,7 +2985,7 @@ Then the CFG we discussed above can be written as
 \begin{eg}
   Consider the CFG with a single rule 
   \begin{align*}
-    S &\to SS \, | \, \verb~a~ S \, | \, \verb~b~.
+    S &\to SS \; | \; \verb~a~ S \; | \; \verb~b~.
   \end{align*}
   
   The language is $\Sigma^* \verb~b~$.
@@ -2993,8 +2995,8 @@ Then the CFG we discussed above can be written as
   Consider the CFG with rules 
   \begin{align*}
     S &\to AB \\ 
-    A &\to \verb~a~ A \verb~a~ \, | \, \varepsilon \\ 
-    B &\to \verb~b~ B \verb~b~ \, | \, \varepsilon.
+    A &\to \verb~a~ A \verb~a~ \; | \; \varepsilon \\ 
+    B &\to \verb~b~ B \verb~b~ \; | \; \varepsilon.
   \end{align*}
   
   The language is $(\verb~aa~)^* (\verb~bb~)^*$.
@@ -3003,8 +3005,8 @@ Then the CFG we discussed above can be written as
 \begin{eg}
   Consider the CFG with rules 
   \begin{align*}
-    S &\to \varepsilon \, | \, \verb~a~ T \, | \, \verb~b~ T \\ 
-    T &\to \verb~a~ S \, | \, \verb~b~ S.
+    S &\to \varepsilon \; | \; \verb~a~ T \; | \; \verb~b~ T \\ 
+    T &\to \verb~a~ S \; | \; \verb~b~ S.
   \end{align*}
   
   The language is $(\Sigma \Sigma)^*$.
@@ -3017,47 +3019,672 @@ Then the CFG we discussed above can be written as
 \begin{eg}
   Consider the language $\mathcal L = \left \{ \verb~a~^n (\verb~a~ \cup \verb~b~)^n : n \geq 0 \right \}$.
   
-  A CFG for this language is 
+  A CFG for this language is given by
   \begin{align*}
-    S &\to \verb~a~ S \verb~a~ \, | \, \verb~a~ S \verb~b~ \, | \, \varepsilon.
+    S &\to \verb~a~ S \verb~a~ \; | \; \verb~a~ S \verb~b~ \; | \; \varepsilon.
   \end{align*}
 \end{eg}
 
 \begin{eg}
   Consider the language $\mathcal L = \left \{ (\verb~a~ \cup \verb~b~)^n \verb~a~ (\verb~a~ \cup \verb~b~)^n : n \geq 0 \right \}$.
   
-  A CFG for this language is 
+  A CFG for this language is given by
   \begin{align*}
     S &\to T S T \\ 
-    T &\to \verb~a~ \, | \, \verb~b~.
+    T &\to \verb~a~ \; | \; \verb~b~.
   \end{align*}
-\end{eg}
-
-\begin{eg}
-  Consider the language $\mathcal L = \left \{ \verb~a~^n \verb~b~^m : n \geq m \right \}$.
-\end{eg}
-
-\begin{eg}
-  Consider the language $\mathcal L = \left \{ \verb~a~^n \verb~b~^m : n > m \right \}$.
 \end{eg}
 
 \begin{eg}
   Consider the language $\mathcal L = \left \{ \verb~a~^n \verb~b~^m : 0 \leq m \leq 3 n \right \}$.
 
-  A CFG for this language is 
+  A CFG for this language is given by
   \begin{align*}
-    S &\to \verb~a~ S B B B \, | \, \varepsilon \\ 
-    T &\to \verb~b~ \, | \, \varepsilon.
+    S &\to \verb~a~ S B B B \; | \; \varepsilon \\ 
+    T &\to \verb~b~ \; | \; \varepsilon.
   \end{align*}
 \end{eg}
 
 \begin{eg}
   Consider the language $\mathcal L = \left \{ w : w = w^R \right \}$.
   
-  A CFG for this language is 
+  A CFG for this language is given by
   \begin{align*}
-    S &\to \verb~a~ S \verb~a~ \, | \, \verb~b~ S \verb~b~ \, | \, \verb~a~ \, | \, \verb~b~ \, | \, \varepsilon.
+    S &\to \verb~a~ S \verb~a~ \; | \; \verb~b~ S \verb~b~ \; | \; \verb~a~ \; | \; \verb~b~ \; | \; \varepsilon.
   \end{align*}
+\end{eg}
+
+\begin{eg}
+  Consider the language $\mathcal L = \left \{ \verb~a~^n \verb~b~^m : n \geq m \right \}$.
+  
+  A CFG for this language is given by 
+  \begin{align*}
+    S &\to \verb~a~ S \; | \; \verb~a~ S \verb~b~ \; | \; \varepsilon.
+  \end{align*}
+\end{eg}
+
+\begin{eg}
+  Consider the language $\mathcal L = \left \{ \verb~a~^n \verb~b~^m : n > m \right \}$.
+  
+  A CFG for this language is given by 
+  \begin{align*}
+    S &\to \verb~a~ S \; | \; \verb~a~ S \verb~b~ \; | \; \verb~a~.
+  \end{align*}
+\end{eg}
+
+\begin{eg}
+  Consider the language $\mathcal L = \left \{ w : \text{$w$ contains at least three \verb~a~s} \right \}$.
+
+  A CFG for this language is given by 
+  \begin{align*}
+    S &\to G \verb~a~ G \verb~a~ G \verb~a~ G \\ 
+    G &\to  \verb~a~ G \; | \; \verb~b~ G \; | \; \varepsilon.
+  \end{align*}
+\end{eg}
+
+\begin{eg}
+  Consider the language $\mathcal L = \left \{ w : \text{$w$ contains \verb~abb~ as a substring} \right \}$.
+  
+  A CFG for this language is given by 
+  \begin{align*}
+    S &\to G \verb~abb~ G \\ 
+    G &\to \verb~a~ G \, | \, \verb~b~ G \, | \, \varepsilon.
+  \end{align*}
+\end{eg}
+
+\begin{eg}
+  Consider the language $\mathcal L = \left \{ \verb~a~^n \verb~b~^{m + n} \verb~a~^m : n, m \geq 0 \right \}$.
+  
+  A CFG for this language is given by 
+  \begin{align*}
+    S &\to L R \\ 
+    L &\to \verb~a~ L \verb~b~ \; | \; \varepsilon \\ 
+    R &\to \verb~b~ R \verb~a~ \; | \; \varepsilon.
+  \end{align*}
+\end{eg}
+
+\begin{eg}
+  Consider the alphabet $\Sigma = \left \{ {\color{red} \verb~a~}, {\color{red} \verb~b~}, {\color{red} \varepsilon}, {\color{red} \varnothing}, {\color{red} (}, {\color{red} )}, {\color{red} \cup}, {\color{red} {}^*} \right \}$ and the language $\mathcal L = \text{all regular expressions}$.
+
+  A CFG for this language is given by 
+  \begin{align*}
+    S &\to {\color{red} \varepsilon} \; | \; {\color{red} \varnothing} \; | \; {\color{red} \verb~a~} \; | \; {\color{red} \verb~b~} \; | \; {\color{red} (} S S {\color{red} )} \; | \; {\color{red} (} S {\color{red} \cup} S {\color{red} )} \; | \; {\color{red} (} S {\color{red} {}^*} {\color{red} )}.
+  \end{align*}
+\end{eg}
+
+\newpage
+
+\begin{eg}
+  Consider a programming language: 
+  \begin{itemize}
+    \item identifiers = $(\verb~a~ \cup \cdots \cup \verb~z~) (\verb~a~ \cup \cdots \cup \verb~z~ \cup \verb~0~ \cup \cdots \cup \verb~0~)^*$
+
+    \item numbers = positive integers
+
+    \item statements of 2 types: 
+
+    \begin{itemize}
+      \item assignment
+
+      \item conditional
+    \end{itemize}
+    
+    \item program = a single statement
+  \end{itemize}
+  
+  Now consider the alphabet $\Sigma = \left \{ \verb~a~, \verb~b~, \dots, \verb~z~, \verb~0~, \verb~1~, \dots, \verb~9~, \verb~>~, \verb~=~, \verb~<~, \text{\textvisiblespace}, \verb~¶~ \right \}$ and the language $\mathcal L = \text{ all valid programs}$.
+  
+  A CFG for this language is given by 
+  \begin{align*}
+    S &\to A \; | \; C \\ 
+    D^+ &\to  \verb~1~ \; | \; \verb~2~ \; | \; \cdots \; | \; \verb~9~ & \text{nonzero digit} \\
+    D &\to \verb~0~ \; | \; D^+ & \text{digit} \\ 
+    L &\to \verb~a~ \; | \; \verb~b~ \; | \; \cdots \; | \; \verb~z~ & \text{letter} \\ 
+    I &\to I D \; | \; I L \; | \; L & \text{identifier} \\ 
+    N &\to N D \; | \; D^+ & \text{number} \\ 
+    Q &\to I \; | \; N & \text{numeric quantity} \\ 
+    W &\to \text{\textvisiblespace} \; | \; \verb~¶~ \; | \; W & \text{whitespace} \\ 
+    W' &\to \varepsilon \; | \; W & \text{optional whitespace} \\ 
+    T &\to Q W' \; \verb~=~ \; W' Q \; | \; Q W' \; \verb~<~ \; W' Q \; | \; Q W' \; \verb~>~ \; W' Q & \text{test} \\ 
+    A &\to I W' \; \verb~=~ \; W' Q & \text{assignment} \\ 
+    C &\to \verb~if~ \; W T \; \verb~then~ \; W S \; | \; \verb~if~ \; W T W \; \verb~then~ \; W S W \; \verb~then~ \; W S & \text{conditional}.
+  \end{align*}
+\end{eg}
+
+\newpage
+
+\subsection{Ambiguity}
+
+\begin{eg}
+  Consider the CFG with rules
+  \begin{align*}
+    S &\to S' \; | \; S'' \\ 
+    S' &\to \verb~a~ \; S' \; \verb~b~ \; | \; \varepsilon \\ 
+    S'' &\to \verb~a~ \; S'' \; | \; \varepsilon.
+  \end{align*}
+  Note that this grammar generates the language $\left \{ \verb~a~^n \verb~b~^n : n \geq 0 \right \} \cup \verb~a~^*$.
+  
+  A parse tree for the string \verb~aaabbb~ is given by: 
+
+  \begin{center}
+    \Tree[.$S$ [.$S'$ \verb~a~ [.$S'$ \verb~a~ [.$S'$ \verb~a~ [.$S'$ $\varepsilon$ ] \verb~b~ ] \verb~b~ ] \verb~b~ ]]
+  \end{center}
+  
+  A parse tree for the string \verb~aaaa~ is given by: 
+
+  \begin{center}
+    \Tree[.$S$ [.$S''$ \verb~a~ [.$S''$ \verb~a~ [.$S''$ \verb~a~ [.$S''$ \verb~a~ [.$S''$ $\varepsilon$ ]]]]]]
+  \end{center} 
+  
+  We can find two parse trees for the string $\varepsilon$: 
+
+  \begin{minipage}{0.45 \textwidth}
+    \begin{center}
+      \Tree[.$S$ [.$S'$ $\varepsilon$ ]]
+    \end{center}
+  \end{minipage}%
+  \hspace*{\fill}%
+  \begin{minipage}{0.45 \textwidth}
+    \begin{center}
+      \Tree[.$S$ [.$S''$ $\varepsilon$ ]]
+    \end{center}
+  \end{minipage}
+\end{eg}
+
+\begin{defn}
+  A grammar is called {\boldmath \bfseries ambiguous} if a string has more than one parse tree.
+  Otherwise the grammar is called ``unambiguous.''
+\end{defn}
+
+\begin{eg}
+  Note that the CFG with rules 
+  \begin{align*}
+    S &\to S' \; | \; S'' \\ 
+    S' &\to \verb~a~ \; S' \; \verb~b~ \; | \; \varepsilon \\ 
+    S'' &\to \verb~a~ \; S'' \; | \; \varepsilon
+  \end{align*}
+  is ambiguous since the string $\varepsilon$ has two parse trees.
+  The ambiguity is fixed in the CFG with rules
+  \begin{align*}
+    S &\to S' \; | \; S'' \\ 
+    S' &\to \verb~a~ \; S' \; \verb~b~ \; | \; \varepsilon \\ 
+    S'' &\to \verb~a~ \; S'' \; | \; \verb~a~.
+  \end{align*}
+\end{eg}
+
+\begin{eg}
+  Note that the CFG with rules 
+  \begin{align*}
+    S &\to A B A B \\ 
+    A &\to \verb~a~ \; A \; | \; \varepsilon \\ 
+    B &\to \verb~b~ \; B \; | \; \varepsilon
+  \end{align*}
+  generates language $\verb~a~^* \verb~b~^* \verb~a~^* \verb~b~^*$ and ambiguously generates the string \verb~aa~: 
+
+  \begin{minipage}{0.45 \textwidth}
+    \begin{center}
+      \Tree[.$S$ [.$A$ \verb~a~ [.$A$ \verb~a~ [.$A$ $\varepsilon$ ]]] [.$B$ $\varepsilon$ ] [.$A$ $\varepsilon$ ] [.$B$ $\varepsilon$ ]]
+    \end{center}
+  \end{minipage}%
+  \hspace*{\fill}%
+  \begin{minipage}{0.45 \textwidth}
+    \begin{center}
+      \Tree[.$S$ [.$A$ \verb~a~ [.$A$ $\varepsilon$ ]] [.$B$ $\varepsilon$ ] [.$A$ \verb~a~ [.$A$ $\varepsilon$ ] ] [.$B$ $\varepsilon$ ]]
+    \end{center}
+  \end{minipage}
+  
+  The ambiguity is fixed in the CFG with rules 
+  \begin{align*}
+    S &\to {\color{red} \overbrace{\color{black} \varepsilon \; | \; A \; | \; B \; | \; A B \; | \; B A \; | \; A B A \; | \; B A B \; | \; A B A B}^{\text{8 disjoint languages}}} \\ 
+    A &\to \verb~a~ \; A \; | \; \verb~a~ \\ 
+    B &\to \verb~b~ \; B \; | \; \verb~b~.
+  \end{align*}
+\end{eg}
+
+\newpage
+
+\begin{eg}
+  Note that the CFG with a single rule 
+  \begin{align*}
+    S &\to \verb~a~ \; S \; \verb~b~ \; | \; \verb~aa~ \; S \; \verb~b~ \; | \; \varepsilon
+  \end{align*}
+  generates the language $\left \{ \verb~a~^n \verb~b~^m : m \leq n \leq 2 m \right \}$ and ambiguously generates the string \verb~aaabb~: 
+  
+  \begin{minipage}{0.45 \textwidth}
+    \begin{center}
+      \Tree[.$S$ \verb~a~ [.$S$ \verb~a~ \verb~a~ [.$S$ $\varepsilon$ ] \verb~b~ ] \verb~b~ ]
+    \end{center}
+  \end{minipage}%
+  \hspace*{\fill}%
+  \begin{minipage}{0.45 \textwidth}
+    \begin{center}
+      \Tree[.$S$ \verb~a~ \verb~a~ [.$S$ \verb~a~ [.$S$ $\varepsilon$ ] \verb~b~ ] \verb~b~ ]
+    \end{center}
+  \end{minipage}
+  
+  The ambiguity is fixed in the CFG with rules 
+  \begin{align*}
+    S &\to \verb~a~ \; S \; \verb~b~ \; | \; T \; | \; \varepsilon \\ 
+    T &\to \verb~aa~ \; S \; \verb~b~ \; | \; \verb~aab~.
+  \end{align*}
+\end{eg}
+
+\begin{eg}
+  Note that the CFG with a single rule 
+  \begin{align*}
+    P &\to P P \; | \; \verb~a~ \; P \; \verb~b~ \; | \; \verb~ab~
+  \end{align*}
+  generates the language of properly nested parentheses, where \verb~a~ represents \verb~(~ and \verb~b~ represents \verb~)~, and ambiguously generates the string \verb~ababab~: 
+
+  \begin{minipage}{0.45 \textwidth}
+    \begin{center}
+      \Tree[.$P$ [.$P$ \verb~a~ \verb~b~ ] [.$P$ [.$P$ [.$P$ \verb~a~ \verb~b~ ] [.$P$ \verb~a~ \verb~b~ ]]]]
+    \end{center}
+  \end{minipage}%
+  \hspace*{\fill}%
+  \begin{minipage}{0.45 \textwidth}
+    \begin{center}
+      \Tree[.$P$ [.$P$ [.$P$ \verb~a~ \verb~b~ ] [.$P$ \verb~a~ \verb~b~ ]] [.$P$ \verb~a~ \verb~b~ ]]
+    \end{center}
+  \end{minipage}
+  
+  Consider the following graph: 
+  \begin{center}
+    \begin{tikzpicture}[scale = 0.75]
+      \begin{axis}[
+        xmin = 0, xmax = 11, 
+        ymin = 0, ymax = 5, 
+        axis x line = bottom, 
+        axis y line = left, 
+        xlabel = symbols read, 
+        ylabel = \# \verb~a~s - \# \verb~b~s]
+        \addplot[no marks, very thick, domain = 0 : 1]{x};
+        \addplot[no marks, very thick, domain = 1 : 2]{2 - x};
+        \addplot[no marks, very thick, domain = 2 : 4]{x - 2};
+        \addplot[no marks, very thick, domain = 4 : 5]{6 - x};
+        \addplot[no marks, very thick, domain = 5 : 6]{x - 4};
+        \addplot[no marks, very thick, domain = 6 : 8]{8 - x};
+        \addplot[no marks, very thick, domain = 8 : 9]{x - 8};
+        \addplot[no marks, very thick, domain = 9 : 10]{10 - x};
+      \end{axis}
+    \end{tikzpicture}
+  \end{center}
+  
+  Note that we can unambiguously split this graph into properly parenthesized expressions that have an outer pair of parentheses: 
+  \begin{center}
+    \begin{tikzpicture}[scale = 0.75]
+      \begin{axis}[
+        xmin = 0, xmax = 11, 
+        ymin = 0, ymax = 5, 
+        axis x line = bottom, 
+        axis y line = left, 
+        xlabel = symbols read, 
+        ylabel = \# \verb~a~s - \# \verb~b~s]
+        \addplot[no marks, very thick, domain = 0 : 1]{x};
+        \addplot[no marks, very thick, domain = 1 : 2]{2 - x};
+        \addplot[red, very thick, dashed] (2, 0) to (2, 3);
+        \addplot[no marks, very thick, domain = 2 : 4]{x - 2};
+        \addplot[no marks, very thick, domain = 4 : 5]{6 - x};
+        \addplot[no marks, very thick, domain = 5 : 6]{x - 4};
+        \addplot[no marks, very thick, domain = 6 : 8]{8 - x};
+        \addplot[red, very thick, dashed] (8, 0) to (8, 3);
+        \addplot[no marks, very thick, domain = 8 : 9]{x - 8};
+        \addplot[no marks, very thick, domain = 9 : 10]{10 - x};
+      \end{axis}
+    \end{tikzpicture}
+  \end{center}
+  
+  Then the ambiguity is fixed in the CFG with the single rule 
+  \begin{align*}
+    P &\to {\color{red} \underbrace{\color{black} \verb~ab~ \; | \; \verb~a~ \; P \; \verb~b~}_{\text{1 pair of outer parentheses}}} \; | \; {\color{red} \underbrace{\color{black} \verb~ab~ \; P \; | \; \verb~a~ \; P \; \verb~b~ \; P}_{\text{$\geq 2$ pairs of outer parentheses}}}
+  \end{align*}
+\end{eg}
+
+\begin{eg}
+  Consider the language $\mathcal L = \left \{ w : \text{$w$ has equally many \verb~a~s and \verb~b~s} \right \}$.
+
+  Consider the following graph: 
+  \begin{center}
+    \begin{tikzpicture}[scale = 0.75]
+      \begin{axis}[
+        xmin = 0, xmax = 17, 
+        ymin = -5, ymax = 5, 
+        axis x line = center, 
+        axis y line = left, 
+        every axis x label/.style = {
+          at = {(ticklabel* cs:1.05)},
+          anchor = west,
+        },
+        xlabel = symbols read, 
+        ylabel = \# \verb~a~s - \# \verb~b~s]
+        \addplot[no marks, very thick, domain = 0 : 1]{x};
+        \addplot[no marks, very thick, domain = 1 : 2]{2 - x};
+        \addplot[no marks, very thick, domain = 2 : 4]{x - 2};
+        \addplot[no marks, very thick, domain = 4 : 9]{6 - x};
+        \addplot[no marks, very thick, domain = 9 : 11]{x - 12};
+        \addplot[no marks, very thick, domain = 11 : 12]{10 - x};
+        \addplot[no marks, very thick, domain = 12 : 15]{x - 14};
+        \addplot[no marks, very thick, domain = 15 : 16]{16 - x};
+      \end{axis}
+    \end{tikzpicture}
+  \end{center}
+  
+  Note that we can unambiguously split this graph into maximal contiguous sections that lie completely above or below the $x$-axis: 
+  \begin{center}
+    \begin{tikzpicture}[scale = 0.75]
+      \begin{axis}[
+        xmin = 0, xmax = 17, 
+        ymin = -5, ymax = 5, 
+        axis x line = center, 
+        axis y line = left, 
+        every axis x label/.style = {
+          at = {(ticklabel* cs:1.05)},
+          anchor = west,
+        },
+        xlabel = symbols read, 
+        ylabel = \# \verb~a~s - \# \verb~b~s]
+        \addplot[no marks, very thick, domain = 0 : 1]{x};
+        \addplot[no marks, very thick, domain = 1 : 2]{2 - x};
+        \addplot[no marks, very thick, domain = 2 : 4]{x - 2};
+        \addplot[red, very thick, dashed] (6, -4) to (6, 4);
+        \addplot[no marks, very thick, domain = 4 : 9]{6 - x};
+        \addplot[no marks, very thick, domain = 9 : 11]{x - 12};
+        \addplot[no marks, very thick, domain = 11 : 12]{10 - x};
+        \addplot[no marks, very thick, domain = 12 : 15]{x - 14};
+        \addplot[red, very thick, dashed] (14, -4) to (14, 4);
+        \addplot[no marks, very thick, domain = 15 : 16]{16 - x};
+      \end{axis}
+    \end{tikzpicture}
+  \end{center}
+  
+  Then the ambiguity is fixed in the CFG with rules 
+  \begin{align*}
+    S &\to S' \; | \; S'' \; | \; \varepsilon \\ 
+    S' &\to P \; | \; P S'' \\ 
+    S'' &\to Q \; | \; Q S' \\ 
+    P &\to \verb~ab~ \; | \; \verb~a~ \; P \; \verb~b~ \; | \; \verb~ab~ \; P \; | \; \verb~a~ \; P \; \verb~b~ \; P \\ 
+    Q &\to \verb~ba~ \; | \; \verb~b~ \; Q \; \verb~a~ \; | \; \verb~ba~ \; Q \; | \; \verb~b~ \; Q \; \verb~a~ \; Q
+  \end{align*}
+\end{eg}
+
+\begin{eg}
+  Consider the language $\mathcal L = \left \{ w : \text{every prefix of $w$ has at least as many \verb~a~s as \verb~b~s} \right \}$.
+
+  Consider the following graph: 
+  \begin{center}
+    \begin{tikzpicture}[scale = 0.75]
+      \begin{axis}[
+        xmin = 0, xmax = 17, 
+        ymin = -5, ymax = 5, 
+        axis x line = center, 
+        axis y line = left, 
+        every axis x label/.style = {
+          at = {(ticklabel* cs:1.05)},
+          anchor = west,
+        },
+        xlabel = symbols read, 
+        ylabel = \# \verb~a~s - \# \verb~b~s]
+        \addplot[no marks, very thick, domain = 0 : 1]{x};
+        \addplot[no marks, very thick, domain = 1 : 2]{2 - x};
+        \addplot[no marks, very thick, domain = 2 : 4]{x - 2};
+        \addplot[no marks, very thick, domain = 4 : 6]{6 - x};
+        \addplot[no marks, very thick, domain = 6 : 9]{x - 6};
+        \addplot[no marks, very thick, domain = 9 : 11]{12 - x};
+        \addplot[no marks, very thick, domain = 11 : 12]{x - 10};
+        \addplot[no marks, very thick, domain = 12 : 13]{14 - x};
+        \addplot[no marks, very thick, domain = 13 : 15]{x - 12};
+        \addplot[no marks, very thick, domain = 15 : 16]{18 - x};
+      \end{axis}
+    \end{tikzpicture}
+  \end{center}
+  
+  % todo
+\end{eg}
+
+\subsection{Ambiguity in English}
+
+Consider the following sentences: 
+\begin{quote}
+  The hunter attacked the bear with a stick.
+\end{quote}
+\begin{quote}
+  The complex houses married students.
+\end{quote}
+\begin{quote}
+  The bird the cat the dog the boy saw barked at chased flew away.
+\end{quote}
+
+These examples demonstrate the ambiguity in English.
+
+\section{Pushdown Automata}
+
+\subsection{Definitions}
+
+We may represent an NFA in the follwing way: 
+
+\begin{center}
+  {\color{red} Input}
+
+  \begin{tabular}{c|c|c|c|c|c|c|c|c|c}
+    \hline
+    $\cdots$ & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 1 & $\cdots$ \\ 
+    \hline
+  \end{tabular}
+
+  \begin{tabular}{cccccccccc}
+    \phantom{$\cdots$} & \phantom{0} & \phantom{1} & $\uparrow$ & \phantom{0} & \phantom{1} & \phantom{0} & \phantom{0} & \phantom{1} & \phantom{$\cdots$} \\ 
+    &&& \fbox{$q_{27}$} &&&&&& \\ 
+    &&& {\color{red} State} &&&&&&
+  \end{tabular}
+\end{center}
+
+Then a PDA may be represented in the following way: 
+
+\begin{center}
+  \begin{minipage}{0.45 \textwidth}
+    \begin{center}
+      {\color{red} Input}
+      \vspace{0.5ex}
+
+      \begin{tabular}{c|c|c|c|c|c|c|c|c|c}
+        \hline
+        $\cdots$ & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 1 & $\cdots$ \\ 
+        \hline
+      \end{tabular}
+
+      \begin{tabular}{cccccccccc}
+        \phantom{$\cdots$} & \phantom{0} & \phantom{1} & $\uparrow$ & \phantom{0} & \phantom{1} & \phantom{0} & \phantom{0} & \phantom{1} & \phantom{$\cdots$} \\ 
+        &&& \fbox{$q_{27}$} &&&&&& \\ 
+        &&& {\color{red} State} &&&&&&
+      \end{tabular}
+    \end{center}
+  \end{minipage}%
+  \begin{minipage}{0.45 \textwidth}
+    \begin{center}
+      {\color{red} Stack}
+      \vspace{0.5ex}
+
+      \begin{tabular}{|c|}
+        \hline
+        $\gamma$ \\ 
+        \hline 
+        $\beta$ \\ 
+        \hline
+        $\alpha$ \\ 
+        \hline 
+        $\vdots$ \\ 
+      \end{tabular}
+    \end{center}
+  \end{minipage}
+\end{center}
+
+Transitions in PDAs are in the form of $\alpha, \beta \to \gamma$ where $\alpha$ is the input symbol to read (read nothing if $\alpha = \varepsilon$), $\beta$ is the symbol to pop from the top of the stack (do not pop if $\beta = \varepsilon$), and $\gamma$ is the symbol to push onto the stack (do not push if $\gamma = \varepsilon$).
+
+\begin{eg}
+  A PDA for $\mathcal L = \left \{ \verb~a~^n \verb~b~^n : n \geq 0 \right \}$ is given by: 
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 5em]
+      \node[accepting, initial, initial text=, state, minimum size = 2em] (s) {};
+      \node[right = of s, state, minimum size = 2em] (m1) {};
+      \node[right = of m1, state, minimum size = 2em] (m2) {};
+      \node[color = orange, accepting, right = of m2, state, minimum size = 2em] (e) {\footnotemark[3]};
+      \draw[->]
+      (s) edge[above] node{$\varepsilon, \varepsilon \to \perp$} (m1)
+      (m1) edge[loop above] node{$\verb~a~, \varepsilon \to \verb~a~$} (m1)
+      (m1) edge[above] node{$\varepsilon, \varepsilon \to \varepsilon$} (m2)
+      (m2) edge[loop above] node{\color{red} $\verb~b~, \verb~a~ \to \varepsilon$\footnotemark[1]} (m2)
+      (m2) edge[above] node{\color{blue} $\varepsilon, \perp \to \varepsilon$\footnotemark[2]} (e)
+      ;
+    \end{tikzpicture}
+  \end{center}
+  \footnotetext[1]{\color{red} Usable only if next symbol is \verb~b~ and \verb~a~ is on top of the stack.}
+  \footnotetext[2]{\color{blue} Usable only if $\perp$ is on top of the stack.}
+  \footnotetext[3]{\color{orange} The PDA blows up if input is not finished.}
+  
+  Note that the input alphabet is $\Sigma = \left \{ \verb~a~, \verb~b~ \right \}$ while the stack alphabet is $\Gamma = \left \{ \perp, \verb~a~ \right \}$ where $\perp$ is the bottom marker used to the bottom of the stack.
+\end{eg}
+
+\begin{eg}
+  A PDA for $\mathcal L = \left \{ \verb~a~^n \verb~b~^m : n \geq m \geq 0 \right \}$ is given by: 
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 5em]
+      \node[accepting, initial, initial text=, state, minimum size = 2em] (s) {};
+      \node[accepting, right = of s, state, minimum size = 2em] (e) {};
+      \draw[->]
+      (s) edge[loop above] node{$\verb~a~, \varepsilon \to \verb~a~$} (s)
+      (s) edge[above] node{$\varepsilon, \varepsilon \to \varepsilon$} (e)
+      (e) edge[loop above] node{$\verb~b~, \verb~a~ \to \varepsilon$} (e)
+      ;
+    \end{tikzpicture}
+  \end{center}
+\end{eg}
+
+\begin{eg}
+  A PDA for $\mathcal L = \left \{ w : w = w^R \right \}$ is given by: 
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 8em]
+      \node[initial, initial text=, state, minimum size = 2em] (s) {};
+      \node[right = of s, state, minimum size = 2em] (1) {};
+      \node[right = of 1, state, minimum size = 2em] (2) {};
+      \node[accepting, right = of 2, state, minimum size = 2em] (e) {};
+      \draw[->]
+      (s) edge[above] node{$\varepsilon, \varepsilon \to \perp$} (1)
+      (1) edge[loop above] node[align = center]{$\verb~a~, \varepsilon \to \verb~a~$ \\ $\verb~b~, \varepsilon \to \verb~b~$} (1)
+      (1) edge[above] node[align = center]{$\varepsilon, \varepsilon \to \varepsilon$ \\ $\verb~a~, \varepsilon \to \varepsilon$ \\ $\verb~b~, \varepsilon \to \varepsilon$} (2)
+      (2) edge[loop above] node[align = center]{$\verb~a~, \verb~a~ \to \varepsilon$ \\ $\verb~b~, \verb~b~ \to \varepsilon$} (2)
+      (2) edge[above] node{$\varepsilon, \perp \to \varepsilon$} (e)
+      ;
+    \end{tikzpicture}
+  \end{center}
+\end{eg}
+
+\begin{eg}
+  A PDA for $\mathcal L = \left \{ w : \text{$w$ has equally many \verb~a~s and \verb~b~s} \right \}$ is given by: 
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 8em]
+      \node[initial, initial text=, state, minimum size = 2em] (s) {};
+      \node[right = of s, state, minimum size = 2em] (m) {};
+      \node[accepting, right = of m, state, minimum size = 2em] (e) {};
+      \draw[->]
+      (s) edge[above] node{$\varepsilon, \varepsilon \to \perp$} (m)
+      (m) edge[loop above] node[align = center]{$\verb~a~, \varepsilon \to \verb~a~$ \\ $\verb~a~, \verb~b~ \to \varepsilon$ \\ $\verb~b~, \varepsilon \to \verb~b~$ \\ $\verb~b~, \verb~a~ \to \varepsilon$} (m)
+      (m) edge[above] node[align = center]{$\varepsilon, \perp \to \varepsilon$ \\ $\varepsilon, \varepsilon \to \reflectbox{\$}$ \\ $\varepsilon, \$ \to \varepsilon$} (e)
+      ;
+    \end{tikzpicture}
+  \end{center}
+\end{eg}
+
+\newpage
+
+\begin{eg}
+  A PDA for $\mathcal L = \left \{ w : \text{$w$ has twice as many \verb~a~s as \verb~b~s} \right \}$ is given by: 
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 8em]
+      \node[initial, initial text=, state, minimum size = 2em] (s) {};
+      \node[right = of s, state, minimum size = 2em] (m) {};
+      \node[below = of m, state, minimum size = 2em] (m2) {};
+      \node[accepting, right = of m, state, minimum size = 2em] (e) {};
+      \draw[->]
+      (s) edge[above] node{$\varepsilon, \varepsilon \to \perp$} (m)
+      (m) edge[loop above] node[align = center]{$\verb~a~, \varepsilon \to \$$ \\ $\verb~a~, \reflectbox{\$} \to \varepsilon$} (m)
+      (m) edge[bend right, left] node[align = center]{$\verb~b~, \varepsilon \to \reflectbox{\$}$ \\ $\verb~b~, \$ \to \varepsilon$} (m2)
+      (m2) edge[bend right, right] node[align = center]{$\varepsilon, \varepsilon \to \reflectbox{\$}$ \\ $\varepsilon, \$ \to \varepsilon$} (m)
+      (m) edge[above] node{$\varepsilon, \perp \to \varepsilon$} (e)
+      ;
+    \end{tikzpicture}
+  \end{center}
+\end{eg}
+
+\begin{eg}
+  Consider the language $\mathcal L = \left \{ u v : |u| = |v| \land u \neq v \right \}$.
+  A string $w \in \mathcal L$ may be visually represented by 
+  \begin{center}
+    \begin{tabular}{|ccccccccc|ccccccccc|}
+      \hline
+      \phantom{x} & \phantom{$n$} & \phantom{x} & \cellcolor{pink} & \phantom{$u$} & \phantom{x} & \phantom{$m$} & \phantom{x} & \phantom{x} & \phantom{x} & \phantom{$n$} & \phantom{$x$} & \cellcolor{pink} & \phantom{$v$} & \phantom{x} & \phantom{$m$} & \phantom{x} & \phantom{x} \\ 
+      \hline
+    \end{tabular}
+    
+    \begin{tabular}{cccccccccccccccccc}
+      \phantom{$x$} & \phantom{$n$} & \phantom{$x$} & \phantom{$x$} & $u$ & \phantom{$x$} & \phantom{$m$} & \phantom{$x$} & \phantom{$x$} & \phantom{$x$} & \phantom{$n$} & \phantom{$x$} & \phantom{$x$} & $v$ & \phantom{$x$} & \phantom{$m$} & \phantom{$x$} & \phantom{$x$}
+    \end{tabular}
+  \end{center}
+  where the pink cells represent disagreement.
+  
+  One may intuitively divide the string up like so: 
+  \begin{center}
+    \begin{tabular}{|ccccccccc|ccccccccc|}
+      \hline
+      \phantom{$x$} & $n$ & \phantom{$x$} & \cellcolor{pink} & \phantom{$u$} & \phantom{$x$} & $m$ & \phantom{$x$} & \phantom{$x$} & \phantom{$x$} & $n$ & \phantom{$x$} & \cellcolor{pink} & \phantom{$v$} & \phantom{$x$} & $m$ & \phantom{$x$} & \phantom{$x$} \\ 
+      \hline
+    \end{tabular}
+  \end{center}
+  
+  However, it is very hard to find a PDA for this language from this.
+  Dividing it up in a different way makes it a lot easier: 
+  \begin{center}
+    \begin{tabular}{|ccccccc|ccccccccccc|}
+      \hline
+      \phantom{$x$} & $n$ & \phantom{$x$} & \cellcolor{pink} & \phantom{$u$} & $n$ & \phantom{$m$} & \phantom{$x$} & \phantom{$x$} & $m$ & \phantom{$x$} & \phantom{$x$} & \cellcolor{pink} & \phantom{$v$} & \phantom{$x$} & $m$ & \phantom{$x$} & \phantom{$x$} \\ 
+      \hline
+    \end{tabular}
+  \end{center}
+  
+  Then a PDA for $\mathcal L$ is given by: 
+  \begin{center}
+    \begin{tikzpicture}[> = stealth, node distance = 5em]
+      \node[initial, initial text=, state, minimum size = 2em] (s) {};
+      \node[above right = of s, state, minimum size = 2em] (1) {};
+      \node[right = of 1, state, minimum size = 2em] (2) {};
+      \node[right = of 2, state, minimum size = 2em] (3) {};
+      \node[right = of 3, state, minimum size = 2em] (4) {};
+      \node[below right = of s, state, minimum size = 2em] (5) {};
+      \node[right = of 5, state, minimum size = 2em] (6) {};
+      \node[right = of 6, state, minimum size = 2em] (7) {};
+      \node[right = of 7, state, minimum size = 2em] (8) {};
+      \node[accepting, below right = of 4, state, minimum size = 2em] (e) {};
+      \draw[->]
+      (s) edge[above left] node{$\varepsilon, \varepsilon \to \perp$} (1)
+      (1) edge[above] node{$\verb~a~, \varepsilon \to \varepsilon$} (2)
+      (1) edge[loop above] node[align = center]{$\verb~a~, \varepsilon \to \#$ \\ $\verb~b~, \varepsilon \to \#$} (1)
+      (2) edge[above] node{$\varepsilon, \perp \to \perp$} (3)
+      (2) edge[loop above] node[align = center]{$\verb~a~, \# \to \varepsilon$ \\ $\verb~b~, \# \to \varepsilon$} (2)
+      (3) edge[above] node{$\verb~b~, \varepsilon \to \varepsilon$} (4)
+      (3) edge[loop above] node[align = center]{$\verb~a~, \varepsilon \to \#$ \\ $\verb~b~, \varepsilon \to \#$} (3)
+      (4) edge[above right] node{$\varepsilon, \perp \to \varepsilon$} (e)
+      (4) edge[loop above] node[align = center]{$\verb~a~, \# \to \varepsilon$ \\ $\verb~b~, \# \to \varepsilon$} (4)
+      (s) edge[below left] node{$\varepsilon, \varepsilon \to \perp$} (5)
+      (5) edge[below] node{$\verb~b~, \varepsilon \to \varepsilon$} (6)
+      (5) edge[loop below] node[align = center]{$\verb~a~, \varepsilon \to \#$ \\ $\verb~b~, \varepsilon \to \#$} (5)
+      (6) edge[below] node{$\varepsilon, \perp \to \perp$} (7)
+      (6) edge[loop below] node[align = center]{$\verb~a~, \# \to \varepsilon$ \\ $\verb~b~, \# \to \varepsilon$} (6)
+      (7) edge[below] node{$\verb~a~, \varepsilon \to \varepsilon$} (8)
+      (7) edge[loop below] node[align = center]{$\verb~a~, \varepsilon \to \#$ \\ $\verb~b~, \varepsilon \to \#$} (7)
+      (8) edge[below right] node{$\varepsilon, \perp \to \varepsilon$} (e)
+      (8) edge[loop below] node[align = center]{$\verb~a~, \# \to \varepsilon$ \\ $\verb~b~, \# \to \varepsilon$} (8)
+      ;
+    \end{tikzpicture}
+  \end{center}
 \end{eg}
 
 \end{document}
