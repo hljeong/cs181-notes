@@ -4,9 +4,15 @@
 \usepackage{tikz-qtree}
 \usepackage{colortbl}
 
+\newcommand{\toc}{\microtypesetup{protrusion = false} \tableofcontents \microtypesetup{protrusion = true}}
+
 \class{CS 181 (Introduction to Formal Languages and Automata Theory)}
 
 \begin{document}
+
+\toc
+
+\newpage
 
 \section{Deterministic finite automata (DFAs)}
 
@@ -63,6 +69,8 @@
 \begin{defn}
   A \textbf{computational device} is a mechanism that inputs a string and either accepts or rejects it.
 \end{defn}
+
+\newpage
 
 \subsection{Deterministic finite automata}
 
@@ -167,6 +175,8 @@ In words, this machine accepts nonempty strings of all \verb~a~'s or all \verb~b
   \end{center}
 \end{eg}
 
+\newpage
+
 \begin{eg}
   \begin{center}
     \begin{tikzpicture}[> = stealth, node distance = 3em]
@@ -192,6 +202,8 @@ In words, this machine accepts nonempty strings of all \verb~a~'s or all \verb~b
     $\Sigma = \left \{ \verb~a~, \verb~b~ \right \}$, $\mathcal L = \left \{ w : w \neq \varepsilon \land w_1 = w_{\left | w \right |  } \right \}$
   \end{center}
 \end{eg}
+
+\newpage
 
 \subsection{Designing DFAs}
 
@@ -324,7 +336,7 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
 \end{eg}
 
 \begin{eg}[Week 1 Discussion]
-  A DFA for $\mathcal L = \left \{ w : \left | w \right | > 0 \land \text{$w$ contains only \verb~1~s} \right \}$ is given by: 
+  A DFA for $\mathcal L = \left \{ w : \left | w \right | > 0 \land \text{$w$ contains only \verb~1~'s} \right \}$ is given by: 
   
   \begin{center}
     \begin{tikzpicture}[> = stealth, node distance = 3em]
@@ -506,6 +518,8 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
   \end{itemize}
 \end{note}
 
+\newpage
+
 \section{Nondeterminism}
 
 \subsection{Basic notions}
@@ -545,8 +559,6 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
   An NFA {\boldmath \bfseries accepts} $w$ iff there is \textit{at least} one path to an accept state.
 \end{defn}
 
-\newpage
-
 \begin{eg}
   The output table for Example~\ref{eg:2.1.1} is given by 
   \begin{center}
@@ -564,6 +576,8 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
   
   Then the language is the set of all strings containing \verb~101~ or \verb~11~.
 \end{eg}
+
+\newpage
 
 \subsection{Using shortcuts}
 
@@ -621,6 +635,8 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
   \end{center}
 \end{eg}
 
+\newpage
+
 \subsection{Pattern matching}
 
 \begin{eg}
@@ -644,8 +660,6 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
     \end{tikzpicture}
   \end{center}
 \end{eg}
-
-\newpage
 
 \begin{eg}
   An NFA for $\mathcal L = \{ w : w = \underbrace{\verb~00...0~}_{\geq 0}\underbrace{\verb~11...1~}_{\geq 0}\underbrace{\verb~00...0~}_{\geq 1} \}$ is given by: 
@@ -726,6 +740,8 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
   \end{center}
 \end{eg}
 
+\newpage
+
 \subsection{Alternatives}
 
 \begin{eg}
@@ -750,8 +766,6 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
       ;
     \end{tikzpicture}
   \end{center}
-  
-  \newpage
   
   Note that the following is not valid due to side effects: 
 
@@ -790,8 +804,10 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
   \end{center}
 \end{eg}
 
+\newpage
+
 \begin{eg}
-  An NFA for $\mathcal L = \left \{ w : \text{$w$ contains an even number of \verb~0~s, or exactly two \verb~1~s} \right \}$ is given by: 
+  An NFA for $\mathcal L = \left \{ w : \text{$w$ contains an even number of \verb~0~'s, or exactly two \verb~1~'s} \right \}$ is given by: 
   
   \begin{center}
     \begin{tikzpicture}[> = stealth, node distance = 3em]
@@ -928,6 +944,8 @@ We will be using the binary alphabet $\left \{ \verb~0~, \verb~1~ \right \}$.
   \]
 \end{defn}
 
+\newpage
+
 \section{Equivalence of DFAs and NFAs}
 
 \subsection{Example}
@@ -964,8 +982,6 @@ Recall that the NFA accepts \verb~0110~ iff an accept state is reachable from th
 \end{center}
 
 Since $C$ is an accept state, the NFA accepts the string \verb~0110~.
-
-\newpage
 
 Can we convert this to a DFA? Yes.
 
@@ -1007,6 +1023,8 @@ Can we convert this to a DFA? Yes.
       ;
     \end{tikzpicture}
   \end{center}
+  
+  \newpage
   
   \item Clean up.
 
@@ -1168,6 +1186,8 @@ We will show that this conclusion is the best possible.
   \end{oldenumerate}
 \end{prf}
 
+\newpage
+
 \section{Closure}
 
 \subsection{Complement}
@@ -1294,6 +1314,8 @@ We will show that this conclusion is the best possible.
   \end{center}
 \end{eg}
 
+\newpage
+
 \subsection{Union and intersection}
 
 \begin{minipage}{0.5 \textwidth}
@@ -1358,12 +1380,14 @@ We will show that this conclusion is the best possible.
   \end{oldenumerate}
 \end{prf}
 
+\newpage
+
 \begin{prf}
   {\boldmath \bfseries Idea: }\footnote{Here ``E'' stands for ``EVEN'', ``O'' stands for ``ODD'', ``H'' stands for ``HAPPY'', ``W'' stands for ``WORRIED'', and ``S'' stands for ``SAD''.}
   
   \begin{minipage}{0.48 \textwidth}
     \begin{center}
-      $\mathcal L' = \left \{ w : \text{$w$ has an even number of \verb~0~s} \right \}$.
+      $\mathcal L' = \left \{ w : \text{$w$ has an even number of \verb~0~'s} \right \}$.
     \end{center}
   \end{minipage}%
   \hfill%
@@ -1600,6 +1624,8 @@ We will show that this conclusion is the best possible.
   Since $\mathcal S'$ is regular by construction, $\mathcal L = \mathcal A \setminus \mathcal S'$ is regular.
 \end{prf}
 
+\newpage
+
 \subsection{Concatenation}
 
 \begin{defn}
@@ -1618,7 +1644,7 @@ We will show that this conclusion is the best possible.
   \]
 \end{eg}
 
-{\boldmath \bfseries Observation: } $\mathcal L \varnothing \varnothing \mathcal L = \varnothing$ and $\mathcal L \left \{ \varepsilon \right \} = \left \{ \varepsilon \right \} \mathcal L = \mathcal L$ for any language $\mathcal L$.
+{\boldmath \bfseries Observation: } $\mathcal L \varnothing = \varnothing \mathcal L = \varnothing$ and $\mathcal L \left \{ \varepsilon \right \} = \left \{ \varepsilon \right \} \mathcal L = \mathcal L$ for any language $\mathcal L$.
 
 \begin{thm}
   If $\mathcal L'$ and $\mathcal L''$ are regular then so is $\mathcal L' \mathcal L''.$
@@ -1648,7 +1674,7 @@ We will show that this conclusion is the best possible.
 \end{prf}
 
 \begin{eg}
-  An NFA for $\left \{ u w : \text{$\left | u \right |$ is odd, $v$ contains at least two \verb~0~s} \right \}$ is given by: 
+  An NFA for $\left \{ u w : \text{$\left | u \right |$ is odd, $v$ contains at least two \verb~0~'s} \right \}$ is given by: 
 
   \begin{center}
     \begin{tikzpicture}[> = stealth, node distance = 3em]
@@ -1670,6 +1696,8 @@ We will show that this conclusion is the best possible.
     \end{tikzpicture}
   \end{center}
 \end{eg}
+
+\newpage
 
 \subsection{Kleene star}
 
@@ -1741,6 +1769,8 @@ We will show that this conclusion is the best possible.
   In words, add $\varepsilon$-transitions from every state in $F$ to $q_0$ and add a new start state $q'_0$ and link it with an $\varepsilon$-arrow to $q_0$.
 \end{prf}
 
+\newpage
+
 \subsection{Reverse}
 
 \begin{defn}
@@ -1770,6 +1800,8 @@ We will show that this conclusion is the best possible.
   Reverse all the transitions, create a new start state, and link it with $\varepsilon$-transitions to states in $F$.
   Make $q_0$ the only accept state.
 \end{prf}
+
+\newpage
 
 \subsection{Prefix and suffix}
 
@@ -1806,6 +1838,8 @@ We will show that this conclusion is the best possible.
   $\operatorname{suffix}(\mathcal L) = (\operatorname{prefix}(\mathcal L^R))^R$.
 \end{prf}
 
+\newpage
+
 \subsection{Substring}
 
 \begin{defn}
@@ -1823,6 +1857,8 @@ We will show that this conclusion is the best possible.
   $\operatorname{substring}(\mathcal L) = \operatorname{suffix}(\operatorname{prefix}(\mathcal L))$.
 \end{prf}
 
+\newpage
+
 \subsection{Shuffle}
 
 \begin{defn}
@@ -1838,6 +1874,8 @@ We will show that this conclusion is the best possible.
     \Delta((q', q''), \sigma) = \left ( \delta'(q', \sigma) \times \left \{ q'' \right \} \right ) \cup \left ( \left \{ q' \right \} \times \delta''(q'', \sigma) \right ).
   \]
 \end{prf}
+
+\newpage
 
 \section{Regular expressions}
 
@@ -1938,6 +1976,8 @@ We will show that this conclusion is the best possible.
   The regular expression $(\verb~0~ \cup \varepsilon) 1^*$ can be arguably simplified to $\verb~01~^* \cup 1^*$.
 \end{eg}
 
+\newpage
+
 \begin{eg}
   The regular expression $\verb~1~^* \varnothing$ can be simplified to $\varnothing$.
 \end{eg}
@@ -1963,6 +2003,8 @@ We will show that this conclusion is the best possible.
     \end{tabular}
   \end{center}
 \end{eg}
+
+\newpage
 
 \subsection{Equivalence with automata}
 
@@ -1990,6 +2032,8 @@ We will show that this conclusion is the best possible.
   If there are no transitions from the start state to the accept state then the regular expression is $\varnothing$.
   Otherwise there is exactly one transition $\alpha$, the desired regular expression.
 \end{prf}
+
+\newpage
 
 \subsection{Conversion example}
 
@@ -2129,6 +2173,8 @@ We will show that this conclusion is the best possible.
   \end{tikzpicture}
 \end{center}
 
+\newpage
+
 \subsection{Conversion example \#2}
 
 \begin{center}
@@ -2242,6 +2288,8 @@ We will show that this conclusion is the best possible.
   \end{tikzpicture}
 \end{center}
 
+\newpage
+
 \section{Pumping lemma}
 
 \subsection{First nonregular language}
@@ -2264,10 +2312,12 @@ We will show that this conclusion is the best possible.
       
     \item Write $w = x y z$ where $x$ is the portion of $w$ before the first visit of $q$, $y$ is the portion of $w$ between the first and the second visit of $q$, and $z$ is the portion of $w$ after the second visit of $q$.
       
-    \item Since $D$ accepts $w = x y z$, $D$ also accepts $x y y z$, which contains more than $p$ \verb~0~s and exactly $p$ \verb~1~s.
+    \item Since $D$ accepts $w = x y z$, $D$ also accepts $x y y z$, which contains more than $p$ \verb~0~'s and exactly $p$ \verb~1~'s.
     Then $D$ does not recognize $\mathcal L$.
   \end{itemize}
 \end{prf}
+
+\newpage
 
 \subsection{Pumping lemma}
 
@@ -2335,7 +2385,7 @@ We will show that this conclusion is the best possible.
 \end{eg}
 
 \begin{eg}
-  Consider the language $\mathcal L = \left \{ w : \text{$w$ contains as many \verb~0~s as \verb~1~s} \right \}$.
+  Consider the language $\mathcal L = \left \{ w : \text{$w$ contains as many \verb~0~'s as \verb~1~'s} \right \}$.
   
   Note that 
   \[
@@ -2356,8 +2406,6 @@ We will show that this conclusion is the best possible.
   Then by the closure of regular languages under set difference, $\mathcal L$ is not regular.
 \end{eg}
 
-\subsection{Continued}
-
 \begin{eg}
   Consider the language $\mathcal L = \left \{ \verb~0~^n \verb~1~^m : n > m \right \}$ and the string $\overbrace{\verb~00...0~}^{{\color{red} p + 1}} \overbrace{\verb~11...1~}^{p}$.
   Consider any $y \neq \varepsilon$ such that $\left | x y \right | \leq p$.
@@ -2367,7 +2415,7 @@ We will show that this conclusion is the best possible.
 
 \begin{eg}
   Consider the language $\mathcal L = \left \{ \verb~10~^n \verb~1~^n : n \geq 1 \right \}$ and the string $\verb~1~ \overbrace{\verb~00...0~}^{p} \overbrace{\verb~11...1~}^{p}$.
-  Then $y \neq \varepsilon$ either contains a leading $\verb~1~$, in which case $x z$ does not have a leading $\verb~1~$ and therefore $x z \not \in \mathcal L$, or does not contain a leading $\verb~1~$, in which case $x z$ has a different number of \verb~0~s as trailing \verb~1~s and therefore $x z \not \in \mathcal L$.
+  Then $y \neq \varepsilon$ either contains a leading $\verb~1~$, in which case $x z$ does not have a leading $\verb~1~$ and therefore $x z \not \in \mathcal L$, or does not contain a leading $\verb~1~$, in which case $x z$ has a different number of \verb~0~'s as trailing \verb~1~'s and therefore $x z \not \in \mathcal L$.
   Then $\mathcal L$ is not regular.
 \end{eg}
 
@@ -2412,6 +2460,8 @@ We will show that this conclusion is the best possible.
   Then $\mathcal L$ is not regular. 
 \end{eg}
 
+\newpage
+
 \subsection{True or false}
 
 \begin{eg}
@@ -2447,6 +2497,8 @@ We will show that this conclusion is the best possible.
 \begin{eg}
   The statement ``nonregular languages are always infinite'' is true since all finite languages are regular.
 \end{eg}
+
+\newpage
 
 \section{Myhill-Nerode theorem}
 
@@ -2631,7 +2683,7 @@ We will show that this conclusion is the best possible.
 \end{eg}
 
 \begin{eg}
-  Consider the language $\mathcal L = \left \{ w : \text{$w$ contains as many \verb~0~s as \verb~1~s} \right \}$.
+  Consider the language $\mathcal L = \left \{ w : \text{$w$ contains as many \verb~0~'s as \verb~1~'s} \right \}$.
   Note that this language is nonregular.
   The language can be partitioned into: 
   
@@ -2653,7 +2705,7 @@ We will show that this conclusion is the best possible.
   
   where 
   \[
-    C_i = \left \{ w : \text{number of \verb~0~s in $w$} - \text{number of \verb~1~s in $w$} = i \right \}.
+    C_i = \left \{ w : \text{number of \verb~0~'s in $w$} - \text{number of \verb~1~'s in $w$} = i \right \}.
   \]
 \end{eg}
 
@@ -2666,6 +2718,8 @@ We will show that this conclusion is the best possible.
   for large enough $n$.
   Then every $w \in \Sigma^*$ is in its own equivalence class.
 \end{eg}
+
+\newpage
 
 \subsection{Myhill-Nerode theorem}
 
@@ -2717,6 +2771,8 @@ We will show that this conclusion is the best possible.
   \]
 \end{prf}
 
+\newpage
+
 \subsection{Proving nonregularity}
 
 There are 3 methods to prove nonregularity: 
@@ -2730,12 +2786,10 @@ There are 3 methods to prove nonregularity:
 \end{enumerate}
 
 \begin{eg}
-  Consider the languages $\mathcal L_1 = \left \{ w : w^R \right \}$ and $\mathcal L_2 = \left \{ w : \text{$w$ has equally many \verb~0~s and \verb~1~s} \right \}$.
+  Consider the languages $\mathcal L_1 = \left \{ w : w^R \right \}$ and $\mathcal L_2 = \left \{ w : \text{$w$ has equally many \verb~0~'s and \verb~1~'s} \right \}$.
   we have shown that $\equiv_{\mathcal L_1}$ and $\equiv_{\mathcal L_2}$ have infinitely many equivalence classes.
   Then $\mathcal L_1$ and $\mathcal L_2$ are nonregular.
 \end{eg}
-
-\newpage
 
 \begin{eg}
   Consider the language $\mathcal L = \left \{ ww : w \in \left \{ \verb~0~, \verb~1~ \right \}^* \right \}$.
@@ -2770,6 +2824,8 @@ There are 3 methods to prove nonregularity:
   Then $\equiv_\mathcal L$ has infinitely many classes.
   Then $\mathcal L$ is nonregular.
 \end{eg}
+
+\newpage
 
 \subsection{Proving optimality}
 
@@ -2811,8 +2867,6 @@ There are 3 methods to prove nonregularity:
   Then our DFA is optimal.
 \end{eg}
 
-\newpage
-
 \begin{eg}
   Find the smallest possible DFA for $\mathcal L_k = \left \{ w : k \mid \left | w \right | \right \}$.
   
@@ -2840,6 +2894,8 @@ There are 3 methods to prove nonregularity:
 \begin{cor}
   For each $k$, $\mathcal L_k$ is a language that can be recognized by a DFA with $k$ states but not $k - 1$ states.
 \end{cor}
+
+\newpage
 
 \begin{eg}
   Given $u = u_1 u_2 \cdots u_k$, define $\mathcal L = \Sigma^* u_1 u_2 \cdots u_k \Sigma^*$.
@@ -2872,6 +2928,8 @@ There are 3 methods to prove nonregularity:
   Then $\varepsilon, u_1, u_1 u_2, \dots, u_1 u_2 \cdots u_k$ are in different classes of $\equiv_\mathcal L$.
   Then $\mathcal L$ has at least $k + 1$ classes.
 \end{eg}
+
+\newpage
 
 \section{Context-free grammars}
 
@@ -2920,7 +2978,9 @@ There are 3 methods to prove nonregularity:
   B &\to \verb~b~ B \verb~a~ \; | \; \varepsilon
 \end{align*}
 
-Then the language is $\mathcal L = \left \{ \verb~a~^n \verb~b~^n \cup \verb~b~^n \verb~a~^n : n \geq 0 \right \}$.
+The language is $\mathcal L = \left \{ \verb~a~^n \verb~b~^n \cup \verb~b~^n \verb~a~^n : n \geq 0 \right \}$.
+
+\newpage
 
 \begin{defn}
   A {\boldmath \bfseries context-free grammar} is a tuple $(V, \Sigma, R, S)$ where
@@ -2947,7 +3007,7 @@ Then the CFG we discussed above can be written as
 \begin{eg}
   Consider the CFG with rules
   \begin{align*}
-    S &\to AA \\ 
+    S &\to A A \\ 
     A &\to A.
   \end{align*}
   
@@ -2960,7 +3020,7 @@ Then the CFG we discussed above can be written as
     S &\to \verb~ab~ S \; | \; \verb~a~.
   \end{align*}
   
-  The language is $(\verb~ab~^*) \verb~a~$.
+  The language is $(\verb~ab~^*) \verb~a~$, or equivalently $\verb~a~ (\verb~ba~)^*$.
 \end{eg}
 
 \begin{eg}
@@ -2975,7 +3035,7 @@ Then the CFG we discussed above can be written as
 \begin{eg}
   Consider the CFG with rules 
   \begin{align*}
-    S &\to \verb~a~ S \verb~b~ \; | \; B \\ 
+    S &\to \verb~a~ S \verb~a~ \; | \; B \\ 
     B &\to \verb~b~ B \; | \; \varepsilon.
   \end{align*}
   
@@ -3030,7 +3090,7 @@ Then the CFG we discussed above can be written as
   
   A CFG for this language is given by
   \begin{align*}
-    S &\to T S T \\ 
+    S &\to T S T \; | \; \verb~a~ \\ 
     T &\to \verb~a~ \; | \; \verb~b~.
   \end{align*}
 \end{eg}
@@ -3041,7 +3101,7 @@ Then the CFG we discussed above can be written as
   A CFG for this language is given by
   \begin{align*}
     S &\to \verb~a~ S B B B \; | \; \varepsilon \\ 
-    T &\to \verb~b~ \; | \; \varepsilon.
+    B &\to \verb~b~ \; | \; \varepsilon.
   \end{align*}
 \end{eg}
 
@@ -3073,7 +3133,7 @@ Then the CFG we discussed above can be written as
 \end{eg}
 
 \begin{eg}
-  Consider the language $\mathcal L = \left \{ w : \text{$w$ contains at least three \verb~a~s} \right \}$.
+  Consider the language $\mathcal L = \left \{ w : \text{$w$ contains at least three \verb~a~'s} \right \}$.
 
   A CFG for this language is given by 
   \begin{align*}
@@ -3108,16 +3168,14 @@ Then the CFG we discussed above can be written as
 
   A CFG for this language is given by 
   \begin{align*}
-    S &\to {\color{red} \varepsilon} \; | \; {\color{red} \varnothing} \; | \; {\color{red} \verb~a~} \; | \; {\color{red} \verb~b~} \; | \; {\color{red} (} S S {\color{red} )} \; | \; {\color{red} (} S {\color{red} \cup} S {\color{red} )} \; | \; {\color{red} (} S {\color{red} {}^*} {\color{red} )}.
+    S &\to {\color{red} \varepsilon} \; | \; {\color{red} \varnothing} \; | \; {\color{red} \verb~a~} \; | \; {\color{red} \verb~b~} \; | \; {\color{red} (} S S {\color{red} )} \; | \; {\color{red} (} S \; {\color{red} \cup} \; S {\color{red} )} \; | \; {\color{red} (} S {\color{red} {}^*} {\color{red} )}.
   \end{align*}
 \end{eg}
-
-\newpage
 
 \begin{eg}
   Consider a programming language: 
   \begin{itemize}
-    \item identifiers = $(\verb~a~ \cup \cdots \cup \verb~z~) (\verb~a~ \cup \cdots \cup \verb~z~ \cup \verb~0~ \cup \cdots \cup \verb~0~)^*$
+    \item identifiers = $(\verb~a~ \cup \cdots \cup \verb~z~) (\verb~a~ \cup \cdots \cup \verb~z~ \cup \verb~0~ \cup \cdots \cup \verb~9~)^*$
 
     \item numbers = positive integers
 
@@ -3143,6 +3201,10 @@ Then the CFG we discussed above can be written as
     I &\to I D \; | \; I L \; | \; L & \text{identifier} \\ 
     N &\to N D \; | \; D^+ & \text{number} \\ 
     Q &\to I \; | \; N & \text{numeric quantity} \\ 
+    \phantom{C} &\phantom{\to \verb~if~ \; W T \; \verb~then~ \; W S \; | \; \verb~if~ \; W T W \; \verb~then~ \; W S W \; \verb~then~ \; W S} & \phantom{\text{conditional}.}
+  \end{align*}
+  
+  \begin{align*}
     W &\to \text{\textvisiblespace} \; | \; \verb~¶~ \; | \; W & \text{whitespace} \\ 
     W' &\to \varepsilon \; | \; W & \text{optional whitespace} \\ 
     T &\to Q W' \; \verb~=~ \; W' Q \; | \; Q W' \; \verb~<~ \; W' Q \; | \; Q W' \; \verb~>~ \; W' Q & \text{test} \\ 
@@ -3159,8 +3221,8 @@ Then the CFG we discussed above can be written as
   Consider the CFG with rules
   \begin{align*}
     S &\to S' \; | \; S'' \\ 
-    S' &\to \verb~a~ \; S' \; \verb~b~ \; | \; \varepsilon \\ 
-    S'' &\to \verb~a~ \; S'' \; | \; \varepsilon.
+    S' &\to \verb~a~ S' \verb~b~ \; | \; \varepsilon \\ 
+    S'' &\to \verb~a~ S'' \; | \; \varepsilon.
   \end{align*}
   Note that this grammar generates the language $\left \{ \verb~a~^n \verb~b~^n : n \geq 0 \right \} \cup \verb~a~^*$.
   
@@ -3200,15 +3262,15 @@ Then the CFG we discussed above can be written as
   Note that the CFG with rules 
   \begin{align*}
     S &\to S' \; | \; S'' \\ 
-    S' &\to \verb~a~ \; S' \; \verb~b~ \; | \; \varepsilon \\ 
-    S'' &\to \verb~a~ \; S'' \; | \; \varepsilon
+    S' &\to \verb~a~ S' \verb~b~ \; | \; \varepsilon \\ 
+    S'' &\to \verb~a~ S'' \; | \; \varepsilon
   \end{align*}
   is ambiguous since the string $\varepsilon$ has two parse trees.
   The ambiguity is fixed in the CFG with rules
   \begin{align*}
     S &\to S' \; | \; S'' \\ 
-    S' &\to \verb~a~ \; S' \; \verb~b~ \; | \; \varepsilon \\ 
-    S'' &\to \verb~a~ \; S'' \; | \; \verb~a~.
+    S' &\to \verb~a~ S' \verb~b~ \; | \; \varepsilon \\ 
+    S'' &\to \verb~a~ S'' \; | \; \verb~a~.
   \end{align*}
 \end{eg}
 
@@ -3216,8 +3278,8 @@ Then the CFG we discussed above can be written as
   Note that the CFG with rules 
   \begin{align*}
     S &\to A B A B \\ 
-    A &\to \verb~a~ \; A \; | \; \varepsilon \\ 
-    B &\to \verb~b~ \; B \; | \; \varepsilon
+    A &\to \verb~a~ A \; | \; \varepsilon \\ 
+    B &\to \verb~b~ B \; | \; \varepsilon
   \end{align*}
   generates language $\verb~a~^* \verb~b~^* \verb~a~^* \verb~b~^*$ and ambiguously generates the string \verb~aa~: 
 
@@ -3236,8 +3298,8 @@ Then the CFG we discussed above can be written as
   The ambiguity is fixed in the CFG with rules 
   \begin{align*}
     S &\to {\color{red} \overbrace{\color{black} \varepsilon \; | \; A \; | \; B \; | \; A B \; | \; B A \; | \; A B A \; | \; B A B \; | \; A B A B}^{\text{8 disjoint languages}}} \\ 
-    A &\to \verb~a~ \; A \; | \; \verb~a~ \\ 
-    B &\to \verb~b~ \; B \; | \; \verb~b~.
+    A &\to \verb~a~ A \; | \; \verb~a~ \\ 
+    B &\to \verb~b~ B \; | \; \verb~b~.
   \end{align*}
 \end{eg}
 
@@ -3246,7 +3308,7 @@ Then the CFG we discussed above can be written as
 \begin{eg}
   Note that the CFG with a single rule 
   \begin{align*}
-    S &\to \verb~a~ \; S \; \verb~b~ \; | \; \verb~aa~ \; S \; \verb~b~ \; | \; \varepsilon
+    S &\to \verb~a~ S \verb~b~ \; | \; \verb~aa~ S \verb~b~ \; | \; \varepsilon
   \end{align*}
   generates the language $\left \{ \verb~a~^n \verb~b~^m : m \leq n \leq 2 m \right \}$ and ambiguously generates the string \verb~aaabb~: 
   
@@ -3264,21 +3326,21 @@ Then the CFG we discussed above can be written as
   
   The ambiguity is fixed in the CFG with rules 
   \begin{align*}
-    S &\to \verb~a~ \; S \; \verb~b~ \; | \; T \; | \; \varepsilon \\ 
-    T &\to \verb~aa~ \; S \; \verb~b~ \; | \; \verb~aab~.
+    S &\to \verb~a~ S \verb~b~ \; | \; T \; | \; \varepsilon \\ 
+    T &\to \verb~aa~ S \verb~b~ \; | \; \verb~aab~.
   \end{align*}
 \end{eg}
 
 \begin{eg}
   Note that the CFG with a single rule 
   \begin{align*}
-    P &\to P P \; | \; \verb~a~ \; P \; \verb~b~ \; | \; \verb~ab~
+    P &\to P P \; | \; \verb~a~ P \verb~b~ \; | \; \verb~ab~
   \end{align*}
   generates the language of properly nested parentheses, where \verb~a~ represents \verb~(~ and \verb~b~ represents \verb~)~, and ambiguously generates the string \verb~ababab~: 
 
   \begin{minipage}{0.45 \textwidth}
     \begin{center}
-      \Tree[.$P$ [.$P$ \verb~a~ \verb~b~ ] [.$P$ [.$P$ [.$P$ \verb~a~ \verb~b~ ] [.$P$ \verb~a~ \verb~b~ ]]]]
+      \Tree[.$P$ [.$P$ \verb~a~ \verb~b~ ] [.$P$ [.$P$ \verb~a~ \verb~b~ ] [.$P$ \verb~a~ \verb~b~ ]]]
     \end{center}
   \end{minipage}%
   \hspace*{\fill}%
@@ -3297,7 +3359,7 @@ Then the CFG we discussed above can be written as
         axis x line = bottom, 
         axis y line = left, 
         xlabel = symbols read, 
-        ylabel = \# \verb~a~s - \# \verb~b~s]
+        ylabel = \# \verb~a~'s - \# \verb~b~'s]
         \addplot[no marks, very thick, domain = 0 : 1]{x};
         \addplot[no marks, very thick, domain = 1 : 2]{2 - x};
         \addplot[no marks, very thick, domain = 2 : 4]{x - 2};
@@ -3319,7 +3381,7 @@ Then the CFG we discussed above can be written as
         axis x line = bottom, 
         axis y line = left, 
         xlabel = symbols read, 
-        ylabel = \# \verb~a~s - \# \verb~b~s]
+        ylabel = \# \verb~a~'s - \# \verb~b~'s]
         \addplot[no marks, very thick, domain = 0 : 1]{x};
         \addplot[no marks, very thick, domain = 1 : 2]{2 - x};
         \addplot[red, very thick, dashed] (2, 0) to (2, 3);
@@ -3336,12 +3398,12 @@ Then the CFG we discussed above can be written as
   
   Then the ambiguity is fixed in the CFG with the single rule 
   \begin{align*}
-    P &\to {\color{red} \underbrace{\color{black} \verb~ab~ \; | \; \verb~a~ \; P \; \verb~b~}_{\text{1 pair of outer parentheses}}} \; | \; {\color{red} \underbrace{\color{black} \verb~ab~ \; P \; | \; \verb~a~ \; P \; \verb~b~ \; P}_{\text{$\geq 2$ pairs of outer parentheses}}}
+    P &\to {\color{red} \underbrace{\color{black} \verb~ab~ \; | \; \verb~a~ P \verb~b~}_{\text{1 pair of outer parentheses}}} \; | \; {\color{red} \underbrace{\color{black} \verb~ab~ P \; | \; \verb~a~ P \verb~b~ P}_{\text{$\geq 2$ pairs of outer parentheses}}}
   \end{align*}
 \end{eg}
 
 \begin{eg}
-  Consider the language $\mathcal L = \left \{ w : \text{$w$ has equally many \verb~a~s and \verb~b~s} \right \}$.
+  Consider the language $\mathcal L = \left \{ w : \text{$w$ has equally many \verb~a~'s and \verb~b~'s} \right \}$.
 
   Consider the following graph: 
   \begin{center}
@@ -3356,7 +3418,7 @@ Then the CFG we discussed above can be written as
           anchor = west,
         },
         xlabel = symbols read, 
-        ylabel = \# \verb~a~s - \# \verb~b~s]
+        ylabel = \# \verb~a~'s - \# \verb~b~'s]
         \addplot[no marks, very thick, domain = 0 : 1]{x};
         \addplot[no marks, very thick, domain = 1 : 2]{2 - x};
         \addplot[no marks, very thick, domain = 2 : 4]{x - 2};
@@ -3382,7 +3444,7 @@ Then the CFG we discussed above can be written as
           anchor = west,
         },
         xlabel = symbols read, 
-        ylabel = \# \verb~a~s - \# \verb~b~s]
+        ylabel = \# \verb~a~'s - \# \verb~b~'s]
         \addplot[no marks, very thick, domain = 0 : 1]{x};
         \addplot[no marks, very thick, domain = 1 : 2]{2 - x};
         \addplot[no marks, very thick, domain = 2 : 4]{x - 2};
@@ -3402,13 +3464,13 @@ Then the CFG we discussed above can be written as
     S &\to S' \; | \; S'' \; | \; \varepsilon \\ 
     S' &\to P \; | \; P S'' \\ 
     S'' &\to Q \; | \; Q S' \\ 
-    P &\to \verb~ab~ \; | \; \verb~a~ \; P \; \verb~b~ \; | \; \verb~ab~ \; P \; | \; \verb~a~ \; P \; \verb~b~ \; P \\ 
-    Q &\to \verb~ba~ \; | \; \verb~b~ \; Q \; \verb~a~ \; | \; \verb~ba~ \; Q \; | \; \verb~b~ \; Q \; \verb~a~ \; Q
+    P &\to \verb~ab~ \; | \; \verb~a~ P \verb~b~ \; | \; \verb~ab~ P \; | \; \verb~a~ P \; \verb~b~ P \\ 
+    Q &\to \verb~ba~ \; | \; \verb~b~ Q \verb~a~ \; | \; \verb~ba~ Q \; | \; \verb~b~ Q \verb~a~ Q
   \end{align*}
 \end{eg}
 
 \begin{eg}
-  Consider the language $\mathcal L = \left \{ w : \text{every prefix of $w$ has at least as many \verb~a~s as \verb~b~s} \right \}$.
+  Consider the language $\mathcal L = \left \{ w : \text{every prefix of $w$ has at least as many \verb~a~'s as \verb~b~'s} \right \}$.
 
   Consider the following graph: 
   \begin{center}
@@ -3423,7 +3485,7 @@ Then the CFG we discussed above can be written as
           anchor = west,
         },
         xlabel = symbols read, 
-        ylabel = \# \verb~a~s - \# \verb~b~s]
+        ylabel = \# \verb~a~'s - \# \verb~b~'s]
         \addplot[no marks, very thick, domain = 0 : 1]{x};
         \addplot[no marks, very thick, domain = 1 : 2]{2 - x};
         \addplot[no marks, very thick, domain = 2 : 4]{x - 2};
@@ -3438,8 +3500,49 @@ Then the CFG we discussed above can be written as
     \end{tikzpicture}
   \end{center}
   
-  % todo
+  The two cases we can have are where 
+  \begin{enumerate}
+    \item the balance starts at 0 and ends at 0, and where
+
+    \item the balance starts at 0 and ends up positive.
+  \end{enumerate}
+  These two cases are disjoint: 
+  \begin{center}
+    \begin{tikzpicture}[scale = 0.75]
+      \begin{axis}[
+        xmin = 0, xmax = 17, 
+        ymin = -5, ymax = 5, 
+        axis x line = center, 
+        axis y line = left, 
+        every axis x label/.style = {
+          at = {(ticklabel* cs:1.05)},
+          anchor = west,
+        },
+        xlabel = symbols read, 
+        ylabel = \# \verb~a~'s - \# \verb~b~'s]
+        \addplot[no marks, very thick, domain = 0 : 1]{x};
+        \addplot[no marks, very thick, domain = 1 : 2]{2 - x};
+        \addplot[no marks, very thick, domain = 2 : 4]{x - 2};
+        \addplot[no marks, very thick, domain = 4 : 6]{6 - x};
+        \addplot[no marks, very thick, domain = 6 : 9]{x - 6};
+        \addplot[red, very thick, dashed] (7, -2) to (7, 6);
+        \addplot[no marks, very thick, domain = 9 : 11]{12 - x};
+        \addplot[no marks, very thick, domain = 11 : 12]{x - 10};
+        \addplot[no marks, very thick, domain = 12 : 13]{14 - x};
+        \addplot[red, very thick, dashed] (13, -2) to (13, 6);
+        \addplot[no marks, very thick, domain = 13 : 15]{x - 12};
+        \addplot[no marks, very thick, domain = 15 : 16]{18 - x};
+      \end{axis}
+    \end{tikzpicture}
+  \end{center}
+
+  Then the ambiguity is fixed in the CFG with a single rule 
+  \[
+    S \to {\color{red} \underbrace{\color{black} \varepsilon \; | \; P}_{\text{case 1}}} \; | \; {\color{red} \underbrace{\color{black} \verb~a~ P \; | \; P \verb~a~ S}_{\text{case 2}}}.
+  \]
 \end{eg}
+
+\newpage
 
 \subsection{Ambiguity in English}
 
@@ -3453,8 +3556,13 @@ Consider the following sentences:
 \begin{quote}
   The bird the cat the dog the boy saw barked at chased flew away.
 \end{quote}
+\begin{quote}
+  Ship-shipping ships ship ship-shipping ships.
+\end{quote}
 
-These examples demonstrate the ambiguity in English.
+These examples drive home the point that English is very subtle and that you cannot represent it with a context-free grammar.
+
+\newpage
 
 \section{Pushdown Automata}
 
@@ -3579,7 +3687,7 @@ Transitions in PDAs are in the form of $\alpha, \beta \to \gamma$ where $\alpha$
 \end{eg}
 
 \begin{eg}
-  A PDA for $\mathcal L = \left \{ w : \text{$w$ has equally many \verb~a~s and \verb~b~s} \right \}$ is given by: 
+  A PDA for $\mathcal L = \left \{ w : \text{$w$ has equally many \verb~a~'s and \verb~b~'s} \right \}$ is given by: 
   \begin{center}
     \begin{tikzpicture}[> = stealth, node distance = 8em]
       \node[initial, initial text=, state, minimum size = 2em] (s) {};
@@ -3594,10 +3702,8 @@ Transitions in PDAs are in the form of $\alpha, \beta \to \gamma$ where $\alpha$
   \end{center}
 \end{eg}
 
-\newpage
-
 \begin{eg}
-  A PDA for $\mathcal L = \left \{ w : \text{$w$ has twice as many \verb~a~s as \verb~b~s} \right \}$ is given by: 
+  A PDA for $\mathcal L = \left \{ w : \text{$w$ has twice as many \verb~a~'s as \verb~b~'s} \right \}$ is given by: 
   \begin{center}
     \begin{tikzpicture}[> = stealth, node distance = 8em]
       \node[initial, initial text=, state, minimum size = 2em] (s) {};
@@ -3649,6 +3755,8 @@ Transitions in PDAs are in the form of $\alpha, \beta \to \gamma$ where $\alpha$
       \hline
     \end{tabular}
   \end{center}
+  
+  \newpage
   
   Then a PDA for $\mathcal L$ is given by: 
   \begin{center}
