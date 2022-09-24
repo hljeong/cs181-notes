@@ -1,5 +1,7 @@
 # cs181-notes
 
-lecture style convenient for note-taking in this format
+taught by alexander sherstov, spring 2022
 
-also testing [latex-notes-class](https://github.com/hljeong/latex-notes-class) and [latex.hsnips](https://github.com/hljeong/snippets/blob/latex-test/latex.hsnips)
+testing [latex-notes-class](https://github.com/hljeong/latex-notes-class) and [latex.hsnips](https://github.com/hljeong/snippets/blob/latex-test/latex.hsnips)
+
+paused
